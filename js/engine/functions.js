@@ -31,7 +31,7 @@ var abs = Math.abs,
       if (n > h) return h;
       return n;
     },
-    // Generate random integer in a (min, max) range
+    // Generate random integer between min (inclusive) and max (exclusive) range
     rndr = function(a, b) {
       return floor(rnd() * (b - a)) + a;
     },
