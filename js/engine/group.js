@@ -3,7 +3,7 @@ var Group = function() {
   _.e = []; // Group elements
 
   // Add element
-  _.a = function(e) {
+  _.add = function(e) {
     _.e.push(e);
   };
 

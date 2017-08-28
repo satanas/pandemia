@@ -7,6 +7,7 @@ var Level = function() {
   _.map = [];
   _.leafs = [];
   _.root = null;
+  // TODO: Pass maxLeafSize as parameter
   _.maxLeafSize = 20;
 
   _.arooms = [];
@@ -48,15 +49,19 @@ var Level = function() {
       });
     });
 
-   // Showing off
-   for (var v=0; v<_.wh; v++) {
-     var row = [];
-     for (var u=0; u<_.ww; u++) {
-       row.push(_.map[u][v]);
-     }
-     console.log(v, row.join(''));
-   }
+    // Showing off
+    for (var v=0; v<_.wh; v++) {
+      var row = [];
+      for (var u=0; u<_.ww; u++) {
+        row.push(_.map[u][v]);
+      }
+      console.log(v, row.join(''));
+    }
   };
+
+  _.isWall = function(x, y) {
+    return (_.map[x][y] === '#');
+  }
 
   _.getWorldSize = function() {
     return [_.ww, _.wh];
@@ -100,7 +105,7 @@ var Leaf = function(x, y, w, h) {
   _.h = h;
   _.lc = null; // left child
   _.rc = null; //right child
-  _.min = 6; // min leaf size
+  _.min = 10; // min leaf size
   _.room = null;
   _.halls = [];
 
@@ -154,8 +159,9 @@ var Leaf = function(x, y, w, h) {
       // This leaf is ready to make a room. The room can be 3 x 3 tiles to the size of the leaf - 2.
       // Then, place the room within the leaf, but don't put it right against the side of the leaf because
       // that would merge the two rooms together.
-      var w = rndr(3, _.w - 2),
-          h = rndr(3, _.h - 2),
+      // TODO: Pass minimum size of the room as parameter
+      var w = rndr(5, _.w - 2),
+          h = rndr(5, _.h - 2),
           x = rndr(1, _.w - w - 1),
           y = rndr(1, _.h - h - 1);
       _.room = new Rect(_.x + x, _.y + y, w, h);
@@ -186,58 +192,60 @@ var Leaf = function(x, y, w, h) {
     }
   };
 
+  // TODO: Pass hall height as parameter
   // Now we'll connect these two rooms together with hallways
   _.createHall = function(lRoom, rRoom) {
     var p1 = new Point(rndr(lRoom.b.l + 1, lRoom.b.r - 2), rndr(lRoom.b.t + 1, lRoom.b.b - 2)),
         p2 = new Point(rndr(rRoom.b.l + 1, rRoom.b.r - 2), rndr(rRoom.b.t + 1, rRoom.b.b - 2)),
         w = p2.x - p1.x,
-        h = p2.y - p1.y;
+        h = p2.y - p1.y,
+        hallHeight = 4;
 
     if (w < 0) {
       if (h < 0) {
         if (rnd() < 0.5) {
-          _.halls.push(new Rect(p2.x, p1.y, abs(w), 1));
-          _.halls.push(new Rect(p2.x, p2.y, 1, abs(h)));
+          _.halls.push(new Rect(p2.x, p1.y, abs(w), hallHeight));
+          _.halls.push(new Rect(p2.x, p2.y, hallHeight, abs(h)));
         } else {
-          _.halls.push(new Rect(p2.x, p2.y, abs(w), 1));
-          _.halls.push(new Rect(p1.x, p2.y, 1, abs(h)));
+          _.halls.push(new Rect(p2.x, p2.y, abs(w), hallHeight));
+          _.halls.push(new Rect(p1.x, p2.y, hallHeight, abs(h)));
         }
       } else if (h > 0) {
         if (rnd() < 0.5) {
-          _.halls.push(new Rect(p2.x, p1.y, abs(w), 1));
-          _.halls.push(new Rect(p2.x, p1.y, 1, abs(h)));
+          _.halls.push(new Rect(p2.x, p1.y, abs(w), hallHeight));
+          _.halls.push(new Rect(p2.x, p1.y, hallHeight, abs(h)));
         } else {
-          _.halls.push(new Rect(p2.x, p2.y, abs(w), 1));
-          _.halls.push(new Rect(p1.x, p1.y, 1, abs(h)));
+          _.halls.push(new Rect(p2.x, p2.y, abs(w), hallHeight));
+          _.halls.push(new Rect(p1.x, p1.y, hallHeight, abs(h)));
         }
       } else { // if (h === 0)
-          _.halls.push(new Rect(p2.x, p2.y, abs(w), 1));
+          _.halls.push(new Rect(p2.x, p2.y, abs(w), hallHeight));
       }
     } else if (w > 0) {
       if (h < 0) {
         if (rnd() < 0.5) {
-          _.halls.push(new Rect(p1.x, p2.y, abs(w), 1));
-          _.halls.push(new Rect(p1.x, p2.y, 1, abs(h)));
+          _.halls.push(new Rect(p1.x, p2.y, abs(w), hallHeight));
+          _.halls.push(new Rect(p1.x, p2.y, hallHeight, abs(h)));
         } else {
-          _.halls.push(new Rect(p1.x, p1.y, abs(w), 1));
-          _.halls.push(new Rect(p2.x, p2.y, 1, abs(h)));
+          _.halls.push(new Rect(p1.x, p1.y, abs(w), hallHeight));
+          _.halls.push(new Rect(p2.x, p2.y, hallHeight, abs(h)));
         }
       } else if (h > 0) {
         if (rnd() < 0.5) {
-          _.halls.push(new Rect(p1.x, p1.y, abs(w), 1));
-          _.halls.push(new Rect(p2.x, p1.y, 1, abs(h)));
+          _.halls.push(new Rect(p1.x, p1.y, abs(w), hallHeight));
+          _.halls.push(new Rect(p2.x, p1.y, hallHeight, abs(h)));
         } else {
-          _.halls.push(new Rect(p1.x, p2.y, abs(w), 1));
-          _.halls.push(new Rect(p1.x, p1.y, 1, abs(h)));
+          _.halls.push(new Rect(p1.x, p2.y, abs(w), hallHeight));
+          _.halls.push(new Rect(p1.x, p1.y, hallHeight, abs(h)));
         }
       } else { // if (h === 0)
-          _.halls.push(new Rect(p1.x, p1.y, abs(w), 1));
+          _.halls.push(new Rect(p1.x, p1.y, abs(w), hallHeight));
       }
     } else { // if (w === 0)
       if (h < 0) {
-          _.halls.push(new Rect(p2.x, p2.y, 1, abs(h)));
+          _.halls.push(new Rect(p2.x, p2.y, hallHeight, abs(h)));
       } else if (h > 0) {
-          _.halls.push(new Rect(p1.x, p1.y, 1, abs(h)));
+          _.halls.push(new Rect(p1.x, p1.y, hallHeight, abs(h)));
       }
     }
   };
