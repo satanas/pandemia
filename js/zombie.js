@@ -7,6 +7,8 @@ var Zombie = function(x, y) {
   _.dy = 0;
   _.mindist = 400; // min distance to start chasing the player
   _.path = []; // points of path
+  _.ctimer = 300; // check time in ms
+  _.ccount = 0; // time counter before checking new route
 
   _.inherits(Sprite);
   _.inherits(AStar);
@@ -14,6 +16,7 @@ var Zombie = function(x, y) {
   AStar.call(_, $.lvl.ww, $.lvl.wh);
 
   _.u = function() {
+    _.ccount += $.e;
     var a = new Point(_.x, _.y), // current zombie location
         b = new Point($.player.x, $.player.y), // player location
         d = _.getdist(a, b), // distance in pixels between zombie and player
@@ -31,6 +34,10 @@ var Zombie = function(x, y) {
       if (cp.x === _.path[0].x && cp.y === _.path[0].y) {
         // We remove the current node from the path and let the walking continue
         _.path.splice(0, 1);
+        if (_.path.length === 0) {
+          _.dx = 0;
+          _.dy = 0;
+        }
       } else {
         if (cp.x < _.path[0].x) {
           _.dx = _.s;
@@ -52,21 +59,13 @@ var Zombie = function(x, y) {
           _.dy = 0;
         }
 
-        if (b.toGrid().x !== dp.x || b.toGrid().y !== dp.y) {
+        if (_.ccount >= _.ctimer && (b.toGrid().x !== dp.x || b.toGrid().y !== dp.y)) {
           _.path = [];
+          _.ccount = 0;
         }
       }
     }
 
-    //if (_.path.length === 0) {
-    //  _.dx = 0;
-    //  _.dy = 0;
-    //}
-
-    //_.dx = iir(_.dx, -_.mxs, _.mxs);
-    //_.dy = iir(_.dy, -_.mxs, _.mxs);
-
-    //console.log('asas', _.dx, _.dy);
     _.x += _.dx;
     _.y += _.dy;
 
@@ -96,5 +95,5 @@ var Zombie = function(x, y) {
     $.x.fs('#00ff00');
     $.x.fr(p.x, p.y, _.w, _.h);
     $.x.r();
-  }
+  };
 };
