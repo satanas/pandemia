@@ -9,10 +9,14 @@ var GameScene = function() {
   Scene.call(_);
 
   $.o = new Collisions();
+
+  // Collision groups
   $.g.walls = new Group();
+  $.g.z = new Group();
 
   $.lvl.gen(_.wh, _.wh);
-  _.player = new Player(120, 120);
+  $.player = new Player(120, 120);
+  $.g.z.add(new Zombie(300, 300));
   $.cam.setWorldSize(_.ww, _.wh);
   $.cam.setTarget(_.player);
 
@@ -29,11 +33,13 @@ var GameScene = function() {
     $.x.clr('#ccc');
 
     // Update
-    _.player.u();
+    $.g.z.u();
+    $.player.u();
     $.cam.u();
 
     // Render
-    $.cam.r(_.player);
+    $.cam.r($.player);
+    $.g.z.r();
     $.g.walls.r();
   };
 

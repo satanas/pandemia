@@ -14,40 +14,50 @@ var Level = function() {
 
   _.gen = function(w, h) {
     var i = 0, j = 0;
-    _.ww = w / 32;
-    _.wh = h / 32;
+    _.ww = 20; //w / 32;
+    _.wh = 20; //h / 32;
 
-    _.makeLeafs();
-    _.root.createRooms();
-
-    // Fill map with non-walkable blocks (walls)
-    for (j=0; j<_.wh; j++) {
+    for (j=0; j<20; j++) {
       _.map[j] = [];
-      for (i=0; i<_.ww; i++) {
-        _.map[j][i] = "#"
+      for (i=0; i<20; i++) {
+        _.map[j][i] = "."
+        if (j === 0 || j === 19)
+          _.map[j][i] = "#"
+        if (i === 0 || i === 19)
+          _.map[j][i] = "#"
       }
     }
 
-    // Now we set walkable blocks according to the available rooms
-    //_.leafs.map(function(l) { return l.room }).concat(_.halls).forEach(function(room) {
-    _.leafs.forEach(function(leaf) {
-      var room = leaf.room;
-      if (room !== null) {
-        _.arooms.push(room);
-        for (j=room.b.l; j<=room.b.r; j++) {
-          for (i=room.b.t; i<=room.b.b; i++)
-            _.map[j][i] = ".";
-        }
-      }
+    //_.makeLeafs();
+    //_.root.createRooms();
 
-      leaf.halls.forEach(function(hall) {
-        if (hall === null || hall === undefined) return;
-        for (j=hall.b.l; j<=hall.b.r; j++) {
-          for (i=hall.b.t; i<=hall.b.b; i++)
-            _.map[j][i] = ".";
-        }
-      });
-    });
+    // Fill map with non-walkable blocks (walls)
+    //for (j=0; j<_.wh; j++) {
+    //  _.map[j] = [];
+    //  for (i=0; i<_.ww; i++) {
+    //    _.map[j][i] = "#"
+    //  }
+    //}
+
+    // Now we set walkable blocks according to the available rooms
+    //_.leafs.forEach(function(leaf) {
+    //  var room = leaf.room;
+    //  if (room !== null) {
+    //    _.arooms.push(room);
+    //    for (j=room.b.l; j<=room.b.r; j++) {
+    //      for (i=room.b.t; i<=room.b.b; i++)
+    //        _.map[j][i] = ".";
+    //    }
+    //  }
+
+    //  leaf.halls.forEach(function(hall) {
+    //    if (hall === null || hall === undefined) return;
+    //    for (j=hall.b.l; j<=hall.b.r; j++) {
+    //      for (i=hall.b.t; i<=hall.b.b; i++)
+    //        _.map[j][i] = ".";
+    //    }
+    //  });
+    //});
 
     // Showing off
     for (var v=0; v<_.wh; v++) {
@@ -65,6 +75,10 @@ var Level = function() {
 
   _.getWorldSize = function() {
     return [_.ww, _.wh];
+  };
+
+  _.length = function() {
+    return _.ww * _.wh;
   };
 
   _.makeLeafs = function() {
