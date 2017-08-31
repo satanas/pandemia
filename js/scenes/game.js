@@ -18,7 +18,7 @@ var GameScene = function() {
   $.player = new Player(120, 120);
   $.g.z.add(new Zombie(300, 300));
   $.cam.setWorldSize(_.ww, _.wh);
-  $.cam.setTarget(_.player);
+  $.cam.setTarget($.player);
 
   // Load the walls
   for (var j=0; j<$.lvl.wh; j++) {
@@ -38,9 +38,9 @@ var GameScene = function() {
     $.cam.u();
 
     // Render
+    $.g.walls.r();
     $.cam.r($.player);
     $.g.z.r();
-    $.g.walls.r();
   };
 
   _.applyFilter = function(g, b) {

@@ -5,6 +5,6 @@ var Point = function(x, y) {
 
   // TODO: configure grid size
   _.toGrid = function() {
-    return new Point(floor(_.x / 32), floor(_.y / 32));
+    return new Point(floor(_.x / GRID_SIZE), floor(_.y / GRID_SIZE));
   };
 };

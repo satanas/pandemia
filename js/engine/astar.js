@@ -1,4 +1,6 @@
-// Based on http://buildnewgames.com/astar/
+// A* implementation based on:
+// http://buildnewgames.com/astar/
+// https://github.com/qiao/PathFinding.js/blob/master/src/core/Grid.js
 var AStar = function(ww, wh) {
   var _ = this;
   _.ww = ww;
@@ -6,11 +8,20 @@ var AStar = function(ww, wh) {
 
   // Manhattan distance
   _.getdist = function(p, q) {
-    return abs(p.x - q.x) + abs(p.y - q.y);
+    return sqrt(pow(p.x - q.x, 2) + pow(p.y - q.y, 2));
+    //return abs(p.x - q.x) + abs(p.y - q.y);
   };
 
   // Returns adjacent available cells north, south, east and west that aren't blocked.
-  _.neighbours = function(x, y) {
+  //   offsets (sX)      diagonalOffsets (dX)
+  //  +---+---+---+    +---+---+---+
+  //  |   | 0 |   |    | 0 |   | 1 |
+  //  +---+---+---+    +---+---+---+
+  //  | 3 |   | 1 |    |   |   |   |
+  //  +---+---+---+    +---+---+---+
+  //  |   | 2 |   |    | 3 |   | 2 |
+  //  +---+---+---+    +---+---+---+
+  _.neighbors = function(x, y) {
     var n = y - 1, // north
         s = y + 1, // south
         e = x + 1, // east
@@ -19,21 +30,54 @@ var AStar = function(ww, wh) {
         aS = s < _.wh && !$.lvl.isWall(x, s), // available south
         aE = e < _.ww && !$.lvl.isWall(e, y), // available east
         aW = w > -1 && !$.lvl.isWall(w, y),   // available west
+        s0, s1, s2, s3 = 0,
+        d0, d1, d2, d3 = 0,
         r = []; // result
-    if (aN)
+    // ↑
+    if (aN) {
       r.push({x:x, y:n});
-    if (aS)
+      s0 = 1;
+    }
+    // ↓
+    if (aS) {
       r.push({x:x, y:s});
-    if (aE)
+      s2 = 1;
+    }
+    // →
+    if (aE) {
       r.push({x:e, y:y});
-    if (aW)
+      s1 = 1;
+    }
+    // ←
+    if (aW) {
       r.push({x:w, y:y});
+      s3 = 1;
+    }
+    // TODO: Flag to control this
+    // Diagonal movement when no obstacles
+    d0 = s3 && s0;
+    d1 = s0 && s1;
+    d2 = s1 && s2;
+    d3 = s2 && s3;
+
+    // ↖
+    if (d0 && !$.lvl.isWall(w, n))
+      r.push({x:w, y:n});
+    // ↗
+    if (d1 && !$.lvl.isWall(e, n))
+      r.push({x:e, y:n});
+    // ↘
+    if (d2 && !$.lvl.isWall(e, s))
+      r.push({x:e, y:s});
+    // ↙
+    if (d3 && !$.lvl.isWall(w, s))
+      r.push({x:w, y:s});
     return r;
   };
 
   _.findpath = function(a, b) {
-    var start = new Node(null, a, _.ww), // start node
-        end = new Node(null, b, _.ww), // end node
+    var start = new Node(null, new Point(a.x , a.y).toGrid(), _.ww), // start node
+        end = new Node(null, new Point(b.x, b.y).toGrid(), _.ww), // end node
         mlen = $.lvl.length(), // map size
         wcells = new Array(mlen), // array to store world cells
         lopen = [start], // list of currently open nodes
@@ -56,12 +100,12 @@ var AStar = function(ww, wh) {
       if (xnode.v === end.v) { // is it the destination node?
         xpath = lclosed[lclosed.push(xnode) - 1];
         do {
-          res.push(new Point(xpath.x, xpath.y));
+          res.push(new Point(xpath.x * GRID_SIZE, xpath.y * GRID_SIZE));
         } while (xpath = xpath.p);
         wcells = lclosed = lopen = [];
         res.reverse();
       } else { // not the destination
-        xneigh = _.neighbours(xnode.x, xnode.y);
+        xneigh = _.neighbors(xnode.x, xnode.y);
         for (i=0, j=xneigh.length; i < j; i++) {
           xpath = new Node(xnode, xneigh[i], _.ww);
           if (!wcells[xpath.v]) {
