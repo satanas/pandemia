@@ -5,9 +5,10 @@ var Zombie = function(x, y) {
   _.o = 'l'; // orientation
   _.mindist = 400; // min distance to start chasing the player
   _.path = []; // points of path
-  _.ctimer = 300; // check time in ms
+  _.ctimer = 1000; // check time in ms
   _.ccount = 0; // time counter before checking new route
   _.angle = 0;
+  _.trackingPos;
 
   _.inherits(Sprite);
   _.inherits(AStar);
@@ -15,6 +16,7 @@ var Zombie = function(x, y) {
   AStar.call(_, $.lvl.ww, $.lvl.wh);
 
   _.u = function() {
+    // TODO: Move the seek behavior to a separated file inside ai folder
     _.ccount += $.e;
     var d = _.getdist(_, $.player); // distance in pixels between zombie and player
 
@@ -22,12 +24,12 @@ var Zombie = function(x, y) {
     if (_.path.length === 0) {
       if ((d <= _.mindist) && (round(d) > 40)) {
         _.path = _.findpath(_, $.player);
-        console.log('path changed', Date.now(), _.path);
+        _.trackingPos = new Point($.player.x, $.player.y);
+        //console.log('path changed', Date.now(), _.path);
       }
     } else {
       const nextPos = _.path[0];
       const dist = _.getdist(_, nextPos);
-      var dp = _.path[_.path.length - 1]; // last point (destination) of current path
       // The zombie reached the current node
       if (dist === 0) {
         // We remove the current node from the path and let the walking continue
@@ -43,10 +45,10 @@ var Zombie = function(x, y) {
         _.updateRect();
 
         // Recalculate path if destination point changed
-        //console.log('px', $.player.x, 'dx', dp.x, 'py', $.player.y, 'dy', dp.y);
-        //if (_.ccount >= _.ctimer && ($.player.x !== dp.x || $.player.y !== dp.y)) {
-        //  _.clrPath();
-        //}
+        //console.log('px, py', $.player.x, $.player.y, 'ox, oy', _.trackingPos.x, _.trackingPos.y);
+        if (_.ccount >= _.ctimer && _.trackingPos !== null && ($.player.x !== _.trackingPos.x || $.player.y !== _.trackingPos.y)) {
+          _.clrPath();
+        }
       }
     }
   };
