@@ -1,11 +1,8 @@
 var Zombie = function(x, y) {
   var _ = this;
-  _.d = 'l'; // direction
-  _.s = 1.05; // speed
-  _.o = 'l'; // orientation
   _.mindist = 400; // min distance to start chasing the player
   _.path = []; // points of path
-  _.ctimer = 1000; // check time in ms
+  _.ctimer = 300; // check time in ms
   _.ccount = 0; // time counter before checking new route
   _.angle = 0;
   _.trackingPos;
@@ -23,9 +20,8 @@ var Zombie = function(x, y) {
     // The zombie doesn't have a path to walk
     if (_.path.length === 0) {
       if ((d <= _.mindist) && (round(d) > 40)) {
-        _.path = _.findpath(_, $.player);
+        _.path = _.findpath(_, $.player, MAX_ZOMBIE_PATH_DISTANCE);
         _.trackingPos = new Point($.player.x, $.player.y);
-        //console.log('path changed', Date.now(), _.path);
       }
     } else {
       const nextPos = _.path[0];
@@ -38,7 +34,6 @@ var Zombie = function(x, y) {
         _.angle = atan2(nextPos.y - _.y, nextPos.x - _.x);
         const appliedDist = min(dist, ZOMBIE_SPEED);
 
-        //console.log('nextPos', nextPos.x, nextPos.y, 'x,y', _.x, _.y, 'dist', cos(_.angle) * dist, sin(_.angle) * dist, 'appliedDist', appliedDist, 'z', ZOMBIE_SPEED, 'angle', _.angle);
         _.x += appliedDist * cos(_.angle);
         _.y += appliedDist * sin(_.angle);
 
@@ -68,11 +63,7 @@ var Zombie = function(x, y) {
   };
 
   _.clrPath = function() {
-    _.path = [];
+    _.path.splice(1, _.path.length);
     _.ccount = 0;
-  };
-
-  _.inPlace = function(p1, p2) {
-    return (abs(p1.x - p2.x) <= _.s && abs(p1.y - p2.y) <= _.s);
   };
 };

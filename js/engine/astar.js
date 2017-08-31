@@ -1,10 +1,11 @@
 // A* implementation based on:
 // http://buildnewgames.com/astar/
 // https://github.com/qiao/PathFinding.js/blob/master/src/core/Grid.js
-var AStar = function(ww, wh) {
+var AStar = function(ww, wh, maxpath) {
   var _ = this;
   _.ww = ww;
   _.wh = wh;
+  _.maxpath = maxpath; // max distance before aborting the calculation
 
   // Manhattan distance
   _.getdist = function(p, q) {
@@ -101,6 +102,8 @@ var AStar = function(ww, wh) {
         xpath = lclosed[lclosed.push(xnode) - 1];
         do {
           res.push(new Point(xpath.x * GRID_SIZE, xpath.y * GRID_SIZE));
+          // Abort the calculation if the target is too far away
+          if (res.length > _.maxpath) return [];
         } while (xpath = xpath.p);
         wcells = lclosed = lopen = [];
         res.reverse();
