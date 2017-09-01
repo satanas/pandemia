@@ -40,7 +40,6 @@ var Zombie = function(x, y) {
         _.updateRect();
 
         // Recalculate path if destination point changed
-        //console.log('px, py', $.player.x, $.player.y, 'ox, oy', _.trackingPos.x, _.trackingPos.y);
         if (_.ccount >= _.ctimer && _.trackingPos !== null && ($.player.x !== _.trackingPos.x || $.player.y !== _.trackingPos.y)) {
           _.clrPath();
         }
@@ -52,6 +51,11 @@ var Zombie = function(x, y) {
     $.x.s();
     $.x.fs('#00ff00');
     $.x.fr(p.x, p.y, _.w, _.h);
+
+    $.x.bp();
+    $.x.ss('#11c1fc');
+    $.x.arc(p.x + (_.w / 2), p.y + (_.h / 2), _.mindist, 0, 2 * PI);
+    $.x.k();
 
     _.path.forEach(function(o) {
       var z = $.cam.transformCoordinates(new Rect(o.x, o.y, 32, 32));

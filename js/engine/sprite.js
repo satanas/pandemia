@@ -1,3 +1,4 @@
+// TODO: Use rect to define sprite pos and size
 var Sprite = function(x, y, w, h) {
   var _ = this;
   _.x = x;
@@ -17,6 +18,10 @@ var Sprite = function(x, y, w, h) {
       r: _.x + _.w
     };
   };
+
+  //_.getPos = function() {
+  //  return new Point(
+  //};
 
   _.updateRect();
 };

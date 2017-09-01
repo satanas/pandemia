@@ -6,8 +6,7 @@ var MenuScene = function() {
   _.update = function() {
     $.x.clr('#fff');
     $.x.s();
-    $.x.ct('PRISON', 75, 220, 'black', 'courier');
-    $.x.ct('ESCAPE', 75, 295, '#ff7f00', 'courier');
+    $.x.ct('Pandemia', 75, 280, 'red', 'courier');
 
     $.x.r();
 

@@ -21,3 +21,7 @@ var Rect = function(x, y, w, h) {
 
   _.update();
 };
+
+Rect.fromGrid = function(o) {
+  return new Rect(o.x * GRID_SIZE, o.y * GRID_SIZE, o.w * GRID_SIZE, o.h * GRID_SIZE);
+};
