@@ -1,5 +1,6 @@
 // Based on http://gamedevelopment.tutsplus.com/tutorials/how-to-use-bsp-trees-to-generate-game-maps--gamedev-12268
 // Arguments: level number, width, height, number of enemies, item to be placed, leaf size
+// TODO: Extract grid behavior outside the level, inherit and only implement the parts relevant for this level
 var Level = function() {
   var _ = this;
   _.ww = 0;
@@ -17,17 +18,6 @@ var Level = function() {
     _.ww = w / 32;
     _.wh = h / 32;
 
-    //for (j=0; j<20; j++) {
-    //  _.map[j] = [];
-    //  for (i=0; i<20; i++) {
-    //    _.map[j][i] = "."
-    //    if (j === 0 || j === 19)
-    //      _.map[j][i] = "#"
-    //    if (i === 0 || i === 19)
-    //      _.map[j][i] = "#"
-    //  }
-    //}
-
     _.makeLeafs();
     _.root.createRooms();
 
@@ -43,7 +33,7 @@ var Level = function() {
     _.leafs.forEach(function(leaf) {
       var room = leaf.room;
       if (room !== null) {
-        _.arooms.push(room);
+        _.arooms.push(Rect.fromGrid(room));
         for (j=room.b.l; j<=room.b.r; j++) {
           for (i=room.b.t; i<=room.b.b; i++)
             _.map[j][i] = ".";
@@ -52,7 +42,7 @@ var Level = function() {
 
       leaf.halls.forEach(function(hall) {
         if (hall === null || hall === undefined) return;
-        _.arooms.push(hall);
+        //_.arooms.push(hall);
         for (j=hall.b.l; j<=hall.b.r; j++) {
           for (i=hall.b.t; i<=hall.b.b; i++)
             _.map[j][i] = ".";
@@ -60,15 +50,20 @@ var Level = function() {
       });
     });
 
-    console.log(_.arooms);
-    // Showing off
-    for (var v=0; v<_.wh; v++) {
-      var row = [];
-      for (var u=0; u<_.ww; u++) {
-        row.push(_.map[u][v]);
-      }
-      console.log(v, row.join(''));
+    // Add player
+    $.player = new Player(120, 120);
+
+    var assignedIndexes = [];
+    for (i=0; i < _.arooms.length / 4; i++) {
+      do {
+        j = rndr(0, _.arooms.length)
+      } while (assignedIndexes.indexOf(j) !== -1);
+      $.g.s.add(new Spawner(_.arooms[j], $.player));
+      assignedIndexes.push(j);
     }
+
+    // Printing map to console
+    _.print();
   };
 
   _.isWall = function(x, y) {
@@ -108,6 +103,17 @@ var Level = function() {
           }
         }
       } // end for
+    }
+  };
+
+  _.print = function() {
+    var v, u, row;
+    for (v=0; v<_.wh; v++) {
+      row = [];
+      for (u=0; u<_.ww; u++) {
+        row.push(_.map[u][v]);
+      }
+      console.log(v, row.join(''));
     }
   };
 
