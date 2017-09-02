@@ -54,7 +54,7 @@ var Level = function() {
 
       leaf.halls.forEach(function(hall) {
         if (hall === null || hall === undefined) return;
-        //_.arooms.push(hall);
+        //_.arooms.push(Rect.fromGrid(hall));
         for (j=hall.y; j<hall.y + hall.h; j++) {
           for (i=hall.x; i<hall.x + hall.w; i++)
             _.map[j][i] = ".";
@@ -63,9 +63,9 @@ var Level = function() {
     });
 
     // Load the walls
-    for (j=0; j<$.lvl.wh; j++) {
-      for (i=0; i<$.lvl.ww; i++) {
-        if ($.lvl.isWall(i, j)) {
+    for (j=0; j<_.wh; j++) {
+      for (i=0; i<_.ww; i++) {
+        if (_.isWall(i, j)) {
           $.g.walls.add(new Wall(i*32, j*32));
         }
       }
@@ -74,8 +74,9 @@ var Level = function() {
     // Add player
     // TODO: Assign player to an empty room (centered)
     $.player = new Player(120, 120);
+    $.g.i.add(new Syringe(160, 160));
 
-    // Extract the arooms from the array once they're user. Use a while loop
+    // Extract the arooms from the array once they're used. Use a while loop
     // to avoid modifying the condition for the for loop
     //var assignedIndexes = [];
     //for (i=0; i < _.arooms.length / 3; i++) {
@@ -86,9 +87,18 @@ var Level = function() {
     //  assignedIndexes.push(j);
     //}
 
+    // Load items
+    //assignedIndexes = [];
+    //for (i=0; i < _.arooms.length / 3; i++) {
+    //  do {
+    //    j = rndr(0, _.arooms.length)
+    //  } while (assignedIndexes.indexOf(j) !== -1);
+    //  _.addSpawner(_.arooms[j]);
+    //  assignedIndexes.push(j);
+    //}
+
     // Printing map to console
     _.print();
-    //console.log(_.map)
   };
 
   _.isWall = function(x, y) {
@@ -107,14 +117,12 @@ var Level = function() {
     var s = new Spawner(room, $.player),
         rect = new Rect(s.x, s.y, s.w, s.h).toGrid();
 
-    console.log('rect', rect);
     $.g.s.add(s);
-    //for (j=rect.y; j<rect.y + rect.h; j++) {
-    //  _.map[j] = [];
-    //  for (i=rect.x; i<rect.x + rect.w; i++) {
-    //    _.map[j][i] = "S"
-    //  }
-    //}
+    for (j=rect.y; j<rect.b.b; j++) {
+      for (i=rect.x; i<rect.b.r; i++) {
+        _.map[j][i] = "s"
+      }
+    }
   };
 
   _.makeLeafs = function() {

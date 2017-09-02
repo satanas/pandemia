@@ -10,6 +10,8 @@ var Player = function(x, y) {
   _.intensity = 0;
   _.humanity = 100;
   _.humanityDecay = _.humanity / (7 * 60); // 7 min
+  _.collectedItems = [];
+  _.hc = 0; // healing counter
 
   //var x = room.x + (room.w / 2) - 32,
   //    y = room.y + (room.h / 2) - 32;
@@ -18,7 +20,12 @@ var Player = function(x, y) {
   Sprite.call(_, x, y, 32, 64);
 
   _.u = function() {
-    _.humanity = iir(_.humanity - ($.e * _.humanityDecay / 1000), 0.1);
+    if (_.hc > 0) {
+      _.hc = iir(_.hc - $.e, 0);
+    } else {
+      _.humanity = iir(_.humanity - ($.e * _.humanityDecay / 1000), 0.1);
+    }
+    console.log('humanity', _.humanity, _.collectedItems);
     _.ic = iir(_.ic - $.e, 0);
     _.mxs = iir(-1.5 + (_.humanity / 10), MIN_PLAYER_SPEED);
 
@@ -78,6 +85,16 @@ var Player = function(x, y) {
         _.ic = INVINCIBILITY_TIME;
       });
     }
+
+    // Collisions with items
+    $.g.i.c(_, function(p, i) {
+      i.a = 0;
+      if (i.type === ITEMS.MEDIKIT) {
+        _.hc = MEDIKIT_DURATION;
+      } else {
+        _.collectedItems.push(i.type);
+      }
+    });
 
     _.updateRect();
   };
