@@ -27,10 +27,11 @@ var abs = Math.abs,
     rnd = Math.random,
     now = Date.now,
     PI = Math.PI,
+    // TODO: Probably is better to call this clamp and make the high value optional
     // Check if a number Is In Range
     iir = function(n, l, h) {
       if (n < l) return l;
-      if (n > h) return h;
+      if (h !== null && h !== undefined && n > h) return h;
       return n;
     },
     // Generate random integer between min (inclusive) and max (exclusive) range

@@ -1,11 +1,12 @@
 var Zombie = function(x, y) {
   var _ = this;
-  _.mindist = 400; // min distance to start chasing the player
+  _.mindist = 500; // min distance to start chasing the player
   _.path = []; // points of path
   _.ctimer = 300; // check time in ms
   _.ccount = 0; // time counter before checking new route
   _.angle = 0;
   _.trackingPos;
+  _.damage = rndr(4, 8);
 
   _.inherits(Sprite);
   _.inherits(AStar);
@@ -52,16 +53,16 @@ var Zombie = function(x, y) {
     $.x.fs('#00ff00');
     $.x.fr(p.x, p.y, _.w, _.h);
 
-    $.x.bp();
-    $.x.ss('#11c1fc');
-    $.x.arc(p.x + (_.w / 2), p.y + (_.h / 2), _.mindist, 0, 2 * PI);
-    $.x.k();
+    //$.x.bp();
+    //$.x.ss('#11c1fc');
+    //$.x.arc(p.x + (_.w / 2), p.y + (_.h / 2), _.mindist, 0, 2 * PI);
+    //$.x.k();
 
-    _.path.forEach(function(o) {
-      var z = $.cam.transformCoordinates(new Rect(o.x, o.y, 32, 32));
-      $.x.ss('#ff0000');
-      $.x.sr(z.x, z.y, 32, 32);
-    });
+    //_.path.forEach(function(o) {
+    //  var z = $.cam.transformCoordinates(new Rect(o.x, o.y, 32, 32));
+    //  $.x.ss('#ff0000');
+    //  $.x.sr(z.x, z.y, 32, 32);
+    //});
 
     $.x.r();
   };

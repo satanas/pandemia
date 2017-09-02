@@ -51,10 +51,13 @@ var Level = function() {
     });
 
     // Add player
+    // TODO: Assign player to an empty room (centered)
     $.player = new Player(120, 120);
 
+    // Extract the arooms from the array once they're user. Use a while loop
+    // to avoid modifying the condition for the for loop
     var assignedIndexes = [];
-    for (i=0; i < _.arooms.length / 4; i++) {
+    for (i=0; i < _.arooms.length / 3; i++) {
       do {
         j = rndr(0, _.arooms.length)
       } while (assignedIndexes.indexOf(j) !== -1);

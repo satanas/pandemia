@@ -1,7 +1,7 @@
 var GameScene = function() {
   var _ = this;
-  _.ww = 4096;
-  _.wh = 4096;
+  _.ww = 5120;
+  _.wh = 5120;
   _.maxBlur = 5;
   _.c = $.byId("c"); // canvas
 
@@ -15,6 +15,7 @@ var GameScene = function() {
   $.g.z = new Group(); // Zombies
   $.g.s = new Group(); // Spawners
 
+  $.ai = new AIDirector();
   $.lvl.gen(_.wh, _.wh);
   $.g.z.add(new Zombie(300, 300));
   $.cam.setWorldSize(_.ww, _.wh);
@@ -33,8 +34,10 @@ var GameScene = function() {
     $.x.clr('#ccc');
 
     // Update
+    $.g.s.u();
     $.g.z.u();
     $.player.u();
+    $.ai.u();
     $.cam.u();
 
     // Render

@@ -2,6 +2,8 @@ var Group = function() {
   var _ = this;
   _.e = []; // Group elements
 
+  // TODO: method to return number of elements in group
+
   // Add element
   _.add = function(e) {
     _.e.push(e);
