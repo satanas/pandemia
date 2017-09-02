@@ -19,6 +19,10 @@ var Rect = function(x, y, w, h) {
     //if (p.x >= _.x && p.y
   };
 
+  _.toGrid = function() {
+    return new Rect(floor(_.x / GRID_SIZE), floor(_.y / GRID_SIZE), _.w / GRID_SIZE, _.h / GRID_SIZE);
+  };
+
   _.update();
 };
 

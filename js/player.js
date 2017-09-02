@@ -1,6 +1,6 @@
 var Player = function(x, y) {
   var _ = this;
-  _.mxs = 8.50; // max speed
+  _.mxs = 0; // max speed
   _.d = 'l'; // direction
   _.s = 0.35; // speed
 
@@ -19,9 +19,8 @@ var Player = function(x, y) {
 
   _.u = function() {
     _.humanity = iir(_.humanity - ($.e * _.humanityDecay / 1000), 0.1);
-    //_.intensity += 1 / _.humanity;
     _.ic = iir(_.ic - $.e, 0);
-    console.log(_.humanity);
+    _.mxs = iir(-1.5 + (_.humanity / 10), MIN_PLAYER_SPEED);
 
     if ($.in.p(37)) {
       _.d = 'l';

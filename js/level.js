@@ -21,6 +21,18 @@ var Level = function() {
     _.makeLeafs();
     _.root.createRooms();
 
+    //        i ...
+    //        ↓
+    //      +---+---+---+---+
+    //  j → | O | O | O | O |
+    //  .   +---+---+---+---+
+    //  .   |   |   |   |   |
+    //  .   +---+---+---+---+
+    //      |   |   |   |   |
+    //      +---+---+---+---+
+    // j represents a full row, so it should iterate over the Y coord
+    // i represents the column, so it should iterate over the X coord
+    //
     // Fill map with non-walkable blocks (walls)
     for (j=0; j<_.wh; j++) {
       _.map[j] = [];
@@ -34,8 +46,8 @@ var Level = function() {
       var room = leaf.room;
       if (room !== null) {
         _.arooms.push(Rect.fromGrid(room));
-        for (j=room.b.l; j<=room.b.r; j++) {
-          for (i=room.b.t; i<=room.b.b; i++)
+        for (j=room.y; j<room.y + room.h; j++) {
+          for (i=room.x; i<room.x + room.w; i++)
             _.map[j][i] = ".";
         }
       }
@@ -43,12 +55,21 @@ var Level = function() {
       leaf.halls.forEach(function(hall) {
         if (hall === null || hall === undefined) return;
         //_.arooms.push(hall);
-        for (j=hall.b.l; j<=hall.b.r; j++) {
-          for (i=hall.b.t; i<=hall.b.b; i++)
+        for (j=hall.y; j<hall.y + hall.h; j++) {
+          for (i=hall.x; i<hall.x + hall.w; i++)
             _.map[j][i] = ".";
         }
       });
     });
+
+    // Load the walls
+    for (j=0; j<$.lvl.wh; j++) {
+      for (i=0; i<$.lvl.ww; i++) {
+        if ($.lvl.isWall(i, j)) {
+          $.g.walls.add(new Wall(i*32, j*32));
+        }
+      }
+    }
 
     // Add player
     // TODO: Assign player to an empty room (centered)
@@ -56,21 +77,22 @@ var Level = function() {
 
     // Extract the arooms from the array once they're user. Use a while loop
     // to avoid modifying the condition for the for loop
-    var assignedIndexes = [];
-    for (i=0; i < _.arooms.length / 3; i++) {
-      do {
-        j = rndr(0, _.arooms.length)
-      } while (assignedIndexes.indexOf(j) !== -1);
-      $.g.s.add(new Spawner(_.arooms[j], $.player));
-      assignedIndexes.push(j);
-    }
+    //var assignedIndexes = [];
+    //for (i=0; i < _.arooms.length / 3; i++) {
+    //  do {
+    //    j = rndr(0, _.arooms.length)
+    //  } while (assignedIndexes.indexOf(j) !== -1);
+    //  _.addSpawner(_.arooms[j]);
+    //  assignedIndexes.push(j);
+    //}
 
     // Printing map to console
     _.print();
+    //console.log(_.map)
   };
 
   _.isWall = function(x, y) {
-    return (_.map[x][y] === '#');
+    return (_.map[y][x] === '#');
   }
 
   _.getWorldSize = function() {
@@ -79,6 +101,20 @@ var Level = function() {
 
   _.length = function() {
     return _.ww * _.wh;
+  };
+
+  _.addSpawner = function(room) {
+    var s = new Spawner(room, $.player),
+        rect = new Rect(s.x, s.y, s.w, s.h).toGrid();
+
+    console.log('rect', rect);
+    $.g.s.add(s);
+    //for (j=rect.y; j<rect.y + rect.h; j++) {
+    //  _.map[j] = [];
+    //  for (i=rect.x; i<rect.x + rect.w; i++) {
+    //    _.map[j][i] = "S"
+    //  }
+    //}
   };
 
   _.makeLeafs = function() {
@@ -114,7 +150,7 @@ var Level = function() {
     for (v=0; v<_.wh; v++) {
       row = [];
       for (u=0; u<_.ww; u++) {
-        row.push(_.map[u][v]);
+        row.push(_.map[v][u]);
       }
       console.log(v, row.join(''));
     }

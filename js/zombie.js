@@ -6,8 +6,10 @@ var Zombie = function(x, y) {
   _.ccount = 0; // time counter before checking new route
   _.angle = 0;
   _.trackingPos;
+  _.s = (rnd() * 0.5) + MIN_ZOMBIE_SPEED;
   _.damage = rndr(4, 8);
 
+  console.log('speed', _.s, 'damage', _.damage);
   _.inherits(Sprite);
   _.inherits(AStar);
   Sprite.call(_, x, y, 32, 32);
@@ -33,7 +35,7 @@ var Zombie = function(x, y) {
         _.path.shift();
       } else {
         _.angle = atan2(nextPos.y - _.y, nextPos.x - _.x);
-        const appliedDist = min(dist, ZOMBIE_SPEED);
+        const appliedDist = min(dist, _.s);
 
         _.x += appliedDist * cos(_.angle);
         _.y += appliedDist * sin(_.angle);

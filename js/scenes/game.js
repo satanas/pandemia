@@ -16,19 +16,9 @@ var GameScene = function() {
   $.g.s = new Group(); // Spawners
 
   $.ai = new AIDirector();
-  $.lvl.gen(_.wh, _.wh);
-  $.g.z.add(new Zombie(300, 300));
+  $.lvl.gen(_.wh, _.wh, Wall);
   $.cam.setWorldSize(_.ww, _.wh);
   $.cam.setTarget($.player);
-
-  // Load the walls
-  for (var j=0; j<$.lvl.wh; j++) {
-    for (var i=0; i<$.lvl.ww; i++) {
-      if ($.lvl.isWall(j, i)) {
-        $.g.walls.add(new Wall(j*32, i*32, 0));
-      }
-    }
-  }
 
   _.update = function() {
     $.x.clr('#ccc');
@@ -39,6 +29,7 @@ var GameScene = function() {
     $.player.u();
     $.ai.u();
     $.cam.u();
+    _.losingHumanityEffects();
 
     // Render
     $.g.walls.r();
@@ -47,10 +38,16 @@ var GameScene = function() {
     $.g.z.r();
   };
 
-  _.applyFilter = function(g, b) {
-    b = b * _.maxBlur / 100;
-    _.c.style.filter = "grayscale(" + g + "%) blur(" + b + "px)";
-  };
+  _.losingHumanityEffects = function() {
+    var h = $.player.humanity,
+        g = 0,
+        b = 0;
 
-  //_.applyFilter(50, 100);
+    g = iir((100 - h) * 2, 0, 100);
+    if (h <= 70 && h > 0) {
+      b = iir((70 - h) * 2, 0, 100);
+    }
+    //console.log(h, g, b);
+    _.c.style.filter = "grayscale(" + g + "%) blur(" + (b * _.maxBlur / 100) + "px)";
+  };
 }
