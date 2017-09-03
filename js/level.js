@@ -74,7 +74,7 @@ var Level = function() {
     // Add player
     // TODO: Assign player to an empty room (centered)
     $.player = new Player(120, 120);
-    $.g.i.add(new Syringe(160, 160));
+    $.g.i.add(new Antigens(160, 160));
 
     // Extract the arooms from the array once they're used. Use a while loop
     // to avoid modifying the condition for the for loop
