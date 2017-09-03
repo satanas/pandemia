@@ -20,6 +20,7 @@ var GameScene = function() {
   $.lvl.gen(_.wh, _.wh, Wall);
   $.cam.setWorldSize(_.ww, _.wh);
   $.cam.setTarget($.player);
+  $.hud = new HUD();
 
   _.update = function() {
     $.x.clr('#ccc');
@@ -31,6 +32,7 @@ var GameScene = function() {
     $.player.u();
     $.ai.u();
     $.cam.u();
+    $.hud.u();
     _.losingHumanityEffects();
 
     // Render
@@ -39,6 +41,7 @@ var GameScene = function() {
     $.g.i.r();
     $.cam.r($.player);
     $.g.z.r();
+    $.hud.r();
   };
 
   _.losingHumanityEffects = function() {

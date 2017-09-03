@@ -295,6 +295,13 @@ var Text = function() {
        [  1, 1, 1,  , 1 ],
        [  1,  , 1,  , 1 ],
        [  1, 1, 1, 1, 1 ]
+    ],
+    '-': [
+       [  ,  ,  ,  ,  ],
+       [  ,  ,  ,  ,  ],
+       [  , 1, 1, 1,  ],
+       [  ,  ,  ,  ,  ],
+       [  ,  ,  ,  ,  ],
     ]
   };
 
@@ -330,18 +337,20 @@ var Text = function() {
   //   snap: round to the lower integer. Default: false
   //   scale: false
   _.draw = function(opt) {
+    opt.color = opt.color || '#000';
+    opt.x = opt.x || 0;
+    opt.y = opt.y || 0;
+    opt.scale = opt.scale || 1;
+    opt.vspacing = opt.vspacing || 1;
+    opt.hspacing = opt.hspacing || 1;
+
     var letterSize = _.size * opt.scale,
         lines = opt.text.split("\n"),
         linesCopy = lines.slice(0),
         lineCount = lines.length,
         longestLine = linesCopy.sort( function ( a, b ) { return b.length - a.length; } )[ 0 ],
         textWidth = ( longestLine.length * letterSize ) + ( ( longestLine.length - 1 ) * opt.hspacing ),
-        textHeight = ( lineCount * letterSize ) + ( ( lineCount - 1 ) * opt.vspacing )
-        opt.color = opt.color || '#000',
-        opt.x = opt.x || 0
-        opt.y = opt.y || 0
-        opt.vspacing = opt.vspacing || 1,
-        opt.hspacing = opt.hspacing || 1;
+        textHeight = ( lineCount * letterSize ) + ( ( lineCount - 1 ) * opt.vspacing );
 
     for (var i = 0; i < lineCount; i++) {
       var line = lines[i],
@@ -366,6 +375,16 @@ var Text = function() {
         y = Math.floor(y);
       }
 
+      if (opt.shadow) {
+        _.drawLine({
+          x: x + opt.shadow.value,
+          y: y + opt.shadow.value,
+          text: line.toUpperCase(),
+          hspacing: opt.hspacing,
+          scale: opt.scale,
+          color: opt.shadow.color
+        });
+      }
       _.drawLine({
         x: x,
         y: y,
@@ -375,5 +394,11 @@ var Text = function() {
         color: opt.color
       });
     }
+
+    return {
+      lines: lines,
+      width: textWidth,
+      height: textHeight
+    };
   };
 };

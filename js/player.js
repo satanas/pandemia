@@ -25,7 +25,7 @@ var Player = function(x, y) {
     } else {
       _.humanity = iir(_.humanity - ($.e * _.humanityDecay / 1000), 0.1);
     }
-    console.log('humanity', _.humanity, _.collectedItems);
+    //console.log('humanity', _.humanity, _.collectedItems);
     _.ic = iir(_.ic - $.e, 0);
     _.mxs = iir(-1.5 + (_.humanity / 10), MIN_PLAYER_SPEED);
 
@@ -107,5 +107,9 @@ var Player = function(x, y) {
       $.x.fs('#ff0000');
     $.x.fr(p.x, p.y, _.w, _.h);
     $.x.r();
+  }
+
+  _.has= function(item) {
+    return _.collectedItems.indexOf(item) >= 0;
   }
 };

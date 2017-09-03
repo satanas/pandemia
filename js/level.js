@@ -78,14 +78,14 @@ var Level = function() {
 
     // Extract the arooms from the array once they're used. Use a while loop
     // to avoid modifying the condition for the for loop
-    //var assignedIndexes = [];
-    //for (i=0; i < _.arooms.length / 3; i++) {
-    //  do {
-    //    j = rndr(0, _.arooms.length)
-    //  } while (assignedIndexes.indexOf(j) !== -1);
-    //  _.addSpawner(_.arooms[j]);
-    //  assignedIndexes.push(j);
-    //}
+    var assignedIndexes = [];
+    for (i=0; i < _.arooms.length / 3; i++) {
+      do {
+        j = rndr(0, _.arooms.length)
+      } while (assignedIndexes.indexOf(j) !== -1);
+      _.addSpawner(_.arooms[j]);
+      assignedIndexes.push(j);
+    }
 
     // Load items
     //assignedIndexes = [];
