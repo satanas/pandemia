@@ -22,3 +22,5 @@ INPUT = {
   DOWN: 83,   // S
   ENTER: 13,  // Enter
 }
+
+// ZQSD for frenchies

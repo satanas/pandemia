@@ -12,10 +12,12 @@ var Player = function(x, y) {
   _.humanityDecay = _.humanity / (7 * 60); // 7 min
   _.collectedItems = [];
   _.hc = 0; // healing counter
+  _.shootingAngle = 0;
 
   _.sex = 'm';
   _.skinColor = '#ffe499';
   _.hairColor = '#795548';
+  _.aim = new Point(0, 0);
 
   //var x = room.x + (room.w / 2) - 32,
   //    y = room.y + (room.h / 2) - 32;
@@ -160,6 +162,14 @@ var Player = function(x, y) {
     } else if (_.d === 'l') {
     } else if (_.d === 'r') {
     }
+
+    // debug
+    var c = _.getOffsetCenter(p),
+        mag = 100
+    $.x.ss('red');
+    $.x.mv(c.x, c.y);
+    $.x.lt(c.x + (mag * cos(_.shootingAngle)), c.y + (mag * sin(_.shootingAngle)));
+    $.x.k();
     $.x.r();
   }
 
@@ -167,27 +177,35 @@ var Player = function(x, y) {
     return _.collectedItems.indexOf(item) >= 0;
   }
 
+  _.getOffsetCenter = function(p) {
+    // p is the transformed point of the sprite
+    return new Point(p.x + (_.w * _.scaleX / 2), p.y + (_.h * _.scaleY / 2));
+  }
+
   _.updateAim = function(e) {
     var rect = $.cv.getBoundingClientRect(),
-        scaleX = $.cv.width / rect.width,
-        scaleY = $.cv.height / rect.height;
-    _.aimX = (e.clientX - rect.left) * scaleX;
-    _.aimY = (e.clientY - rect.top) * scaleY;
+        p = $.cam.transformPointCoordinates(_.x, _.y), // transform coordinates to viewport coords
+        c = _.getOffsetCenter(p);
+
+    _.scaleX = $.cv.width / rect.width;
+    _.scaleY = $.cv.height / rect.height;
+
+    _.aim.x = (e.clientX - rect.left) * _.scaleX;
+    _.aim.y = (e.clientY - rect.top) * _.scaleY;
+    _.shootingAngle = atan2((_.aim.y - c.y), (_.aim.x - c.x));
   }
 
   _.drawAim = function() {
-    if (_.aimX === undefined || _.aimY === undefined) return;
-
     $.x.s();
     $.x.bp();
     $.x.fs('red');
-    $.x.arc(_.aimX, _.aimY, 2, 0, 2 * PI);
+    $.x.arc(_.aim.x, _.aim.y, 2, 0, 2 * PI);
     $.x.f();
     $.x.cp();
-    $.x.fr(_.aimX, _.aimY - 14, 1, 8);
-    $.x.fr(_.aimX, _.aimY + 7, 1, 8);
-    $.x.fr(_.aimX - 14, _.aimY, 8, 1);
-    $.x.fr(_.aimX + 7, _.aimY, 8, 1);
+    $.x.fr(_.aim.x, _.aim.y - 14, 1, 8);
+    $.x.fr(_.aim.x, _.aim.y + 7, 1, 8);
+    $.x.fr(_.aim.x - 14, _.aim.y, 8, 1);
+    $.x.fr(_.aim.x + 7, _.aim.y, 8, 1);
     $.x.r();
   }
 
