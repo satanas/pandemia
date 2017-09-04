@@ -6,18 +6,22 @@ var Zombie = function(x, y) {
   _.ccount = 0; // time counter before checking new route
   _.angle = 0;
   _.trackingPos;
+  _.bcount = 0; // biting counter
   _.s = (rnd() * 0.5) + MIN_ZOMBIE_SPEED;
-  _.damage = rndr(4, 8);
+ // _.damage = rndr(4, 8);
 
-  console.log('speed', _.s, 'damage', _.damage);
   _.inherits(Sprite);
   _.inherits(AStar);
-  Sprite.call(_, x, y, 32, 32);
+  Sprite.call(_, x, y, 64, 64);
   AStar.call(_, $.lvl.ww, $.lvl.wh);
 
   _.u = function() {
     // TODO: Move the seek behavior to a separated file inside ai folder
     _.ccount += $.e;
+    if (_.bcount > 0) {
+      _.bcount = iir(_.bcount - $.e, 0);
+      return
+    }
     var d = _.getdist(_, $.player); // distance in pixels between zombie and player
 
     // The zombie doesn't have a path to walk
@@ -68,6 +72,11 @@ var Zombie = function(x, y) {
 
     $.x.r();
   };
+
+  _.bite = function() {
+    _.bcount = rndr(MIN_BITING_DURATION, MIN_BITING_DURATION + 200);
+    return rndr(4, 8);
+  }
 
   _.clrPath = function() {
     _.path.splice(1, _.path.length);

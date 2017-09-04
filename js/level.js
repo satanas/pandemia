@@ -15,8 +15,8 @@ var Level = function() {
 
   _.gen = function(w, h) {
     var i = 0, j = 0;
-    _.ww = w / 32;
-    _.wh = h / 32;
+    _.ww = w / GRID_SIZE;
+    _.wh = h / GRID_SIZE;
 
     _.makeLeafs();
     _.root.createRooms();
@@ -66,7 +66,7 @@ var Level = function() {
     for (j=0; j<_.wh; j++) {
       for (i=0; i<_.ww; i++) {
         if (_.isWall(i, j)) {
-          $.g.walls.add(new Wall(i*32, j*32));
+          $.g.walls.add(new Wall(i * GRID_SIZE, j * GRID_SIZE));
         }
       }
     }
@@ -74,7 +74,7 @@ var Level = function() {
     // Add player
     // TODO: Assign player to an empty room (centered)
     $.player = new Player(120, 120);
-    $.g.i.add(new Antigens(160, 160));
+    $.g.i.add(new Antigens(320, 320));
 
     // Extract the arooms from the array once they're used. Use a while loop
     // to avoid modifying the condition for the for loop
@@ -174,7 +174,7 @@ var Leaf = function(x, y, w, h) {
   _.h = h;
   _.lc = null; // left child
   _.rc = null; //right child
-  _.min = 10; // min leaf size
+  _.min = 20; // min leaf size
   _.room = null;
   _.halls = [];
 
@@ -268,7 +268,7 @@ var Leaf = function(x, y, w, h) {
         p2 = new Point(rndr(rRoom.b.l + 1, rRoom.b.r - 2), rndr(rRoom.b.t + 1, rRoom.b.b - 2)),
         w = p2.x - p1.x,
         h = p2.y - p1.y,
-        hallHeight = 4;
+        hallHeight = 6;
 
     if (w < 0) {
       if (h < 0) {

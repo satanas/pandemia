@@ -54,6 +54,8 @@ var Bottle = function(x, y) {
 
   _.r = function(p) {
     _.draw(p.x, p.y, _.anim.g());
+
+    $.x.setTransform(1, 0, 0, 1, 0, 0);
   }
 
   _.draw = function(x, y, f, bw) {

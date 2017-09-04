@@ -34,6 +34,7 @@ $.init = function(w, h) {
   $.x.di = $.x.drawImage;
   $.x.sc = $.x.scale;
   $.x.bp = $.x.beginPath;
+  $.x.cp = $.x.closePath;
   $.x.mv = $.x.moveTo;
   $.x.lt = $.x.lineTo;
   $.x.e = $.x.ellipse;

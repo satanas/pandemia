@@ -1,7 +1,7 @@
 var GameScene = function() {
   var _ = this;
-  _.ww = 5120;
-  _.wh = 5120;
+  _.ww = 6400;
+  _.wh = 6400;
   _.maxBlur = 5;
   _.c = $.byId("c"); // canvas
 
@@ -20,6 +20,7 @@ var GameScene = function() {
   $.lvl.gen(_.wh, _.wh, Wall);
   $.cam.setWorldSize(_.ww, _.wh);
   $.cam.setTarget($.player);
+  $.ss = new ScreenShake();
   $.hud = new HUD();
 
   _.update = function() {
@@ -33,6 +34,7 @@ var GameScene = function() {
     $.ai.u();
     $.cam.u();
     $.hud.u();
+    $.ss.u();
     _.losingHumanityEffects();
 
     // Render
@@ -41,6 +43,7 @@ var GameScene = function() {
     $.g.i.r();
     $.cam.r($.player);
     $.g.z.r();
+    $.player.drawAim();
     $.hud.r();
   };
 
