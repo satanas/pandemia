@@ -1,7 +1,7 @@
 var Player = function(x, y) {
   var _ = this;
   _.mxs = 0; // max speed
-  _.d = 'l'; // direction
+  _.d = DIR.LEFT; // direction
   _.s = 0.35; // speed
 
   _.dx = 0;
@@ -12,6 +12,7 @@ var Player = function(x, y) {
   _.humanityDecay = _.humanity / (7 * 60); // 7 min
   _.collectedItems = [];
   _.hc = 0; // healing counter
+  _.vaccine = 0;
   _.shootingAngle = 0;
 
   _.sex = 'm';
@@ -33,7 +34,6 @@ var Player = function(x, y) {
     }
     //console.log('humanity', _.humanity, _.collectedItems);
     _.mxs = iir(-1.5 + (_.humanity / 10), MIN_PLAYER_SPEED);
-
     _.shotDelay = iir(_.shotDelay - $.e, 0);
 
     if (_.ic > 0) {
@@ -43,18 +43,18 @@ var Player = function(x, y) {
     }
 
     if ($.in.p(INPUT.LEFT)) {
-      _.d = 'l';
+      _.d = DIR.LEFT;
       _.dx -= _.s;
     } else if ($.in.p(INPUT.RIGHT)) {
-      _.d = 'r';
+      _.d = DIR.RIGHT;
       _.dx += _.s;
     }
 
     if ($.in.p(INPUT.UP)) {
-      _.d = 'u';
+      _.d = DIR.UP;
       _.dy -= _.s;
     } else if ($.in.p(INPUT.DOWN)) {
-      _.d = 'd';
+      _.d = DIR.DOWN;
       _.dy += _.s;
     }
 
@@ -94,6 +94,7 @@ var Player = function(x, y) {
       $.g.z.c(_, function(p, z) {
         _.humanity -= z.bite();
         _.ic = INVINCIBILITY_TIME;
+        _.dropVaccine();
         $.ss.shake(1.8, 200)
       });
     }
@@ -108,9 +109,21 @@ var Player = function(x, y) {
       }
     });
 
+    // If the player doesn't have the vaccine, we check for collisions with the vaccine box
+    if (!_.vaccine) {
+      $.g.boxes.c(_, function(p, b) {
+        if (b.isPickable()) {
+          _.vaccine = b;
+        }
+      });
+    }
+    if (_.vaccine) {
+      _.vaccine.x = _.x + 16;
+      _.vaccine.y = _.y - 34;
+    }
+
     _.updateRect();
 
-    console.log(_.shotDelay, $.g.bullets.e.length);
     if (_.shooting && !_.shotDelay) {
       _.shoot();
     }
@@ -118,6 +131,9 @@ var Player = function(x, y) {
 
   _.r = function(p) {
     $.x.s();
+    // debug
+    $.x.ss('red');
+    $.x.sr(p.x, p.y, _.w, _.h);
     //if (_.ic !== 0)
     //  $.x.fs('#000000');
     //else
@@ -133,7 +149,7 @@ var Player = function(x, y) {
     $.x.fr(p.x + 22, p.y + 59, 9, 6);
     $.x.fr(p.x + 35, p.y + 59, 9, 6);
 
-    if (_.d === 'd') {
+    if (_.d === DIR.DOWN) {
       // T-shirt
       $.x.fs('#2196f3');
       $.x.fr(p.x + 29, p.y + 25, 8, 24);
@@ -156,7 +172,7 @@ var Player = function(x, y) {
         $.x.fr(p.x + 20, p.y + 1, 26, 4);
         $.x.fr(p.x + 46, p.y + 5, 4, 15);
       }
-    } else if (_.d === 'u') {
+    } else if (_.d === DIR.UP) {
       $.x.fs(_.hairColor);
       if (_.sex === 'm') {
         $.x.fr(p.x + 16, p.y + 5, 34, 15);
@@ -166,8 +182,8 @@ var Player = function(x, y) {
       $.x.fs(_.skinColor);
       $.x.fr(p.x + 16, p.y + 42, 4, 4);
       $.x.fr(p.x + 46, p.y + 42, 4, 4);
-    } else if (_.d === 'l') {
-    } else if (_.d === 'r') {
+    } else if (_.d === DIR.LEFT) {
+    } else if (_.d === DIR.RIGHT) {
     }
 
     // debug
@@ -185,9 +201,17 @@ var Player = function(x, y) {
   }
 
   _.shoot = function() {
+    _.dropVaccine();
     _.shotDelay = SHOT_DELAY;
     var c = _.getCenter();
     $.g.bullets.add(new Bullet(c.x, c.y, _.shootingAngle));
+  }
+
+  _.dropVaccine = function() {
+    if (_.vaccine) {
+      _.vaccine.drop(_);
+      _.vaccine = 0;
+    }
   }
 
   _.getCenter = function() {

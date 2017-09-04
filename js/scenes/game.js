@@ -16,6 +16,7 @@ var GameScene = function() {
   $.g.s = new Group(); // Spawners
   $.g.i = new Group(); // Items
   $.g.bullets = new Group(); // Bullets
+  $.g.boxes = new Group(); // Pushables boxes
 
   $.ai = new AIDirector();
   $.lvl.gen(_.wh, _.wh, Wall);
@@ -33,6 +34,7 @@ var GameScene = function() {
     $.g.i.u();
     $.g.bullets.u();
     $.player.u();
+    $.g.boxes.u();
     $.ai.u();
     $.cam.u();
     $.hud.u();
@@ -45,6 +47,7 @@ var GameScene = function() {
     $.g.i.r();
     $.cam.r($.player);
     $.g.z.r();
+    $.g.boxes.r();
     $.g.bullets.r();
     $.player.drawAim();
     $.hud.r();

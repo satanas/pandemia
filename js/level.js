@@ -71,14 +71,23 @@ var Level = function() {
       }
     }
 
-    // Add player
-    // TODO: Assign player to an empty room (centered)
-    $.player = new Player(120, 120);
-    $.g.i.add(new Antigens(320, 320));
+    var assignedIndexes = [], cx, cy, px, py;
+    // Add player and vaccine
+    i = rndr(0, _.arooms.length)
+    cx = _.arooms[i].x + (_.arooms[i].w / 2);
+    cy = _.arooms[i].y + (_.arooms[i].h / 2);
+    $.g.boxes.add(new Vaccine(cx, cy));
+    do {
+      px = rndr(_.arooms[i].x, _.arooms[i].b.r);
+    } while (px === cx);
+    do {
+      py = rndr(_.arooms[i].y, _.arooms[i].b.b);
+    } while (py === cy);
+    $.player = new Player(px, py);
+    assignedIndexes.push(i);
 
     // Extract the arooms from the array once they're used. Use a while loop
     // to avoid modifying the condition for the for loop
-    var assignedIndexes = [];
     for (i=0; i < _.arooms.length / 3; i++) {
       do {
         j = rndr(0, _.arooms.length)

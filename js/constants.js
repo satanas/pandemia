@@ -23,5 +23,12 @@ INPUT = {
   ENTER: 13,  // Enter
 }
 SHOT_DELAY = 50;
+DIR = {
+  LEFT: 'l',
+  RIGHT: 'r',
+  UP: 'u',
+  DOWN: 'd'
+}
+VACCINE_PICKUP_DELAY = 1500; // ms
 
 // ZQSD for frenchies

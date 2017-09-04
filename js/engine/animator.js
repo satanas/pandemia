@@ -5,7 +5,7 @@
 var Animator = function(arr, d, f) {
   var _ = this;
   _.arr = arr; // Array of images
-  _.d = d; // Frame duration
+  _.d = d || 250; // Frame duration
   _.c = 0; // Animation counter
   _.f = f || 0; // Frame index
   _.cb = 0; // Callback to be called on every frame change
