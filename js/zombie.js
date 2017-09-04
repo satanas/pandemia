@@ -8,6 +8,7 @@ var Zombie = function(x, y) {
   _.trackingPos;
   _.bcount = 0; // biting counter
   _.s = (rnd() * 0.5) + MIN_ZOMBIE_SPEED;
+  _.health = rndr(4, 8);
  // _.damage = rndr(4, 8);
 
   _.inherits(Sprite);
@@ -52,6 +53,13 @@ var Zombie = function(x, y) {
         }
       }
     }
+
+    // Collisions with bullets
+    $.g.bullets.c(_, function(p, b) {
+      b.a = 0;
+      _.health -= 1;
+      if (_.health <= 0) _.a = 0;
+    });
   };
 
   _.r = function(p) {

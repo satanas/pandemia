@@ -15,6 +15,7 @@ var GameScene = function() {
   $.g.z = new Group(); // Zombies
   $.g.s = new Group(); // Spawners
   $.g.i = new Group(); // Items
+  $.g.bullets = new Group(); // Bullets
 
   $.ai = new AIDirector();
   $.lvl.gen(_.wh, _.wh, Wall);
@@ -30,6 +31,7 @@ var GameScene = function() {
     $.g.s.u();
     $.g.z.u();
     $.g.i.u();
+    $.g.bullets.u();
     $.player.u();
     $.ai.u();
     $.cam.u();
@@ -43,6 +45,7 @@ var GameScene = function() {
     $.g.i.r();
     $.cam.r($.player);
     $.g.z.r();
+    $.g.bullets.r();
     $.player.drawAim();
     $.hud.r();
   };

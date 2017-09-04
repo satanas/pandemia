@@ -22,5 +22,6 @@ INPUT = {
   DOWN: 83,   // S
   ENTER: 13,  // Enter
 }
+SHOT_DELAY = 50;
 
 // ZQSD for frenchies

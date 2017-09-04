@@ -34,6 +34,8 @@ var Player = function(x, y) {
     //console.log('humanity', _.humanity, _.collectedItems);
     _.mxs = iir(-1.5 + (_.humanity / 10), MIN_PLAYER_SPEED);
 
+    _.shotDelay = iir(_.shotDelay - $.e, 0);
+
     if (_.ic > 0) {
       _.ic = iir(_.ic - $.e, 0);
       // Slow down 20% if recovering
@@ -107,6 +109,11 @@ var Player = function(x, y) {
     });
 
     _.updateRect();
+
+    console.log(_.shotDelay, $.g.bullets.e.length);
+    if (_.shooting && !_.shotDelay) {
+      _.shoot();
+    }
   };
 
   _.r = function(p) {
@@ -173,8 +180,19 @@ var Player = function(x, y) {
     $.x.r();
   }
 
-  _.has= function(item) {
+  _.has = function(item) {
     return _.collectedItems.indexOf(item) >= 0;
+  }
+
+  _.shoot = function() {
+    _.shotDelay = SHOT_DELAY;
+    var c = _.getCenter();
+    $.g.bullets.add(new Bullet(c.x, c.y, _.shootingAngle));
+  }
+
+  _.getCenter = function() {
+    // p is the transformed point of the sprite
+    return new Point(_.x + (_.w / 2), _.y + (_.h / 2));
   }
 
   _.getOffsetCenter = function(p) {
@@ -212,4 +230,12 @@ var Player = function(x, y) {
   $.cv.addEventListener('mousemove', function(e) {
     _.updateAim(e);
   }, false);
+
+  $.cv.addEventListener('mousedown', function(e) {
+    _.shooting = 1;
+  });
+
+  $.cv.addEventListener('mouseup', function(e) {
+    _.shooting = 0;
+  });
 };
