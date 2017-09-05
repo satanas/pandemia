@@ -4,10 +4,11 @@ var Bullet = function(cx, cy, angle, type) {
   _.type = type;
   _.speed = _.type.SPEED;
   _.damage = _.type.DAM;
-  _.lifetime = 400; // only valid for flame
+  _.lifetime = 500; // only valid for flame
   if (_.type.ID === WEAPONS.FLAME.ID) {
-    _.angle += (rnde([-15, -10, 0, 10, 15]) * PI / 180);
-    _.xdecay = rndr(50, 80); // per second
+    _.angle += rndr(-8, 8) * PI / 180;
+    _.angleVar = _.angle + (rnde([-20, -15, 0, 15, 20]) * PI / 180);
+    _.xdecay = 20; //rndr(50, 80); // per second
     _.color = 7;
     _.w = rndr(40, 60);
   }
@@ -33,9 +34,16 @@ var Bullet = function(cx, cy, angle, type) {
     _.updateRect();
 
     if (_.type.ID === WEAPONS.FLAME.ID) {
-      //_.w = iir(_.w - ($.e * _.xdecay / 1000), 1);
+      _.w = iir(_.w - ($.e * _.xdecay / 1000), 1);
       _.lifetime = iir(_.lifetime - $.e, 0);
       _.color = iir(_.color + ($.e / 12), 7, 22);
+      if (_.lifetime < 400 && _.angleVar) {
+        _.angle = _.angleVar;
+        _.angleVar = 0;
+      }
+      if (_.lifetime < 200 && _.damage) {
+        _.damage = 0;
+      }
     }
   }
 
