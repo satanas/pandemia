@@ -22,12 +22,33 @@ INPUT = {
   DOWN: 83,   // S
   ENTER: 13,  // Enter
 }
-SHOT_DELAY = 50;
 DIR = {
   LEFT: 'l',
   RIGHT: 'r',
   UP: 'u',
   DOWN: 'd'
+}
+WEAPONS= {
+  PISTOL: {
+    ID: 'PISTOL',
+    DELAY: 50,
+    SPEED: 50,
+    SIZE: 10,
+    DAM: 1
+  },
+  SHOTGUN: {
+    ID: 'SHOTGUN',
+    DELAY: 300,
+    SPEED: 30,
+    SIZE: 16,
+    DAM: 2
+  },
+  FLAME: {
+    ID: 'FLAME',
+    DELAY: 40,
+    SPEED: 7,
+    SIZE: 60
+  }
 }
 VACCINE_PICKUP_DELAY = 1500; // ms
 

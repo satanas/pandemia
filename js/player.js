@@ -13,12 +13,13 @@ var Player = function(x, y) {
   _.collectedItems = [];
   _.hc = 0; // healing counter
   _.vaccine = 0;
-  _.shootingAngle = 0;
+  _.angle = 0;
 
   _.sex = 'm';
   _.skinColor = '#ffe499';
   _.hairColor = '#795548';
   _.aim = new Point(0, 0);
+  _.weapon = WEAPONS.FLAME;
 
   //var x = room.x + (room.w / 2) - 32,
   //    y = room.y + (room.h / 2) - 32;
@@ -127,6 +128,7 @@ var Player = function(x, y) {
     if (_.shooting && !_.shotDelay) {
       _.shoot();
     }
+    //console.log('bullets', $.g.bullets.e.length);
   };
 
   _.r = function(p) {
@@ -191,7 +193,7 @@ var Player = function(x, y) {
         mag = 100
     $.x.ss('red');
     $.x.mv(c.x, c.y);
-    $.x.lt(c.x + (mag * cos(_.shootingAngle)), c.y + (mag * sin(_.shootingAngle)));
+    $.x.lt(c.x + (mag * cos(_.angle)), c.y + (mag * sin(_.angle)));
     $.x.k();
     $.x.r();
   }
@@ -202,9 +204,13 @@ var Player = function(x, y) {
 
   _.shoot = function() {
     _.dropVaccine();
-    _.shotDelay = SHOT_DELAY;
+    _.shotDelay = _.weapon.DELAY;
     var c = _.getCenter();
-    $.g.bullets.add(new Bullet(c.x, c.y, _.shootingAngle));
+    $.g.bullets.add(new Bullet(c.x, c.y, _.angle, _.weapon));
+    if (_.weapon.ID === WEAPONS.SHOTGUN.ID) {
+      $.g.bullets.add(new Bullet(c.x, c.y, _.angle + (rndr(4, 15) * PI / 180), _.weapon));
+      $.g.bullets.add(new Bullet(c.x, c.y, _.angle - (rndr(4, 15) * PI / 180), _.weapon));
+    }
   }
 
   _.dropVaccine = function() {
@@ -234,7 +240,7 @@ var Player = function(x, y) {
 
     _.aim.x = (e.clientX - rect.left) * _.scaleX;
     _.aim.y = (e.clientY - rect.top) * _.scaleY;
-    _.shootingAngle = atan2((_.aim.y - c.y), (_.aim.x - c.x));
+    _.angle = atan2((_.aim.y - c.y), (_.aim.x - c.x));
   }
 
   _.drawAim = function() {

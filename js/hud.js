@@ -8,10 +8,22 @@ var HUD = function() {
   };
 
   _.r = function() {
-    var o = $.text.draw({
+    var weapon, o = $.text.draw({
       text: 'Humanity:',
       x: 20,
       y: 20,
+      color: '#fff',
+      scale: 2,
+      shadow: {
+        value: 1,
+        color: '#000'
+      }
+    });
+
+    $.text.draw({
+      text: $.player.weapon.ID,
+      y: 85,
+      halign: 'center',
       color: '#fff',
       scale: 2,
       shadow: {
@@ -25,13 +37,15 @@ var HUD = function() {
     $.x.fr(o.width + 25, 15, 200, 20);
     $.x.fs('#ff0000');
     $.x.fr(o.width + 25, 15, _.barWidth, 20);
+    if ($.player.vaccine) {
+      $.x.fs('rgba(0,0,0,0.6)');
+      $.x.fr(($.vw - 64) / 2, 15, 64, 64);
+    }
+    $.x.ss('#fff');
+    $.x.lineWidth = 4
+    $.x.sr(($.vw - 64) / 2, 15, 64, 64);
     $.x.r();
 
-    _.drawIcon(650, 10, ITEMS.SYRINGE, 'Syringe', 640, !$.player.has(ITEMS.SYRINGE));
-    _.drawIcon(720, 10, ITEMS.ANTIGENS, 'Antigen', 710, !$.player.has(ITEMS.ANTIGENS));
-    _.drawIcon(790, 10, ITEMS.STABILIZERS, 'MgSO4', 790, !$.player.has(ITEMS.STABILIZERS));
-    _.drawIcon(860, 10, ITEMS.ANTIBIOTICS, 'Anti-B', 855, !$.player.has(ITEMS.ANTIBIOTICS));
-    _.drawIcon(930, 10, ITEMS.ADJUVANTS, 'AI-13', 928, !$.player.has(ITEMS.ADJUVANTS));
   }
 
   _.drawIcon = function(x, y, type, text, tx, bw) {
