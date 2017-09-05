@@ -16,6 +16,66 @@ var MediKit = function(x, y) {
   };
 }
 
+var Ammo = function(x, y) {
+  var _ = this;
+
+  _.type = ITEMS.AMMO;
+  _.inherits(Sprite);
+  Sprite.call(_, x, y, 32, 32);
+
+  _.r = function(p) {
+    $.x.s();
+    $.x.fs('#00f');
+    $.x.fr(p.x, p.y, _.w, _.h);
+    $.x.r();
+  };
+}
+
+var Pistol = function(x, y) {
+  var _ = this;
+
+  _.type = ITEMS.PISTOL;
+  _.inherits(Sprite);
+  Sprite.call(_, x, y, 32, 32);
+
+  _.r = function(p) {
+    $.x.s();
+    $.x.fs('#0aa');
+    $.x.fr(p.x, p.y, _.w, _.h);
+    $.x.r();
+  };
+}
+
+var Shotgun = function(x, y) {
+  var _ = this;
+
+  _.type = ITEMS.SHOTGUN;
+  _.inherits(Sprite);
+  Sprite.call(_, x, y, 32, 32);
+
+  _.r = function(p) {
+    $.x.s();
+    $.x.fs('#a0a');
+    $.x.fr(p.x, p.y, _.w, _.h);
+    $.x.r();
+  };
+}
+
+var Flame = function(x, y) {
+  var _ = this;
+
+  _.type = ITEMS.FLAME;
+  _.inherits(Sprite);
+  Sprite.call(_, x, y, 32, 32);
+
+  _.r = function(p) {
+    $.x.s();
+    $.x.fs('#aa0');
+    $.x.fr(p.x, p.y, _.w, _.h);
+    $.x.r();
+  };
+}
+
 var Vaccine = function(x, y) {
   var _ = this;
   _.anim = new Animator([0, 1], 100);

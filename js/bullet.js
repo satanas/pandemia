@@ -48,10 +48,14 @@ var Bullet = function(cx, cy, angle, type) {
   }
 
   _.r = function(p) {
-    var c = _.color * 255 / 100,
-        o = _.lifetime / 200;
     $.x.s();
-    $.x.fs('hsla(' + c + ',100%,50%,' + o + ')');
+    if (_.type.ID === WEAPONS.FLAME.ID) {
+      var c = _.color * 255 / 100,
+          o = _.lifetime / 200;
+      $.x.fs('hsla(' + c + ',100%,50%,' + o + ')');
+    } else {
+      $.x.fs('white');
+    }
     $.x.bp();
     $.x.arc(p.x, p.y, _.w / 2, 0, 2 * PI);
     $.x.f();

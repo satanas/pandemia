@@ -58,7 +58,25 @@ var Zombie = function(x, y) {
     $.g.bullets.c(_, function(p, b) {
       b.a = 0;
       _.health -= 1;
-      if (_.health <= 0) _.a = 0;
+      if (_.health <= 0) {
+        _.a = 0;
+        if (rnd() >= DROP_RATE) {
+          var i = rndr(1, 6),
+              x = _.x + (_.w / 2),
+              y = _.b.b - 32;
+          if (i === ITEMS.MEDIKIT) {
+            $.g.i.add(new MediKit(x, y));
+          } else if (i === ITEMS.AMMO) {
+            $.g.i.add(new Ammo(x, y));
+          } else if (i === ITEMS.PISTOL) {
+            $.g.i.add(new Pistol(x, y));
+          } else if (i === ITEMS.SHOTGUN) {
+            $.g.i.add(new Shotgun(x, y));
+          } else if (i === ITEMS.FLAME) {
+            $.g.i.add(new Flame(x, y));
+          }
+        }
+      }
     });
   };
 

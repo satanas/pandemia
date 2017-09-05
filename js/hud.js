@@ -32,6 +32,18 @@ var HUD = function() {
       }
     });
 
+    $.text.draw({
+      text: $.player.ammo + '',
+      x: 400,
+      y: 85,
+      color: '#fff',
+      scale: 2,
+      shadow: {
+        value: 1,
+        color: '#000'
+      }
+    });
+
     $.x.s();
     $.x.fs('#333');
     $.x.fr(o.width + 25, 15, 200, 20);

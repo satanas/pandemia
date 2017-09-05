@@ -9,11 +9,10 @@ MEDIKIT_DURATION = 1500; // ms
 MIN_BITING_DURATION = 900; // ms
 ITEMS = {
   MEDIKIT: 1,
-  SYRINGE: 2,
-  ANTIGENS: 3,
-  STABILIZERS: 4,
-  ANTIBIOTICS: 5,
-  ADJUVANTS: 6
+  AMMO: 2,
+  PISTOL: 3,
+  SHOTGUN: 4,
+  FLAME: 5
 }
 INPUT = {
   LEFT: 65,   // A
@@ -41,7 +40,7 @@ WEAPONS= {
     DELAY: 300,
     SPEED: 30,
     SIZE: 16,
-    DAM: 2
+    DAM: 3
   },
   FLAME: {
     ID: 'FLAME',
@@ -51,5 +50,7 @@ WEAPONS= {
   }
 }
 VACCINE_PICKUP_DELAY = 1500; // ms
+DROP_RATE = 0.5;
+AMMO_PER_BOX = 30;
 
 // ZQSD for frenchies
