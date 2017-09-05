@@ -52,7 +52,7 @@ gulp.task('clean', function() {
   .pipe(clean());
 });
 
-gulp.task('build', ['minify_html'], function() {
+gulp.task('build', ['minify_html', 'minify_css', 'minify_js_closure'], function() {
   var s = size();
   gulp.src(['min/all.min.js', 'min/index.html', 'min/style.min.css'])
   .pipe(zip(config.appName + '.zip'))
@@ -70,6 +70,6 @@ gulp.task('build', ['minify_html'], function() {
   });
 });
 
-gulp.task('closure', function() {
+gulp.task('minify_js_closure', function() {
   execSync('java -jar closure-compiler.jar --js js/ --js_output_file min/all.min.js');
 });
