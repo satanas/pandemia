@@ -7,9 +7,9 @@ var MediKit = function(x, y) {
 
   _.r = function(p) {
     $.x.s();
-    $.x.fs('#ffffff');
+    $.x.fs('#fff');
     $.x.fr(p.x, p.y, _.w, _.h);
-    $.x.fs('#ff0000');
+    $.x.fs('#f00');
     $.x.fr(p.x + 12, p.y + 6, 8, 20);
     $.x.fr(p.x + 6, p.y + 12, 20, 8);
     $.x.r();
@@ -93,12 +93,12 @@ var Vaccine = function(x, y) {
     $.x.s();
     if (_.pickupDelay > 0) {
       if (_.anim.g()) {
-        $.x.fs('#ff0000');
+        $.x.fs('#f00');
       } else {
-        $.x.fs('#ffffff');
+        $.x.fs('#fff');
       }
     } else {
-      $.x.fs('#ffffff');
+      $.x.fs('#fff');
     }
     $.x.fr(p.x, p.y, _.w, _.h);
     $.x.r();

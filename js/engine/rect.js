@@ -15,13 +15,13 @@ var Rect = function(x, y, w, h) {
     };
   };
 
-  _.pointInRect = function(p) {
-    //if (p.x >= _.x && p.y
-  };
-
   _.toGrid = function() {
     return new Rect(floor(_.x / GRID_SIZE), floor(_.y / GRID_SIZE), _.w / GRID_SIZE, _.h / GRID_SIZE);
   };
+
+  _.center = function() {
+    return new Point(_.x + (_.w / 2), _.y + (_.h / 2));
+  }
 
   _.update();
 };

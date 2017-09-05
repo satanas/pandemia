@@ -13,8 +13,6 @@ window.addEventListener('load', function() {
 
   // Game Scenes
   $.scn = {};
-  // SVG
-  $.svg = new SVG();
 
   $.lvl = new Level();
 

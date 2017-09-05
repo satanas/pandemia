@@ -1,7 +1,7 @@
 var GameScene = function() {
   var _ = this;
-  _.ww = 6400;
-  _.wh = 6400;
+  _.ww = 3200;
+  _.wh = 3200;
   _.maxBlur = 5;
   _.c = $.byId("c"); // canvas
 
@@ -15,10 +15,10 @@ var GameScene = function() {
   $.g.z = new Group(); // Zombies
   $.g.s = new Group(); // Spawners
   $.g.i = new Group(); // Items
+  $.g.h = new Group(); // Start and end points
   $.g.bullets = new Group(); // Bullets
   $.g.boxes = new Group(); // Pushables boxes
 
-  $.ai = new AIDirector();
   $.lvl.gen(_.wh, _.wh, Wall);
   $.cam.setWorldSize(_.ww, _.wh);
   $.cam.setTarget($.player);
@@ -32,16 +32,17 @@ var GameScene = function() {
     $.g.s.u();
     $.g.z.u();
     $.g.i.u();
+    $.g.h.u();
     $.g.bullets.u();
     $.player.u();
     $.g.boxes.u();
-    $.ai.u();
     $.cam.u();
     $.hud.u();
     $.ss.u();
-    _.losingHumanityEffects();
+    _.fx();
 
     // Render
+    $.g.h.r();
     $.g.walls.r();
     $.g.s.r();
     $.g.i.r();
@@ -53,7 +54,7 @@ var GameScene = function() {
     $.hud.r();
   };
 
-  _.losingHumanityEffects = function() {
+  _.fx = function() {
     var h = $.player.humanity,
         g = 0,
         b = 0;
@@ -65,4 +66,7 @@ var GameScene = function() {
     //console.log(h, g, b);
     _.c.style.filter = "grayscale(" + g + "%) blur(" + (b * _.maxBlur / 100) + "px)";
   };
+
+  _.inst = function() {
+  }
 }

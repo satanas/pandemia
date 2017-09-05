@@ -7,9 +7,8 @@ var Zombie = function(x, y) {
   _.angle = 0;
   _.trackingPos;
   _.bcount = 0; // biting counter
-  _.s = (rnd() * 0.5) + MIN_ZOMBIE_SPEED;
-  _.health = rndr(4, 8);
- // _.damage = rndr(4, 8);
+  _.s = rnd() + MZS; // speed
+  _.health = rndr(3, 5);
 
   _.inherits(Sprite);
   _.inherits(AStar);

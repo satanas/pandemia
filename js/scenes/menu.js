@@ -7,14 +7,9 @@ var MenuScene = function() {
 
   _.update = function() {
     $.x.clr('#fff');
-    //$.x.ct('Pandemia', 125, 290, 'red', 'courier');
-    $.text.draw({
-      y: 180,
+    $.text.r(0, 180, 'Pandemia', 15, '#3cdb02', {
       halign: 'center',
-      text: 'Pandemia',
       hspacing: 10,
-      scale: 15,
-      color: '#3cdb02'
     });
 
     if ($.in.p(13)) {

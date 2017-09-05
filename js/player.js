@@ -132,6 +132,13 @@ var Player = function(x, y) {
       _.vaccine.y = _.y - 34;
     }
 
+    $.g.h.c(_, function(p, z) {
+      if (z.end && _.vaccine) {
+        // Stop all the zombies, fade out, etc
+        console.log('you win');
+      }
+    });
+
     _.updateRect();
 
     if (_.shooting && !_.shotDelay) {
@@ -143,7 +150,7 @@ var Player = function(x, y) {
   _.r = function(p) {
     $.x.s();
     // debug
-    $.x.ss('red');
+    $.x.ss('#f00');
     $.x.sr(p.x, p.y, _.w, _.h);
     //if (_.ic !== 0)
     //  $.x.fs('#000000');
@@ -200,7 +207,8 @@ var Player = function(x, y) {
     // debug
     var c = _.getOffsetCenter(p),
         mag = 100
-    $.x.ss('red');
+    $.x.ss('#f00');
+    $.x.bp();
     $.x.mv(c.x, c.y);
     $.x.lt(c.x + (mag * cos(_.angle)), c.y + (mag * sin(_.angle)));
     $.x.k();
@@ -260,10 +268,9 @@ var Player = function(x, y) {
   _.drawAim = function() {
     $.x.s();
     $.x.bp();
-    $.x.fs('red');
+    $.x.fs('#f00');
     $.x.arc(_.aim.x, _.aim.y, 2, 0, 2 * PI);
     $.x.f();
-    $.x.cp();
     $.x.fr(_.aim.x, _.aim.y - 14, 1, 8);
     $.x.fr(_.aim.x, _.aim.y + 7, 1, 8);
     $.x.fr(_.aim.x - 14, _.aim.y, 8, 1);

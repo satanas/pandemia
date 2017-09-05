@@ -8,7 +8,6 @@ module.exports = {
     "js/engine/group.js",
     "js/engine/sprite.js",
     "js/engine/collisions.js",
-    "js/engine/svg.js",
     "js/engine/animator.js",
     "js/engine/sound.js",
     "js/engine/rect.js",
@@ -27,6 +26,10 @@ module.exports = {
     "js/spawner.js",
     "js/ai_director.js",
     "js/items.js",
+    "js/hud.js",
+    "js/perlin_noise.js",
+    "js/effects.js",
+    "js/bullet.js",
     "js/game.js",
   ]
 }

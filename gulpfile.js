@@ -10,6 +10,7 @@ var clean = require('gulp-clean');
 var zip = require('gulp-zip');
 var chalk = require('chalk');
 var config = require('./config');
+var execSync = require('child_process').execSync;
 
 gulp.task('minify_js', function() {
   return gulp.src(config.sourceFiles)
@@ -25,7 +26,8 @@ gulp.task('minify_css', function() {
   .pipe(gulp.dest('min'));
 });
 
-gulp.task('minify_html', ['minify_js', 'minify_css'], function() {
+//gulp.task('minify_html', ['minify_js', 'minify_css'], function() {
+gulp.task('minify_html', function() {
   var pattern = /<!-- Begin imports -->([\s\S]*)<!-- End imports -->/;
 
   return gulp.src(['index.html'])
@@ -68,10 +70,6 @@ gulp.task('build', ['minify_html'], function() {
   });
 });
 
-//gulp.task('closure', function() {
-//  var files = glob.sync('js/*.js');
-//
-//  files.map(function(file) {
-//    exec('java -jar compiler.jar --language_in ECMASCRIPT5 --js ' + file + ' --js_output_file min/' + file + '.min');
-//  });
-//});
+gulp.task('closure', function() {
+  execSync('java -jar closure-compiler.jar --js js/ --js_output_file min/all.min.js');
+});

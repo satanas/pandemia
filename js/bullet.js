@@ -21,9 +21,11 @@ var Bullet = function(cx, cy, angle, type) {
     _.y += _.speed * sin(_.angle);
 
     // Collisions with walls
-    $.g.walls.c(_, function(p, w) {
-      _.a = 0;
-    });
+    if (_.type.ID !== WEAPONS.FLAME.ID) {
+      $.g.walls.c(_, function(p, w) {
+        _.a = 0;
+      });
+    }
 
     if (!$.cam.inView(_) || !_.lifetime) {
       _.a = 0;
@@ -59,7 +61,6 @@ var Bullet = function(cx, cy, angle, type) {
     $.x.bp();
     $.x.arc(p.x, p.y, _.w / 2, 0, 2 * PI);
     $.x.f();
-    $.x.cp();
     $.x.r();
   }
 }

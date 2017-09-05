@@ -71,29 +71,29 @@ var Level = function() {
       }
     }
 
-    var assignedIndexes = [], cx, cy, px, py;
-    // Add player and vaccine
+    var assignedIndexes = [], c, px, py;
+    // Add player and vaccine in starting room
     i = rndr(0, _.arooms.length)
-    cx = _.arooms[i].x + (_.arooms[i].w / 2);
-    cy = _.arooms[i].y + (_.arooms[i].h / 2);
-    $.g.boxes.add(new Vaccine(cx, cy));
+    c = _.arooms[i].center();
+    $.g.h.add(new StartZ(c.x, c.y));
     do {
       px = rndr(_.arooms[i].x, _.arooms[i].b.r);
-    } while (px === cx);
+    } while (px === c.x);
     do {
       py = rndr(_.arooms[i].y, _.arooms[i].b.b);
-    } while (py === cy);
-    $.player = new Player(px, py);
+    } while (py === c.y);
     assignedIndexes.push(i);
+    // Add ending room
+    do {
+      i = rndr(0, _.arooms.length)
+    } while (assignedIndexes.indexOf(i) !== -1);
+    c = _.arooms[i].center();
+    $.g.h.add(new EndZ(c.x, c.y));
 
     // Extract the arooms from the array once they're used. Use a while loop
     // to avoid modifying the condition for the for loop
-    for (i=0; i < _.arooms.length / 3; i++) {
-      do {
-        j = rndr(0, _.arooms.length)
-      } while (assignedIndexes.indexOf(j) !== -1);
-      _.addSpawner(_.arooms[j]);
-      assignedIndexes.push(j);
+    for (i=0; i < _.arooms.length; i++) {
+      if (assignedIndexes.indexOf(i) === -1) _.addSpawner(_.arooms[i]);
     }
 
     // Load items
@@ -123,7 +123,7 @@ var Level = function() {
   };
 
   _.addSpawner = function(room) {
-    var s = new Spawner(room, $.player),
+    var s = new Spawner(room),
         rect = new Rect(s.x, s.y, s.w, s.h).toGrid();
 
     $.g.s.add(s);
@@ -183,7 +183,7 @@ var Leaf = function(x, y, w, h) {
   _.h = h;
   _.lc = null; // left child
   _.rc = null; //right child
-  _.min = 20; // min leaf size
+  _.min = 10; // min leaf size
   _.room = null;
   _.halls = [];
 
@@ -277,7 +277,7 @@ var Leaf = function(x, y, w, h) {
         p2 = new Point(rndr(rRoom.b.l + 1, rRoom.b.r - 2), rndr(rRoom.b.t + 1, rRoom.b.b - 2)),
         w = p2.x - p1.x,
         h = p2.y - p1.y,
-        hallHeight = 6;
+        hallHeight = 3;
 
     if (w < 0) {
       if (h < 0) {

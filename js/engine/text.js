@@ -308,7 +308,7 @@ var Text = function() {
 
   _.drawLine = function(opt) {
     $.x.s();
-    $.x.bp();
+    $.x.fs(opt.color);
     for( var i = 0; i < opt.text.length; i++ ) {
       // TODO: improve unknown
       var letter = _.LETTERS[ ( opt.text.charAt( i ) ) ] || _.LETTERS[' '];
@@ -320,32 +320,29 @@ var Text = function() {
         }
       }
     }
-    $.x.fs(opt.color);
     $.x.fill();
     $.x.r();
   };
 
+  // tx = text
+  // sc: scale
+  // x: X coord. Default: 0
+  // y: Y coord. Default: 0
+  // c: CSS color. Default: #000
+  //
   // opt =
-  //   x: X coord. Default: 0
-  //   y: Y coord. Default: 0
-  //   color: CSS color. Default: #000
   //   halign: horizontal alignment. Values: 'center', 'right'
   //   valign: vertical alignment. Values: 'center', 'bottom'
-  //   text: string to print,
   //   hspacing: horizontal spacing. Default: 1,
   //   vspacing: vertical spacing. Default: 1,
   //   snap: round to the lower integer. Default: false
-  //   scale: false
-  _.draw = function(opt) {
-    opt.color = opt.color || '#000';
-    opt.x = opt.x || 0;
-    opt.y = opt.y || 0;
-    opt.scale = opt.scale || 1;
+  _.r = function(x, y, tx, sc, c, opt) {
+    opt = opt || {};
     opt.vspacing = opt.vspacing || 1;
     opt.hspacing = opt.hspacing || 1;
 
-    var letterSize = _.size * opt.scale,
-        lines = opt.text.split("\n"),
+    var letterSize = _.size * sc,
+        lines = tx.split("\n"),
         linesCopy = lines.slice(0),
         lineCount = lines.length,
         longestLine = linesCopy.sort( function ( a, b ) { return b.length - a.length; } )[ 0 ],
@@ -354,9 +351,8 @@ var Text = function() {
 
     for (var i = 0; i < lineCount; i++) {
       var line = lines[i],
-          lineWidth = (line.length * letterSize) + ((line.length - 1) * opt.hspacing),
-          x = opt.x,
-          y = opt.y + (letterSize + opt.vspacing) * i;
+          lineWidth = (line.length * letterSize) + ((line.length - 1) * opt.hspacing);
+      y = y + (letterSize + opt.vspacing) * i;
 
       if (opt.halign === 'center') {
         x = ($.vw - lineWidth) / 2;
@@ -375,23 +371,23 @@ var Text = function() {
         y = Math.floor(y);
       }
 
-      if (opt.shadow) {
-        _.drawLine({
-          x: x + opt.shadow.value,
-          y: y + opt.shadow.value,
-          text: line.toUpperCase(),
-          hspacing: opt.hspacing,
-          scale: opt.scale,
-          color: opt.shadow.color
-        });
-      }
+      //if (opt.shadow) {
+      //  _.drawLine({
+      //    x: x + opt.shadow.value,
+      //    y: y + opt.shadow.value,
+      //    text: line.toUpperCase(),
+      //    hspacing: opt.hspacing,
+      //    scale: sc,
+      //    color: opt.shadow.color
+      //  });
+      //}
       _.drawLine({
         x: x,
         y: y,
         text: line.toUpperCase(),
         hspacing: opt.hspacing,
-        scale: opt.scale,
-        color: opt.color
+        scale: sc,
+        color: c
       });
     }
 
