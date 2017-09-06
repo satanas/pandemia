@@ -22,7 +22,7 @@ var Bullet = function(cx, cy, angle, type) {
 
     // Collisions with walls
     if (_.type.ID !== WEAPONS.FLAME.ID) {
-      $.g.walls.c(_, function(p, w) {
+      $.g.w.c(_, function(p, w) {
         _.a = 0;
       });
     }

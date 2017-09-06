@@ -54,8 +54,8 @@ var Zombie = function(x, y) {
     }
 
     // Collisions with bullets
-    $.g.bullets.c(_, function(p, b) {
-      b.a = 0;
+    $.g.b.c(_, function(p, b) {
+      if (b.type !== WEAPONS.FLAME.ID) b.a = 0;
       _.health -= 1;
       if (_.health <= 0) {
         _.a = 0;

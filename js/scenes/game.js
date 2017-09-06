@@ -1,29 +1,43 @@
 var GameScene = function() {
   var _ = this;
-  _.ww = 3200;
-  _.wh = 3200;
   _.maxBlur = 5;
   _.c = $.byId("c"); // canvas
 
   _.inherits(Scene);
   Scene.call(_);
 
-  $.o = new Collisions();
-
-  // Collision groups
-  $.g.walls = new Group(); // Walls
-  $.g.z = new Group(); // Zombies
-  $.g.s = new Group(); // Spawners
-  $.g.i = new Group(); // Items
-  $.g.h = new Group(); // Start and end points
-  $.g.bullets = new Group(); // Bullets
-  $.g.boxes = new Group(); // Pushables boxes
-
-  $.lvl.gen(_.wh, _.wh, Wall);
-  $.cam.setWorldSize(_.ww, _.wh);
-  $.cam.setTarget($.player);
   $.ss = new ScreenShake();
   $.hud = new HUD();
+
+  _.init = function() {
+    // Clear all groups before start
+    Object.keys($.g).forEach(function(g) { $.g[g].clr() })
+    _.intro = 0;
+  }
+
+  _.intro = function() {
+    _.reset();
+    _.init();
+    _.intro = 1;
+    _.ww = 1024;
+    _.wh = 576;
+    $.lvl.iroom(_.ww, _.wh);
+    $.cam.setWorldSize(_.ww, _.wh);
+    $.cam.setTarget($.player);
+    _.loop();
+  }
+
+  _.game = function() {
+    _.reset();
+    _.init();
+    _.ww = 3200;
+    _.wh = 3200;
+    $.lvl.gen(_.ww, _.wh);
+    $.cam.setWorldSize(_.ww, _.wh);
+    $.cam.setTarget($.player);
+    // No need to run loop here because it ran first in the intro
+    //_.loop();
+  }
 
   _.update = function() {
     $.x.clr('#ccc');
@@ -33,9 +47,9 @@ var GameScene = function() {
     $.g.z.u();
     $.g.i.u();
     $.g.h.u();
-    $.g.bullets.u();
+    $.g.x.u();
     $.player.u();
-    $.g.boxes.u();
+    $.g.b.u();
     $.cam.u();
     $.hud.u();
     $.ss.u();
@@ -43,15 +57,17 @@ var GameScene = function() {
 
     // Render
     $.g.h.r();
-    $.g.walls.r();
+    $.g.w.r();
     $.g.s.r();
     $.g.i.r();
     $.cam.r($.player);
     $.g.z.r();
-    $.g.boxes.r();
-    $.g.bullets.r();
+    $.g.x.r();
+    $.g.b.r();
     $.player.drawAim();
     $.hud.r();
+
+    if (_.intro) _.pi();
   };
 
   _.fx = function() {
@@ -63,10 +79,16 @@ var GameScene = function() {
     if (h <= 70 && h > 0) {
       b = iir((70 - h) * 2, 0, 100);
     }
-    //console.log(h, g, b);
     _.c.style.filter = "grayscale(" + g + "%) blur(" + (b * _.maxBlur / 100) + "px)";
   };
 
-  _.inst = function() {
+  // Print instructions method
+  _.pi = function() {
+    $.txt.r(0, _.wh - 120, 'wasd, zqsd and arrows to move\nMouse to aim and shoot', 3, '#000', {
+      halign: 'center',
+      hspacing: 2,
+      vspacing: 20,
+    });
   }
+
 }

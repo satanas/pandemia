@@ -1,4 +1,4 @@
-var Player = function(x, y) {
+var Player = function(x, y, ) {
   var _ = this;
   _.mxs = 0; // max speed
   _.d = DIR.LEFT; // direction
@@ -7,16 +7,13 @@ var Player = function(x, y) {
   _.dx = 0;
   _.dy = 0;
   _.ic = 0; // invincibility counter
-  _.intensity = 0;
   _.humanity = 100;
   _.humanityDecay = _.humanity / (7 * 60); // 7 min
-  _.collectedItems = [];
   _.hc = 0; // healing counter
   _.vaccine = 0;
   _.angle = 0;
   _.ammo = 500;
 
-  _.sex = 'm';
   _.skinColor = '#ffe499';
   _.hairColor = '#795548';
   _.aim = new Point(0, 0);
@@ -34,8 +31,8 @@ var Player = function(x, y) {
     } else {
       _.humanity = iir(_.humanity - ($.e * _.humanityDecay / 1000), 0.1);
     }
-    //console.log('humanity', _.humanity, _.collectedItems);
     _.mxs = iir(-1.5 + (_.humanity / 10), MIN_PLAYER_SPEED);
+    console.log('mxs', _.mxs);
     _.shotDelay = iir(_.shotDelay - $.e, 0);
 
     if (_.ic > 0) {
@@ -73,12 +70,16 @@ var Player = function(x, y) {
     _.x += _.dx;
     _.y += _.dy;
 
+    // Checking world limit collisions
+    _.x = iir(_.x, 0, $.cam.ww - _.w);
+    _.y = iir(_.y, 0, $.cam.wh - _.h);
+
     _.updateRect();
 
     // Collisions with walls
     // p = Player
     // w = Wall
-    $.g.walls.c(_, function(p, w) {
+    $.g.w.c(_, function(p, w) {
       if($.o.top(p, w)) {
         p.y = w.b.b;
       } else if ($.o.bottom(p, w)) {
@@ -121,7 +122,7 @@ var Player = function(x, y) {
 
     // If the player doesn't have the vaccine, we check for collisions with the vaccine box
     if (!_.vaccine) {
-      $.g.boxes.c(_, function(p, b) {
+      $.g.x.c(_, function(p, b) {
         if (b.isPickable()) {
           _.vaccine = b;
         }
@@ -136,6 +137,8 @@ var Player = function(x, y) {
       if (z.end && _.vaccine) {
         // Stop all the zombies, fade out, etc
         console.log('you win');
+      } else if (z.intro && _.vaccine) {
+        $.scn.game.game();
       }
     });
 
@@ -144,7 +147,7 @@ var Player = function(x, y) {
     if (_.shooting && !_.shotDelay) {
       _.shoot();
     }
-    //console.log('bullets', $.g.bullets.e.length);
+    //console.log('bullets', $.g.b.e.length);
   };
 
   _.r = function(p) {
@@ -215,10 +218,6 @@ var Player = function(x, y) {
     $.x.r();
   }
 
-  _.has = function(item) {
-    return _.collectedItems.indexOf(item) >= 0;
-  }
-
   _.shoot = function() {
     if (!_.ammo) {
       return
@@ -227,10 +226,10 @@ var Player = function(x, y) {
     _.shotDelay = _.weapon.DELAY;
     var c = _.getCenter();
     _.ammo -= 1;
-    $.g.bullets.add(new Bullet(c.x, c.y, _.angle, _.weapon));
+    $.g.b.add(new Bullet(c.x, c.y, _.angle, _.weapon));
     if (_.weapon.ID === WEAPONS.SHOTGUN.ID) {
-      $.g.bullets.add(new Bullet(c.x, c.y, _.angle + (rndr(4, 15) * PI / 180), _.weapon));
-      $.g.bullets.add(new Bullet(c.x, c.y, _.angle - (rndr(4, 15) * PI / 180), _.weapon));
+      $.g.b.add(new Bullet(c.x, c.y, _.angle + (rndr(4, 15) * PI / 180), _.weapon));
+      $.g.b.add(new Bullet(c.x, c.y, _.angle - (rndr(4, 15) * PI / 180), _.weapon));
       _.ammo = iir(_.ammo - 2, 0);
     }
   }

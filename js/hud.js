@@ -8,9 +8,9 @@ var HUD = function() {
   };
 
   _.r = function() {
-    var weapon, o = $.text.r(20, 20, 'Humanity:', 2, '#fff');
-    $.text.r(0, 85, $.player.weapon.ID, 2, '#fff', { halign: 'center' });
-    $.text.r(400, 85, $.player.ammo + '', 2, '#fff');
+    var weapon, o = $.txt.r(20, 20, 'Humanity:', 2, '#fff');
+    $.txt.r(0, 85, $.player.weapon.ID, 2, '#fff', { halign: 'center' });
+    $.txt.r(400, 85, $.player.ammo + '', 2, '#fff');
 
     $.x.s();
     $.x.fs('#333');

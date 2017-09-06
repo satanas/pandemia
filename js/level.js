@@ -13,6 +13,28 @@ var Level = function() {
 
   _.arooms = [];
 
+  // Generate intro room
+  _.iroom = function(w, h) {
+    var i = 0, j = 0;
+    _.ww = w / GRID_SIZE;
+    _.wh = h / GRID_SIZE;
+
+    for (j=0; j<_.wh; j++) {
+      _.map[j] = [];
+      for (i=0; i<_.ww; i++) {
+        if (j === 0 || j === _.wh - 1 || i === 0 || i === _.ww - 1) {
+          if ((j >= 3 && j <= 5) && i === 15) continue;
+
+          _.map[j][i] = "#"
+          $.g.w.add(new Wall(i * GRID_SIZE, j * GRID_SIZE));
+        }
+      }
+    }
+    $.g.h.add(new IntroZ(15 * GRID_SIZE, 3 * GRID_SIZE));
+    $.player = new Player(320, 320);
+    $.g.x.add(new Vaccine(500, 500));
+  }
+
   _.gen = function(w, h) {
     var i = 0, j = 0;
     _.ww = w / GRID_SIZE;
@@ -66,7 +88,7 @@ var Level = function() {
     for (j=0; j<_.wh; j++) {
       for (i=0; i<_.ww; i++) {
         if (_.isWall(i, j)) {
-          $.g.walls.add(new Wall(i * GRID_SIZE, j * GRID_SIZE));
+          $.g.w.add(new Wall(i * GRID_SIZE, j * GRID_SIZE));
         }
       }
     }
@@ -75,7 +97,10 @@ var Level = function() {
     // Add player and vaccine in starting room
     i = rndr(0, _.arooms.length)
     c = _.arooms[i].center();
-    $.g.h.add(new StartZ(c.x, c.y));
+    //$.g.h.add(new StartZ(c.x, c.y));
+    $.g.x.add(new Vaccine(c.x, c.y));
+    $.player.x = c.x;
+    $.player.y = c.y;
     do {
       px = rndr(_.arooms[i].x, _.arooms[i].b.r);
     } while (px === c.x);
@@ -95,16 +120,6 @@ var Level = function() {
     for (i=0; i < _.arooms.length; i++) {
       if (assignedIndexes.indexOf(i) === -1) _.addSpawner(_.arooms[i]);
     }
-
-    // Load items
-    //assignedIndexes = [];
-    //for (i=0; i < _.arooms.length / 3; i++) {
-    //  do {
-    //    j = rndr(0, _.arooms.length)
-    //  } while (assignedIndexes.indexOf(j) !== -1);
-    //  _.addSpawner(_.arooms[j]);
-    //  assignedIndexes.push(j);
-    //}
 
     // Printing map to console
     _.print();

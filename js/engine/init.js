@@ -4,7 +4,6 @@ var $ = {}, dbg = false;
 $.cv = document.querySelector("canvas");
 
 // Initialize all variables
-// cid: canvas id
 // w: width
 // h: height
 $.init = function(w, h) {

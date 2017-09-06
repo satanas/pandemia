@@ -3,7 +3,6 @@ var MenuScene = function() {
   _.inherits(Scene);
   Scene.call(_);
 
-  $.text = new Text();
   _.anim = new Animator([0, 1], 150);
 
   _.update = function() {
@@ -24,17 +23,17 @@ var MenuScene = function() {
     $.x.fs('#f80');
     $.x.fr(50, 0, $.vw - 100, $.vh);
 
-    $.text.r(0, 60, 'Pandemia', 15, '#fff', {
+    $.txt.r(0, 60, 'Pandemia', 15, '#fff', {
       halign: 'center',
       hspacing: 15,
     });
     if (_.anim.g()) {
-      $.text.r(0, $.vh - 80, 'Press Enter to start', 4, '#fff', {
+      $.txt.r(0, $.vh - 80, 'Press Enter to start', 4, '#fff', {
         halign: 'center',
         hspacing: 2,
       });
     }
-    $.text.r(0, $.vh - 30, 'By satanas82 for js13k 2017', 1.7, '#fff', {
+    $.txt.r(0, $.vh - 30, 'By satanas82 for js13k 2017', 1.7, '#fff', {
       halign: 'center',
       hspacing: 2,
     });
@@ -60,7 +59,7 @@ var MenuScene = function() {
     if ($.in.p(13)) {
       _.exit();
       $.scn.game = new GameScene();
-      $.scn.game.start();
+      $.scn.game.intro();
     }
   }
 
