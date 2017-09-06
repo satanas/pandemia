@@ -23,7 +23,10 @@ var Level = function() {
       _.map[j] = [];
       for (i=0; i<_.ww; i++) {
         if (j === 0 || j === _.wh - 1 || i === 0 || i === _.ww - 1) {
-          if ((j >= 3 && j <= 5) && i === 15) continue;
+          if ((j >= 3 && j <= 5) && i === 15) {
+            $.g.w.add(new Barricade((i - 1) * GRID_SIZE, j * GRID_SIZE));
+            continue;
+          }
 
           _.map[j][i] = "#"
           $.g.w.add(new Wall(i * GRID_SIZE, j * GRID_SIZE));

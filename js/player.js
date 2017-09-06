@@ -1,4 +1,4 @@
-var Player = function(x, y, ) {
+var Player = function(x, y) {
   var _ = this;
   _.mxs = 0; // max speed
   _.d = DIR.LEFT; // direction
@@ -32,7 +32,6 @@ var Player = function(x, y, ) {
       _.humanity = iir(_.humanity - ($.e * _.humanityDecay / 1000), 0.1);
     }
     _.mxs = iir(-1.5 + (_.humanity / 10), MIN_PLAYER_SPEED);
-    console.log('mxs', _.mxs);
     _.shotDelay = iir(_.shotDelay - $.e, 0);
 
     if (_.ic > 0) {

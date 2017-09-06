@@ -11,27 +11,6 @@ var IntroZ = function(x, y) {
     $.x.r();
   }
 }
-// Start zone
-var StartZ = function(cx, cy) {
-  var _ = this;
-  _.end = 0;
-  _.inherits(Sprite);
-  Sprite.call(_, cx - 128, cy - 80, 256, 160);
-
-  $.g.x.add(new Vaccine(cx - 16, cy - 32));
-  $.player = new Player(cx - 32, _.b.b + 12);
-
-  _.r = function(p) {
-    $.x.s();
-    $.x.fs('red');
-    $.x.fr(p.x, p.y, _.w, _.h);
-    $.x.fs('limegreen');
-    $.x.fr(p.x, p.y + 130, _.w, 30);
-    $.x.r();
-
-    $.txt.r(p.x + 25, p.y + 140, 'Pick up vaccine', 2, '#fff', {hspacing: 4});
-  }
-}
 
 var EndZ = function(cx, cy) {
   var _ = this;

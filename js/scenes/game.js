@@ -43,6 +43,7 @@ var GameScene = function() {
     $.x.clr('#ccc');
 
     // Update
+    $.g.w.u();
     $.g.s.u();
     $.g.z.u();
     $.g.i.u();

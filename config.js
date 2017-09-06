@@ -1,5 +1,5 @@
 module.exports = {
-  appName: 'js13k2017',
+  appName: 'pandemia',
   sourceFiles: [
     "js/engine/functions.js",
     "js/engine/input.js",
@@ -24,12 +24,12 @@ module.exports = {
     "js/wall.js",
     "js/zombie.js",
     "js/spawner.js",
-    "js/ai_director.js",
     "js/items.js",
     "js/hud.js",
     "js/perlin_noise.js",
     "js/effects.js",
     "js/bullet.js",
+    "js/zones.js",
     "js/game.js",
   ]
 }
