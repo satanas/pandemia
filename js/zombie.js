@@ -31,15 +31,16 @@ var Zombie = function(x, y) {
         _.trackingPos = new Point($.player.x, $.player.y);
       }
     } else {
-      const nextPos = _.path[0];
-      const dist = _.getdist(_, nextPos);
+      var nextPos = _.path[0],
+          dist = _.getdist(_, nextPos),
+          appliedDist;
       // The zombie reached the current node
       if (dist === 0) {
         // We remove the current node from the path and let the walking continue
         _.path.shift();
       } else {
         _.angle = atan2(nextPos.y - _.y, nextPos.x - _.x);
-        const appliedDist = min(dist, _.s);
+        appliedDist = min(dist, _.s);
 
         _.x += appliedDist * cos(_.angle);
         _.y += appliedDist * sin(_.angle);
