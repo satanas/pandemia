@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var size = require('gulp-size');
+var gutil = require('gulp-util');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
@@ -16,6 +17,7 @@ gulp.task('minify_js', function() {
   return gulp.src(config.sourceFiles)
   .pipe(concat('all.min.js'))
   .pipe(uglify({mangle: {toplevel: true}}))
+  .on('error', function (err) { gutil.log(gutil.colors.red('[Error]'), err.toString()); })
   .pipe(gulp.dest('min'));
 });
 
@@ -52,7 +54,7 @@ gulp.task('clean', function() {
   .pipe(clean());
 });
 
-gulp.task('build', ['minify_html', 'minify_css', 'minify_js_closure'], function() {
+gulp.task('build', ['minify_html', 'minify_css', 'minify_js'], function() {
   var s = size();
   gulp.src(['min/all.min.js', 'min/index.html', 'min/style.min.css'])
   .pipe(zip(config.appName + '.zip'))
@@ -71,5 +73,5 @@ gulp.task('build', ['minify_html', 'minify_css', 'minify_js_closure'], function(
 });
 
 gulp.task('minify_js_closure', function() {
-  execSync('java -jar closure-compiler.jar --js js/ --js_output_file min/all.min.js');
+  execSync('java -jar closure-compiler.jar --compilation_level SIMPLE --js js/ --js_output_file min/all.min.js');
 });
