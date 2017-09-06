@@ -34,6 +34,10 @@ var MenuScene = function() {
         hspacing: 2,
       });
     }
+    $.text.r(0, $.vh - 30, 'By satanas82 for js13k 2017', 1.7, '#fff', {
+      halign: 'center',
+      hspacing: 2,
+    });
     var cx = floor($.vw / 2),
         cy = floor($.vh / 2) + 40,
         r = 60, // radius
