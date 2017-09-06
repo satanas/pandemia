@@ -234,6 +234,12 @@ var Player = function(x, y, ) {
     }
   }
 
+  _.reset = function(x, y) {
+    _.x = x;
+    _.y = y;
+    _.vaccine = 0;
+  }
+
   _.dropVaccine = function() {
     if (_.vaccine) {
       _.vaccine.drop(_);

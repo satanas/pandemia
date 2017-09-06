@@ -99,8 +99,7 @@ var Level = function() {
     c = _.arooms[i].center();
     //$.g.h.add(new StartZ(c.x, c.y));
     $.g.x.add(new Vaccine(c.x, c.y));
-    $.player.x = c.x;
-    $.player.y = c.y;
+    $.player.reset(c.x, c.y);
     do {
       px = rndr(_.arooms[i].x, _.arooms[i].b.r);
     } while (px === c.x);
