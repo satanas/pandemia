@@ -28,7 +28,7 @@ var Barricade = function(x, y) {
 
   _.r = function(p) {
     $.x.s();
-    $.x.fs('#f0f0f0');
+    $.x.fs('#f0f');
     $.x.fr(p.x, p.y, _.w, _.h);
     $.x.r();
   }

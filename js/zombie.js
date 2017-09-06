@@ -61,12 +61,10 @@ var Zombie = function(x, y) {
       if (_.health <= 0) {
         _.a = 0;
         if (rnd() >= DROP_RATE) {
-          var i = rndr(1, 6),
+          var i = rndr(2, 6),
               x = _.x + (_.w / 2),
               y = _.b.b - 32;
-          if (i === ITEMS.MEDIKIT) {
-            $.g.i.add(new MediKit(x, y));
-          } else if (i === ITEMS.AMMO) {
+          if (i === ITEMS.AMMO) {
             $.g.i.add(new Ammo(x, y));
           } else if (i === ITEMS.PISTOL) {
             $.g.i.add(new Pistol(x, y));
