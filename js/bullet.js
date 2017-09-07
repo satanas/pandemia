@@ -50,7 +50,6 @@ var Bullet = function(cx, cy, angle, type) {
   }
 
   _.r = function(p) {
-    $.x.s();
     if (_.type.ID === WEAPONS.FLAME.ID) {
       var c = _.color * 255 / 100,
           o = _.lifetime / 200;
@@ -60,7 +59,7 @@ var Bullet = function(cx, cy, angle, type) {
     }
     $.x.bp();
     $.x.arc(p.x, p.y, _.w / 2, 0, 2 * PI);
+    $.x.cp();
     $.x.f();
-    $.x.r();
   }
 }

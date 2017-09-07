@@ -302,12 +302,18 @@ var Text = function() {
        [  , 1, 1, 1,  ],
        [  ,  ,  ,  ,  ],
        [  ,  ,  ,  ,  ],
+    ],
+    '.': [
+       [  ,  ,  ,  ,  ],
+       [  ,  ,  ,  ,  ],
+       [  ,  ,  ,  ,  ],
+       [  ,  ,  ,  ,  ],
+       [  ,  , 1,  ,  ],
     ]
   };
 
 
   _.drawLine = function(opt) {
-    $.x.s();
     $.x.fs(opt.color);
     for( var i = 0; i < opt.text.length; i++ ) {
       // TODO: improve unknown
@@ -315,13 +321,13 @@ var Text = function() {
       for( var y = 0; y < _.size; y++ ) {
         for( var x = 0; x < _.size; x++ ) {
           if( letter[ y ][ x ] === 1 ) {
+            $.x.bp();
             $.x.rect( opt.x + ( x * opt.scale ) + ( ( _.size * opt.scale ) + opt.hspacing ) * i, opt.y + y * opt.scale, opt.scale, opt.scale );
+            $.x.fill();
           }
         }
       }
     }
-    $.x.fill();
-    $.x.r();
   };
 
   // tx = text

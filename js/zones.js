@@ -5,10 +5,8 @@ var IntroZ = function(x, y) {
   Sprite.call(_, x, y, 64, 192);
 
   _.r = function(p) {
-    $.x.s();
     $.x.fs('red');
     $.x.fr(p.x, p.y, _.w, _.h);
-    $.x.r();
   }
 }
 
@@ -21,12 +19,10 @@ var EndZ = function(cx, cy) {
   Sprite.call(_, cx - 128, cy - 80, _.ow - 64, _.oh - 64);
 
   _.r = function(p) {
-    $.x.s();
     $.x.fs('white');
     $.x.fr(p.x, p.y, _.ow, _.oh);
     $.x.fs('limegreen');
     $.x.fr(p.x, p.y + 130, _.ow, 30);
-    $.x.r();
 
     $.txt.r(p.x + 65, p.y + 140, 'Safe Point', 2, '#fff', {hspacing: 4});
   }

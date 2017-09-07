@@ -12,7 +12,6 @@ var HUD = function() {
     $.txt.r(0, 85, $.player.weapon.ID, 2, '#fff', { halign: 'center' });
     $.txt.r(400, 85, $.player.ammo + '', 2, '#fff');
 
-    $.x.s();
     $.x.fs('#333');
     $.x.fr(o.width + 25, 15, 200, 20);
     $.x.fs('#f00');
@@ -24,6 +23,5 @@ var HUD = function() {
     $.x.ss('#fff');
     $.x.lineWidth = 4
     $.x.sr(($.vw - 64) / 2, 15, 64, 64);
-    $.x.r();
   }
 };

@@ -9,9 +9,9 @@ var MenuScene = function() {
     var i, j;
     _.anim.u();
     $.x.clr('#fff');
-    $.x.s();
     $.x.ss('#f80');
 
+    $.x.bp();
     $.x.lineWidth = 12;
     for (j=0; j<2; j++) {
       for (i=0; i<20; i++) {
@@ -20,6 +20,7 @@ var MenuScene = function() {
         $.x.k();
       }
     }
+    $.x.cp();
     $.x.fs('#f80');
     $.x.fr(50, 0, $.vw - 100, $.vh);
 
@@ -54,8 +55,6 @@ var MenuScene = function() {
     _.dc(cx + o + 30, cy + o, s);
     _.dc(cx, cy, d);
 
-    $.x.r();
-
     if ($.in.p(13)) {
       _.exit();
       $.scn.game = new GameScene();
@@ -67,6 +66,7 @@ var MenuScene = function() {
   _.dc = function(x, y, r) {
     $.x.bp();
     $.x.arc(x, y, r, 0, 2 * PI);
+    $.x.cp();
     $.x.f();
   }
 }

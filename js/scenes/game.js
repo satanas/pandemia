@@ -57,8 +57,8 @@ var GameScene = function() {
     _.fx();
 
     // Render
-    $.g.h.r();
     $.g.w.r();
+    $.g.h.r();
     $.g.s.r();
     $.g.i.r();
     $.cam.r($.player);
