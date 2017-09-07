@@ -1,19 +1,3 @@
-var MediKit = function(x, y) {
-  var _ = this;
-
-  _.type = ITEMS.MEDIKIT;
-  _.inherits(Sprite);
-  Sprite.call(_, x, y, 32, 32);
-
-  _.r = function(p) {
-    $.x.fs('#fff');
-    $.x.fr(p.x, p.y, _.w, _.h);
-    $.x.fs('#f00');
-    $.x.fr(p.x + 12, p.y + 6, 8, 20);
-    $.x.fr(p.x + 6, p.y + 12, 20, 8);
-  };
-}
-
 var Ammo = function(x, y) {
   var _ = this;
 
@@ -22,8 +6,15 @@ var Ammo = function(x, y) {
   Sprite.call(_, x, y, 32, 32);
 
   _.r = function(p) {
-    $.x.fs('#00f');
-    $.x.fr(p.x, p.y, _.w, _.h);
+    $.x.fs('#f6de88');
+    $.x.fr(p.x, p.y, 32, 6);
+    $.x.fs('#f2c010');
+    $.x.fr(p.x, p.y + 6, 32, 6);
+    $.x.fs('#9b4a0e');
+    $.x.fr(p.x, p.y + 12, 32, 20);
+    $.x.fs('#571a08');
+    $.x.fr(p.x + 7, p.y, 6, 32);
+    $.x.fr(p.x + 20, p.y, 6, 32);
   };
 }
 

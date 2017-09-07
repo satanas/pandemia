@@ -30,9 +30,13 @@ var Level = function() {
 
           _.map[j][i] = "#"
           $.g.w.add(new Wall(i * GRID_SIZE, j * GRID_SIZE));
+        } else {
+          _.map[j][i] = "."
+          $.g.s.add(new Floor(i * GRID_SIZE, j * GRID_SIZE));
         }
       }
     }
+    _.print();
     $.g.h.add(new IntroZ(15 * GRID_SIZE, 3 * GRID_SIZE));
     $.player = new Player(640, 320);
     $.g.w.add(new Scientist(320, 320));
@@ -73,8 +77,10 @@ var Level = function() {
       if (room !== null) {
         _.arooms.push(Rect.fromGrid(room));
         for (j=room.y; j<room.y + room.h; j++) {
-          for (i=room.x; i<room.x + room.w; i++)
+          for (i=room.x; i<room.x + room.w; i++) {
             _.map[j][i] = ".";
+            $.g.s.add(new Floor(i * GRID_SIZE, j * GRID_SIZE));
+          }
         }
       }
 
@@ -82,8 +88,10 @@ var Level = function() {
         if (hall === null || hall === undefined) return;
         //_.arooms.push(Rect.fromGrid(hall));
         for (j=hall.y; j<hall.y + hall.h; j++) {
-          for (i=hall.x; i<hall.x + hall.w; i++)
+          for (i=hall.x; i<hall.x + hall.w; i++) {
             _.map[j][i] = ".";
+            $.g.s.add(new Floor(i * GRID_SIZE, j * GRID_SIZE));
+          }
         }
       });
     });

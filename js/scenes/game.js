@@ -10,6 +10,30 @@ var GameScene = function() {
   $.ss = new ScreenShake();
   $.hud = new HUD();
 
+  // Pattern creation for the floor
+  ////_.tc = document.createElement('canvas'); // temporary canvas
+  ////_.tc.width = 64;
+  ////_.tc.height = 64;
+  ////_.tx = _.tc.getContext('2d'); // temporary context
+  ////// Big 4 blocks
+  ////_.tx.fillStyle = '#433641';
+  ////_.tx.fillRect(0, 0, 32, 32);
+  ////_.tx.fillRect(32, 32, 64, 64);
+  ////_.tx.fillStyle = '#50434e';
+  ////_.tx.fillRect(32, 0, 64, 32);
+  ////_.tx.fillRect(0, 32, 32, 64);
+  ////// Strips
+  ////_.tx.fillStyle = '#4b3746';
+  ////_.tx.fillRect(0, 0, 32, 4);
+  ////_.tx.fillRect(32, 32, 32, 4);
+  ////_.tx.fillStyle = '#3e2a3e';
+  ////_.tx.fillRect(32, 0, 32, 4);
+  ////_.tx.fillRect(0, 32, 32, 4);
+  ////_.tx.fillStyle = '#5b4e59';
+  ////_.tx.fillRect(32, 28, 32, 4);
+  ////_.tx.fillRect(0, 60, 32, 4);
+  ////_.pt = $.x.createPattern(_.tc, 'repeat');
+
   _.init = function() {
     // Clear all groups before start
     Object.keys($.g).forEach(function(g) { $.g[g].clr() })
@@ -41,7 +65,10 @@ var GameScene = function() {
   }
 
   _.update = function() {
-    $.x.clr('#ccc');
+    $.x.clr('#404c54');
+    // Pattern stuff
+    //$.x.fs(_.pt);
+    //$.x.fillRect(0, 0, $.vw, $.vh);
 
     _.be = iir(_.be - $.e, 0);
     // Update
@@ -58,9 +85,9 @@ var GameScene = function() {
     $.ss.u();
 
     // Render
+    $.g.s.r();
     $.g.w.r();
     $.g.h.r();
-    $.g.s.r();
     $.g.i.r();
     $.cam.r($.player);
     $.g.z.r();
