@@ -4,10 +4,20 @@ var MenuScene = function() {
   Scene.call(_);
 
   _.anim = new Animator([0, 1], 150);
+  _.xc = 0; // exit counter
+  _.ef = 0; // exiting flag
+
 
   _.update = function() {
     var i, j;
-    _.anim.u();
+    _.xc = iir(_.xc - $.e, 0);
+    if (_.xc === 0 && _.ef) {
+      _.exit();
+      $.scn.game = new GameScene();
+      $.scn.game.intro();
+    } else if (!_.ef) {
+      _.anim.u();
+    }
     $.x.clr('#fff');
     $.x.ss('#f80');
 
@@ -55,10 +65,11 @@ var MenuScene = function() {
     _.dc(cx + o + 30, cy + o, s);
     _.dc(cx, cy, d);
 
-    if ($.in.p(13)) {
-      _.exit();
-      $.scn.game = new GameScene();
-      $.scn.game.intro();
+    if ($.in.p(13) && !_.ef) {
+      _.ef = 1;
+      _.xc = 300;
+      _.anim.f = 0; // Turn off the press enter message
+      $.sn.p('sl');
     }
   }
 

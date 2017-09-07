@@ -2,6 +2,7 @@ var GameScene = function() {
   var _ = this;
   _.maxBlur = 5;
   _.c = $.byId("c"); // canvas
+  _.be = 0; // bite effect flag
 
   _.inherits(Scene);
   Scene.call(_);
@@ -42,6 +43,7 @@ var GameScene = function() {
   _.update = function() {
     $.x.clr('#ccc');
 
+    _.be = iir(_.be - $.e, 0);
     // Update
     $.g.w.u();
     $.g.s.u();
@@ -54,7 +56,6 @@ var GameScene = function() {
     $.cam.u();
     $.hud.u();
     $.ss.u();
-    _.fx();
 
     // Render
     $.g.w.r();
@@ -67,6 +68,7 @@ var GameScene = function() {
     $.g.b.r();
     $.player.drawAim();
     $.hud.r();
+    _.fx();
 
     if (_.intro) _.pi();
   };
@@ -81,6 +83,12 @@ var GameScene = function() {
       b = iir((70 - h) * 2, 0, 100);
     }
     _.c.style.filter = "grayscale(" + g + "%) blur(" + (b * _.maxBlur / 100) + "px)";
+
+    if (_.be) {
+      //$.x.fs("rgba(255,0,0," + lim(_.t.fo / t, 1) +")");
+      $.x.fs("rgba(255,0,0,0.4)");
+      $.x.fr(0, 0, $.vw, $.vh);
+    }
   };
 
   // Print instructions method

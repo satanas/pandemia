@@ -20,7 +20,10 @@ var Barricade = function(x, y) {
   _.u = function() {
     $.g.b.c(_, function(w, b) {
       _.health -= 1;
-      if (_.health <= 0) _.a = 0;
+      if (_.health <= 0) {
+        _.a = 0;
+        $.sn.p('ex');
+      }
     });
   }
 

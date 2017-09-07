@@ -97,8 +97,14 @@ var Player = function(x, y) {
         _.humanity -= z.bite();
         _.ic = INVINCIBILITY_TIME;
         _.dropVaccine();
+        $.scn.game.be = 30;
         $.ss.shake(1.8, 200)
         $.sn.p('ph');
+        if (_.humanity > 0) {
+        } else {
+          // game over
+          $.sn.p('go');
+        }
       });
     }
 

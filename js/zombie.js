@@ -10,7 +10,7 @@ var Zombie = function(x, y) {
   _.s = rnd() + MZS; // speed
   _.health = rndr(3, 5);
   _.hsc = 0; // hurt sound counter
-  _.gc = 0; // growl counter
+  _.gc = rndr(0, 4000); // growl counter
 
   _.inherits(Sprite);
   _.inherits(AStar);
@@ -26,8 +26,9 @@ var Zombie = function(x, y) {
       _.bcount = iir(_.bcount - $.e, 0);
       return
     }
-    if (!_.gc && (rnd() > 0.8) &&) {
+    if (!_.gc && (rnd() > 0.98) && _.trackingPos) {
       $.sn.p('zg');
+      _.gc = rndr(1000, 4000);
     }
     var d = _.getdist(_, $.player); // distance in pixels between zombie and player
 
@@ -38,6 +39,11 @@ var Zombie = function(x, y) {
         _.trackingPos = new Point($.player.x, $.player.y);
       }
     } else {
+      if (d > _.mindist) {
+        _.trackingPos = null;
+        _.path = [];
+        return;
+      }
       var nextPos = _.path[0],
           dist = _.getdist(_, nextPos),
           appliedDist;
@@ -65,11 +71,9 @@ var Zombie = function(x, y) {
     $.g.b.c(_, function(p, b) {
       if (b.type !== WEAPONS.FLAME.ID) b.a = 0;
       _.health -= 1;
-      if (!_.hsc) {
-        $.sn.p('zh');
-        _.hsc = 700;
-      }
+
       if (_.health <= 0) {
+        $.sn.p('zd');
         _.a = 0;
         if (rnd() >= DROP_RATE) {
           var i = rndr(2, 6),
@@ -84,6 +88,11 @@ var Zombie = function(x, y) {
           } else if (i === ITEMS.FLAME) {
             $.g.i.add(new Flame(x, y));
           }
+        }
+      } else {
+        if (!_.hsc) {
+          $.sn.p('zh');
+          _.hsc = 700;
         }
       }
     });
