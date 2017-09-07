@@ -27,7 +27,7 @@ var Sound = function() {
 
   // Play
   _.p = function(i) {
-    _.s[i].p();
+    if (_.s.hasOwnProperty(i)) _.s[i].p();
   };
 };
 
