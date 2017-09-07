@@ -9,6 +9,8 @@ var Zombie = function(x, y) {
   _.bcount = 0; // biting counter
   _.s = rnd() + MZS; // speed
   _.health = rndr(3, 5);
+  _.hsc = 0; // hurt sound counter
+  _.gc = 0; // growl counter
 
   _.inherits(Sprite);
   _.inherits(AStar);
@@ -18,9 +20,14 @@ var Zombie = function(x, y) {
   _.u = function() {
     // TODO: Move the seek behavior to a separated file inside ai folder
     _.ccount += $.e;
+    _.hsc = iir(_.hsc - $.e, 0);
+    _.gc = iir(_.gc - $.e, 0);
     if (_.bcount > 0) {
       _.bcount = iir(_.bcount - $.e, 0);
       return
+    }
+    if (!_.gc && (rnd() > 0.8) &&) {
+      $.sn.p('zg');
     }
     var d = _.getdist(_, $.player); // distance in pixels between zombie and player
 
@@ -58,6 +65,10 @@ var Zombie = function(x, y) {
     $.g.b.c(_, function(p, b) {
       if (b.type !== WEAPONS.FLAME.ID) b.a = 0;
       _.health -= 1;
+      if (!_.hsc) {
+        $.sn.p('zh');
+        _.hsc = 700;
+      }
       if (_.health <= 0) {
         _.a = 0;
         if (rnd() >= DROP_RATE) {
@@ -79,7 +90,6 @@ var Zombie = function(x, y) {
   };
 
   _.r = function(p) {
-    $.x.s();
     $.x.fs('#00ff00');
     $.x.fr(p.x, p.y, _.w, _.h);
 
@@ -94,7 +104,6 @@ var Zombie = function(x, y) {
     //  $.x.sr(z.x, z.y, 32, 32);
     //});
 
-    $.x.r();
   };
 
   _.bite = function() {

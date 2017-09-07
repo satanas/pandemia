@@ -34,8 +34,9 @@ var Level = function() {
       }
     }
     $.g.h.add(new IntroZ(15 * GRID_SIZE, 3 * GRID_SIZE));
-    $.player = new Player(320, 320);
-    $.g.x.add(new Vaccine(500, 500));
+    $.player = new Player(640, 320);
+    $.g.w.add(new Scientist(320, 320));
+    $.g.x.add(new Vaccine(128, 128));
   }
 
   _.gen = function(w, h) {

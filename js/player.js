@@ -98,6 +98,7 @@ var Player = function(x, y) {
         _.ic = INVINCIBILITY_TIME;
         _.dropVaccine();
         $.ss.shake(1.8, 200)
+        $.sn.p('ph');
       });
     }
 
@@ -123,6 +124,7 @@ var Player = function(x, y) {
     if (!_.vaccine) {
       $.g.x.c(_, function(p, b) {
         if (b.isPickable()) {
+          $.sn.p('vp');
           _.vaccine = b;
         }
       });
@@ -150,8 +152,8 @@ var Player = function(x, y) {
   };
 
   _.r = function(p) {
-    $.x.s();
     // debug
+    $.x.lineWidth = 1;
     $.x.ss('#f00');
     $.x.sr(p.x, p.y, _.w, _.h);
     //if (_.ic !== 0)
@@ -207,14 +209,13 @@ var Player = function(x, y) {
     }
 
     // debug
-    var c = _.getOffsetCenter(p),
+    var c = _.getCenter(p),
         mag = 100
     $.x.ss('#f00');
     $.x.bp();
     $.x.mv(c.x, c.y);
     $.x.lt(c.x + (mag * cos(_.angle)), c.y + (mag * sin(_.angle)));
     $.x.k();
-    $.x.r();
   }
 
   _.shoot = function() {
@@ -230,6 +231,11 @@ var Player = function(x, y) {
       $.g.b.add(new Bullet(c.x, c.y, _.angle + (rndr(4, 15) * PI / 180), _.weapon));
       $.g.b.add(new Bullet(c.x, c.y, _.angle - (rndr(4, 15) * PI / 180), _.weapon));
       _.ammo = iir(_.ammo - 2, 0);
+      $.sn.p('sh');
+    } else if (_.weapon.ID === WEAPONS.FLAME.ID) {
+      $.sn.p('fl');
+    } else {
+      $.sn.p('gu');
     }
   }
 
@@ -270,16 +276,15 @@ var Player = function(x, y) {
   }
 
   _.drawAim = function() {
-    $.x.s();
-    $.x.bp();
     $.x.fs('#f00');
+    $.x.bp();
     $.x.arc(_.aim.x, _.aim.y, 2, 0, 2 * PI);
+    $.x.cp();
     $.x.f();
     $.x.fr(_.aim.x, _.aim.y - 14, 1, 8);
     $.x.fr(_.aim.x, _.aim.y + 7, 1, 8);
     $.x.fr(_.aim.x - 14, _.aim.y, 8, 1);
     $.x.fr(_.aim.x + 7, _.aim.y, 8, 1);
-    $.x.r();
   }
 
   $.cv.addEventListener('mousemove', function(e) {
