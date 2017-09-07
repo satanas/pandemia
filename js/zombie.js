@@ -11,6 +11,8 @@ var Zombie = function(x, y) {
   _.health = rndr(3, 5);
   _.hsc = 0; // hurt sound counter
   _.gc = rndr(0, 4000); // growl counter
+  _.d = 'd'; // direction
+  _.anim = new Animator([0, 1], 300);
 
   _.inherits(Sprite);
   _.inherits(AStar);
@@ -46,7 +48,8 @@ var Zombie = function(x, y) {
       }
       var nextPos = _.path[0],
           dist = _.getdist(_, nextPos),
-          appliedDist;
+          appliedDist, dx, dy;
+      _.anim.u();
       // The zombie reached the current node
       if (dist === 0) {
         // We remove the current node from the path and let the walking continue
@@ -54,9 +57,14 @@ var Zombie = function(x, y) {
       } else {
         _.angle = atan2(nextPos.y - _.y, nextPos.x - _.x);
         appliedDist = min(dist, _.s);
+        dx = appliedDist * cos(_.angle);
+        dy = appliedDist * sin(_.angle);
 
-        _.x += appliedDist * cos(_.angle);
-        _.y += appliedDist * sin(_.angle);
+        _.d = (dx < 0) ? DIR.LEFT : DIR.RIGHT;
+        _.d = (dy < 0) ? DIR.UP : DIR.DOWN;
+
+        _.x += dx;
+        _.y += dy;
 
         _.updateRect();
 
@@ -99,8 +107,22 @@ var Zombie = function(x, y) {
   };
 
   _.r = function(p) {
-    $.x.fs('#00ff00');
-    $.x.fr(p.x, p.y, _.w, _.h);
+    $.x.fs('#a0d6ab');
+    $.x.fr(p.x + 2, p.y, 62, 38);
+    $.x.fs('#83bd90');
+    $.x.fr(p.x + 16, p.y + 38, 34, 13);
+    $.x.fs('#8b938d');
+    $.x.fr(p.x + 16, p.y + 50, 34, 5);
+    // Feet
+    // If the zombie is stopped
+    if (!_.trackingPos) {
+      $.x.fr(p.x + 16, p.y + 55, 14, 8);
+      $.x.fr(p.x + 36, p.y + 55, 14, 8);
+    } else if (_.anim.g()) {
+      $.x.fr(p.x + 16, p.y + 55, 14, 8);
+    } else if (!_.anim.g()) {
+      $.x.fr(p.x + 36, p.y + 55, 14, 8);
+    }
 
     //$.x.bp();
     //$.x.ss('#11c1fc');

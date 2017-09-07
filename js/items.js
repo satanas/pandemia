@@ -15,6 +15,8 @@ var Ammo = function(x, y) {
     $.x.fs('#571a08');
     $.x.fr(p.x + 7, p.y, 6, 32);
     $.x.fr(p.x + 20, p.y, 6, 32);
+    $.x.fs('#121212');
+    $.x.fr(p.x, p.y + 27, 32, 5);
   };
 }
 
