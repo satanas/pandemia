@@ -12,7 +12,7 @@ var Zombie = function(x, y) {
   _.hsc = 0; // hurt sound counter
   _.gc = rndr(0, 4000); // growl counter
   _.d = 'd'; // direction
-  _.anim = new Animator([0, 1], 300);
+  _.anim = new Animator([0, 1], 150);
 
   _.inherits(Sprite);
   _.inherits(AStar);
@@ -60,8 +60,11 @@ var Zombie = function(x, y) {
         dx = appliedDist * cos(_.angle);
         dy = appliedDist * sin(_.angle);
 
-        _.d = (dx < 0) ? DIR.LEFT : DIR.RIGHT;
-        _.d = (dy < 0) ? DIR.UP : DIR.DOWN;
+        if (abs(dx) > abs(dy)) {
+          _.d = (dx < 0) ? DIR.LEFT : DIR.RIGHT;
+        } else {
+          _.d = (dy < 0) ? DIR.UP : DIR.DOWN;
+        }
 
         _.x += dx;
         _.y += dy;
@@ -107,10 +110,13 @@ var Zombie = function(x, y) {
   };
 
   _.r = function(p) {
+    // Head
     $.x.fs('#a0d6ab');
     $.x.fr(p.x + 2, p.y, 62, 38);
+    // Chest
     $.x.fs('#83bd90');
     $.x.fr(p.x + 16, p.y + 38, 34, 13);
+    // Waist
     $.x.fs('#8b938d');
     $.x.fr(p.x + 16, p.y + 50, 34, 5);
     // Feet
@@ -122,6 +128,52 @@ var Zombie = function(x, y) {
       $.x.fr(p.x + 16, p.y + 55, 14, 8);
     } else if (!_.anim.g()) {
       $.x.fr(p.x + 36, p.y + 55, 14, 8);
+    }
+
+    if (_.d === DIR.UP) {
+      // Arms
+      $.x.fs('#8ecc9b');
+      $.x.fr(p.x + 9, p.y + 39, 7, 5);
+      $.x.fr(p.x + 50, p.y + 39, 7, 5);
+    } else if (_.d === DIR.DOWN) {
+      // Arms
+      $.x.fs('#8ecc9b');
+      $.x.fr(p.x + 9, p.y + 39, 7, 10);
+      $.x.fr(p.x + 50, p.y + 39, 7, 10);
+      // Hands
+      $.x.fs('#84ae8d');
+      $.x.fr(p.x + 9, p.y + 49, 7, 5);
+      $.x.fr(p.x + 50, p.y + 49, 7, 5);
+      // Face
+      $.x.fs('#5a5a5a');
+      $.x.fr(p.x + 15, p.y + 19, 6, 6);
+      $.x.fr(p.x + 45, p.y + 19, 6, 6);
+      $.x.fr(p.x + 32, p.y + 26, 2, 9);
+      $.x.fr(p.x + 27, p.y + 31, 12, 2);
+    } else if (_.d === DIR.LEFT) {
+      // Arms
+      $.x.fs('#8ecc9b');
+      $.x.fr(p.x + 11, p.y + 40, 16, 7);
+      // Hands
+      $.x.fs('#84ae8d');
+      $.x.fr(p.x + 5, p.y + 40, 6, 7);
+      // Face
+      $.x.fs('#5a5a5a');
+      $.x.fr(p.x + 10, p.y + 19, 6, 6);
+      $.x.fr(p.x + 2, p.y + 26, 2, 9);
+      $.x.fr(p.x + 4, p.y + 31, 4, 2);
+    } else if (_.d === DIR.RIGHT) {
+      // Arms
+      $.x.fs('#8ecc9b');
+      $.x.fr(p.x + 39, p.y + 40, 16, 7);
+      // Hands
+      $.x.fs('#84ae8d');
+      $.x.fr(p.x + 55, p.y + 40, 6, 7);
+      // Face
+      $.x.fs('#5a5a5a');
+      $.x.fr(p.x + 50, p.y + 19, 6, 6);
+      $.x.fr(p.x + 62, p.y + 26, 2, 9);
+      $.x.fr(p.x + 58, p.y + 31, 4, 2);
     }
 
     //$.x.bp();

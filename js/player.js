@@ -18,6 +18,7 @@ var Player = function(x, y) {
   _.hairColor = '#795548';
   _.aim = new Point(0, 0);
   _.weapon = WEAPONS.PISTOL;
+  _.anim = new Animator([0, 1], 150);
 
   //var x = room.x + (room.w / 2) - 32,
   //    y = room.y + (room.h / 2) - 32;
@@ -33,6 +34,7 @@ var Player = function(x, y) {
     }
     _.mxs = iir(-1.5 + (_.humanity / 10), MIN_PLAYER_SPEED);
     _.shotDelay = iir(_.shotDelay - $.e, 0);
+    _.anim.u();
 
     if (_.ic > 0) {
       _.ic = iir(_.ic - $.e, 0);
@@ -131,13 +133,14 @@ var Player = function(x, y) {
       $.g.x.c(_, function(p, b) {
         if (b.isPickable()) {
           $.sn.p('vp');
+          b.pick();
           _.vaccine = b;
         }
       });
     }
     if (_.vaccine) {
       _.vaccine.x = _.x + 16;
-      _.vaccine.y = _.y - 34;
+      _.vaccine.y = _.y;
     }
 
     $.g.h.c(_, function(p, z) {
@@ -158,63 +161,89 @@ var Player = function(x, y) {
   };
 
   _.r = function(p) {
-    // debug
-    $.x.lineWidth = 1;
-    $.x.ss('#f00');
-    $.x.sr(p.x, p.y, _.w, _.h);
-    //if (_.ic !== 0)
-    //  $.x.fs('#000000');
-    //else
-    //  $.x.fs('#ff0000');
-    $.x.fs(_.skinColor);
-    // Face
-    $.x.fr(p.x + 16, p.y + 5, 34, 20);
-    // Lab coat
-    $.x.fs('white');
-    $.x.fr(p.x + 16, p.y + 25, 34, 33);
+    // Render vaccine first if the player is heading up to cover the box
+    // with the head of the char
+    if (_.d === DIR.UP) {
+      if (_.vaccine) {
+        _.vaccine.draw(p.x + 16, p.y - 6);
+      } else {
+        // Hands
+        $.x.fs('#f3c17f');
+        $.x.fr(p.x + 9, p.y + 44, 7, 5);
+        $.x.fr(p.x + 50, p.y + 44, 7, 5);
+      }
+    }
+    // Head
+    $.x.fs('#ffca85');
+    $.x.fr(p.x + 2, p.y, 62, 38);
+    // Chest
+    $.x.fs('#727254');
+    $.x.fr(p.x + 16, p.y + 38, 34, 13);
+    // Waist
+    $.x.fs('#203622');
+    $.x.fr(p.x + 16, p.y + 50, 34, 5);
     // Feet
-    $.x.fs('black');
-    $.x.fr(p.x + 22, p.y + 59, 9, 6);
-    $.x.fr(p.x + 35, p.y + 59, 9, 6);
+    // If the player is stopped
+    if (!_.dx && !_.dy) {
+      $.x.fr(p.x + 16, p.y + 55, 14, 8);
+      $.x.fr(p.x + 36, p.y + 55, 14, 8);
+    } else if (_.anim.g()) {
+      $.x.fr(p.x + 16, p.y + 55, 14, 8);
+    } else if (!_.anim.g()) {
+      $.x.fr(p.x + 36, p.y + 55, 14, 8);
+    }
 
+    if (_.d === DIR.UP || _.d === DIR.DOWN) {
+      // Arms
+      $.x.fs('#4b4e44');
+      $.x.fr(p.x + 9, p.y + 39, 7, 5);
+      $.x.fr(p.x + 50, p.y + 39, 7, 5);
+    }
     if (_.d === DIR.DOWN) {
-      // T-shirt
-      $.x.fs('#2196f3');
-      $.x.fr(p.x + 29, p.y + 25, 8, 24);
-
-      $.x.fs('black');
-      $.x.fr(p.x + 29, p.y + 49, 8, 7);
-      $.x.fr(p.x + 29, p.y + 56, 2, 3);
-      $.x.fr(p.x + 35, p.y + 56, 2, 3);
-      // Eyes
-      $.x.fr(p.x + 24, p.y + 8, 4, 4);
-      $.x.fr(p.x + 37, p.y + 8, 4, 4);
       // Hands
-      $.x.fs(_.skinColor);
-      $.x.fr(p.x + 16, p.y + 42, 4, 4);
-      $.x.fr(p.x + 46, p.y + 42, 4, 4);
-      // Hair
-      $.x.fs(_.hairColor);
-      if (_.sex === 'm') {
-        $.x.fr(p.x + 16, p.y + 5, 4, 15);
-        $.x.fr(p.x + 20, p.y + 1, 26, 4);
-        $.x.fr(p.x + 46, p.y + 5, 4, 15);
+      $.x.fs('#f3c17f');
+      $.x.fr(p.x + 9, p.y + 44, 7, 5);
+      $.x.fr(p.x + 50, p.y + 44, 7, 5);
+      // Face
+      $.x.fs('#5a5a5a');
+      $.x.fr(p.x + 15, p.y + 19, 6, 6);
+      $.x.fr(p.x + 45, p.y + 19, 6, 6);
+      $.x.fr(p.x + 27, p.y + 31, 12, 2);
+      if (_.vaccine) {
+        _.vaccine.draw(p.x + 16, p.y + 16);
       }
-    } else if (_.d === DIR.UP) {
-      $.x.fs(_.hairColor);
-      if (_.sex === 'm') {
-        $.x.fr(p.x + 16, p.y + 5, 34, 15);
-        $.x.fr(p.x + 20, p.y + 1, 26, 4);
-      }
-      // Hands
-      $.x.fs(_.skinColor);
-      $.x.fr(p.x + 16, p.y + 42, 4, 4);
-      $.x.fr(p.x + 46, p.y + 42, 4, 4);
     } else if (_.d === DIR.LEFT) {
+      // Arms
+      $.x.fs('#4b4e44');
+      $.x.fr(p.x + 11, p.y + 40, 16, 7);
+      // Hands
+      $.x.fs('#f3c17f');
+      $.x.fr(p.x + 5, p.y + 40, 6, 7);
+      if (_.vaccine) {
+        _.vaccine.draw(p.x - 30, p.y + 16);
+      }
+      // Face
+      $.x.fs('#5a5a5a');
+      $.x.fr(p.x + 10, p.y + 19, 6, 6);
+      $.x.fr(p.x + 4, p.y + 31, 4, 2);
     } else if (_.d === DIR.RIGHT) {
+      // Arms
+      $.x.fs('#4b4e44');
+      $.x.fr(p.x + 39, p.y + 40, 16, 7);
+      // Hands
+      $.x.fs('#f3c17f');
+      $.x.fr(p.x + 55, p.y + 40, 6, 7);
+      if (_.vaccine) {
+        _.vaccine.draw(p.x + 62, p.y + 16);
+      }
+      // Face
+      $.x.fs('#5a5a5a');
+      $.x.fr(p.x + 50, p.y + 19, 6, 6);
+      $.x.fr(p.x + 58, p.y + 31, 4, 2);
     }
 
     // debug
+    $.x.lineWidth = 1;
     var c = _.getCenter(p),
         mag = 100
     $.x.ss('#f00');
