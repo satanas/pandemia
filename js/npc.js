@@ -5,7 +5,7 @@ var Scientist = function(x, y) {
   _.dg = [
     'Sarge, come here\nI need your help...',
     'Pick up the vaccine\nand bring it to me',
-    'But the vaccine can save'
+    'Good! Now blow up the\nbarricade and take it\nto the safe point\nYou\'re our only hope'
   ]
   _.inherits(Sprite);
   Sprite.call(_, x, y, 64, 64);
@@ -25,6 +25,14 @@ var Scientist = function(x, y) {
     $.x.k();
     $.x.cp();
 
-    $.txt.r(p.x - 64, p.y - 60, _.dg[0], 2, '#fff', {vspacing: 5});
+    $.txt.r(p.x - 64, p.y - 60, _.dg[_.st], 2, '#fff', {vspacing: 5});
+    if (_.st === 1) {
+      $.txt.r(100, 170, 'Vaccine', 2, '#fff');
+    }
+  }
+
+  // Go to the next step of the dialog
+  _.n = function() {
+    _.st += 1;
   }
 }

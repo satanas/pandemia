@@ -1,15 +1,17 @@
-var IntroZ = function(x, y) {
+// Zone used to exit the lab and start the game
+var StartZ = function(x, y) {
   var _ = this;
-  _.intro = 1;
+  _.start = 1;
   _.inherits(Sprite);
-  Sprite.call(_, x, y, 64, 192);
+  Sprite.call(_, x, y, 54, 172);
 
   _.r = function(p) {
-    $.x.fs('red');
-    $.x.fr(p.x, p.y, _.w, _.h);
+    //$.x.fs('red');
+    //$.x.fr(p.x, p.y, _.w, _.h);
   }
 }
 
+// Zone used to detect the end of the game
 var EndZ = function(cx, cy) {
   var _ = this;
   _.end = 1;
@@ -26,4 +28,17 @@ var EndZ = function(cx, cy) {
 
     $.txt.r(p.x + 65, p.y + 140, 'Safe Point', 2, '#fff', {hspacing: 4});
   }
+}
+
+// Zone used to detect player movement and render instructions
+var IntroZ = function(x, y) {
+  var _ = this;
+  _.intro = 1;
+  _.inherits(Sprite);
+  Sprite.call(_, x, y, 192, 192);
+
+  _.r = function(p) {
+    $.x.fs('red');
+    $.x.fr(p.x, p.y, _.w, _.h);
+  };
 }

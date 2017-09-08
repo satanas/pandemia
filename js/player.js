@@ -147,7 +147,14 @@ var Player = function(x, y) {
       if (z.end && _.vaccine) {
         // Stop all the zombies, fade out, etc
         console.log('you win');
-      } else if (z.intro && _.vaccine) {
+      } else if (z.intro) {
+        var s = $.scientist;
+        if ($.scientist.st === 0) {
+          s.n();
+        } else if ($.scientist.st === 1 && _.vaccine) {
+          s.n();
+        }
+      } else if (z.start && _.vaccine) {
         $.scn.game.game();
       }
     });

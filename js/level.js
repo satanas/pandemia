@@ -37,9 +37,11 @@ var Level = function() {
       }
     }
     _.print();
-    $.g.h.add(new IntroZ(15 * GRID_SIZE, 3 * GRID_SIZE));
+    $.g.h.add(new StartZ(970, 202));
     $.player = new Player(640, 320);
-    $.g.w.add(new Scientist(320, 320));
+    $.scientist = new Scientist(320, 320);
+    $.g.w.add($.scientist);
+    $.g.h.add(new IntroZ(256, 256));
     $.g.x.add(new Vaccine(128, 128));
   }
 

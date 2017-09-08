@@ -13,7 +13,7 @@ window.addEventListener('load', function() {
   $.g.z = new Group(); // Zombies
   $.g.s = new Group(); // Spawners
   $.g.i = new Group(); // Items
-  $.g.h = new Group(); // Start and end points
+  $.g.h = new Group(); // Zones, start, intro and end points
   $.g.b = new Group(); // Bullets
   $.g.x = new Group(); // Pushables boxes
   $.g.n = new Group(); // NPCs
