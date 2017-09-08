@@ -155,6 +155,13 @@ var Vaccine = function(x, y) {
 
 // d is the direction of the render
 Vaccine.draw = function(x, y, d) {
-  $.x.fs('#fff');
+  $.x.fs('#3f51b5');
   $.x.fr(x, y, 32, 32);
+  $.x.fs('#4caf50');
+  $.x.fr(x + 13, y + 6, 7, 19);
+  $.x.fs('#9e9e9e');
+  $.x.fr(x + 11, y + 1, 10, 2);
+  $.x.fr(x + 15, y + 3, 3, 3);
+  $.x.fr(x + 9, y + 8, 14, 2);
+  $.x.fr(x + 16, y + 26, 1, 6);
 }

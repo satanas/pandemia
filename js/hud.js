@@ -1,10 +1,10 @@
 var HUD = function() {
   var _ = this;
-  _.barMaxWidth = 200;
-  _.barWidth = _.barMaxWidth;
+  _.bmxw = 300;
+  _.barWidth = _.bmxw;
 
   _.u = function() {
-    _.barWidth = $.player.humanity * 2;
+    _.barWidth = $.player.humanity * _.bmxw / 100;
   };
 
   _.r = function() {
@@ -12,14 +12,15 @@ var HUD = function() {
         c = '#fff', // text color
         s = 4, // text scale
         ha = { halign: 'center' }, // horizontal alignment
-        o = $.txt.r(20, 40, 'Humanity:', s, c),
         p = $.txt.r(700, 40, 'Ammo:', s, c);
 
     // Humanity bar
     $.x.fs('#333');
-    $.x.fr(o.width + 25, 30, 200, 30);
+    $.x.fr(50, 30, _.bmxw, 30);
     $.x.fs('#f00');
-    $.x.fr(o.width + 25, 30, _.barWidth, 30);
+    $.x.fr(50, 30, _.barWidth, 30);
+    $.txt.r(70, 35, 'Humanity', s, c)
+
     // Ammo
     Ammo.draw(650, 35);
     $.txt.r(p.width + 725, 40, $.player.ammo + '', s, c);
@@ -42,7 +43,8 @@ var HUD = function() {
     // Weapon overlay for vaccine
     if ($.player.vaccine) {
       $.x.fs('rgba(0,0,0,0.8)');
-      $.x.fr(($.vw - 64) / 2, 15, 64, 64);
+      $.x.fr(cx, 16, 64, 64);
+      Vaccine.draw(cx + 16, 32);
       $.txt.r(0, 90, 'Vaccine', 2, c, ha);
     } else {
       $.txt.r(0, 90, $.player.weapon.ID, 2, c, ha);

@@ -165,7 +165,7 @@ var Player = function(x, y) {
     // with the head of the char
     if (_.d === DIR.UP) {
       if (_.vaccine) {
-        _.vaccine.draw(p.x + 16, p.y - 6);
+        Vaccine.draw(p.x + 16, p.y - 6);
       } else {
         // Hands
         $.x.fs('#f3c17f');
@@ -210,7 +210,7 @@ var Player = function(x, y) {
       $.x.fr(p.x + 45, p.y + 19, 6, 6);
       $.x.fr(p.x + 27, p.y + 31, 12, 2);
       if (_.vaccine) {
-        _.vaccine.draw(p.x + 16, p.y + 16);
+        Vaccine.draw(p.x + 16, p.y + 16);
       }
     } else if (_.d === DIR.LEFT) {
       // Arms
@@ -220,7 +220,7 @@ var Player = function(x, y) {
       $.x.fs('#f3c17f');
       $.x.fr(p.x + 5, p.y + 40, 6, 7);
       if (_.vaccine) {
-        _.vaccine.draw(p.x - 30, p.y + 16);
+        Vaccine.draw(p.x - 30, p.y + 16);
       }
       // Face
       $.x.fs('#5a5a5a');
@@ -234,7 +234,7 @@ var Player = function(x, y) {
       $.x.fs('#f3c17f');
       $.x.fr(p.x + 55, p.y + 40, 6, 7);
       if (_.vaccine) {
-        _.vaccine.draw(p.x + 62, p.y + 16);
+        Vaccine.draw(p.x + 62, p.y + 16);
       }
       // Face
       $.x.fs('#5a5a5a');
