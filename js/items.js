@@ -6,18 +6,22 @@ var Ammo = function(x, y) {
   Sprite.call(_, x, y, 32, 32);
 
   _.r = function(p) {
-    $.x.fs('#f6de88');
-    $.x.fr(p.x, p.y, 32, 6);
-    $.x.fs('#f2c010');
-    $.x.fr(p.x, p.y + 6, 32, 6);
-    $.x.fs('#9b4a0e');
-    $.x.fr(p.x, p.y + 12, 32, 20);
-    $.x.fs('#571a08');
-    $.x.fr(p.x + 7, p.y, 6, 32);
-    $.x.fr(p.x + 20, p.y, 6, 32);
-    $.x.fs('#121212');
-    $.x.fr(p.x, p.y + 27, 32, 5);
+    Ammo.draw(p.x, p.y);
   };
+}
+
+Ammo.draw = function(x, y) {
+  $.x.fs('#f6de88');
+  $.x.fr(x, y, 32, 6);
+  $.x.fs('#f2c010');
+  $.x.fr(x, y + 6, 32, 6);
+  $.x.fs('#9b4a0e');
+  $.x.fr(x, y + 12, 32, 20);
+  $.x.fs('#571a08');
+  $.x.fr(x + 7, y, 6, 32);
+  $.x.fr(x + 20, y, 6, 32);
+  $.x.fs('#121212');
+  $.x.fr(x, y + 27, 32, 5);
 }
 
 var Gun = function(x, y) {
@@ -124,18 +128,12 @@ var Vaccine = function(x, y) {
         $.x.fs('#f00');
         $.x.fr(p.x, p.y, _.w, _.h);
       } else {
-        _.draw(p.x, p.y);
+        Vaccine.draw(p.x, p.y);
       }
     } else {
-      _.draw(p.x, p.y);
+      Vaccine.draw(p.x, p.y);
     }
   };
-
-  // d is the direction of the render
-  _.draw = function(x, y, d) {
-    $.x.fs('#fff');
-    $.x.fr(x, y, _.w, _.h);
-  }
 
   _.isPickable = function() {
     return !_.pickupDelay;
@@ -153,4 +151,10 @@ var Vaccine = function(x, y) {
     _.x = p.x + 16;
     _.y = p.b.b - 32;
   }
+}
+
+// d is the direction of the render
+Vaccine.draw = function(x, y, d) {
+  $.x.fs('#fff');
+  $.x.fr(x, y, 32, 32);
 }
