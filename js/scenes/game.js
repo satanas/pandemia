@@ -93,7 +93,9 @@ var GameScene = function() {
 
   // Print instructions method
   _.pi = function() {
-    $.txt.r(0, _.wh - 120, 'wasd, zqsd and arrows to move\nMouse to aim and shoot', 3, '#000', {
+    $.x.fs('rgba(0,0,0,0.5)');
+    $.x.fr(300, 460, 430, 70);
+    $.txt.r(0, _.wh - 100, 'wasd, zqsd and arrows to move\nMouse to aim and shoot', 2, '#fff', {
       halign: 'center',
       hspacing: 2,
       vspacing: 20,

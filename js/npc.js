@@ -16,7 +16,7 @@ var Scientist = function(x, y) {
   _.r = function(p) {
     $.x.fs('#fff000');
     $.x.fr(p.x, p.y, _.w, _.h);
-    $.x.ss('#000');
+    $.x.ss('#fff');
     $.x.bp();
     $.x.mv(p.x - 64, p.y - 20);
     $.x.lt(p.x + 64 * 2, p.y - 20);
@@ -25,6 +25,6 @@ var Scientist = function(x, y) {
     $.x.k();
     $.x.cp();
 
-    $.txt.r(p.x - 64, p.y - 60, _.dg[0], 2, '#000', {vspacing: 5});
+    $.txt.r(p.x - 64, p.y - 60, _.dg[0], 2, '#fff', {vspacing: 5});
   }
 }

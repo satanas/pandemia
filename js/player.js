@@ -244,7 +244,7 @@ var Player = function(x, y) {
 
     // debug
     $.x.lineWidth = 1;
-    var c = _.getCenter(p),
+    var c = _.getOffsetCenter(p),
         mag = 100
     $.x.ss('#f00');
     $.x.bp();
