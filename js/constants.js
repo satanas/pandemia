@@ -8,10 +8,10 @@ INTENSITY_DECAY = 0.5 // per second
 MEDIKIT_DURATION = 1500; // ms
 MIN_BITING_DURATION = 900; // ms
 ITEMS = {
-  AMMO: 2,
-  PISTOL: 3,
-  SHOTGUN: 4,
-  FLAME: 5
+  AM: 2,
+  MG: 3,
+  SG: 4,
+  FL: 5
 }
 INPUT = {
   LEFT: 65,   // A
@@ -27,21 +27,21 @@ DIR = {
   DOWN: 'd'
 }
 WEAPONS= {
-  PISTOL: {
-    ID: 'PISTOL',
+  MG: {
+    ID: 'MACHINEGUN',
     DELAY: 50,
     SPEED: 50,
     SIZE: 10,
     DAM: 1
   },
-  SHOTGUN: {
+  SG: {
     ID: 'SHOTGUN',
     DELAY: 300,
     SPEED: 30,
     SIZE: 16,
     DAM: 3
   },
-  FLAME: {
+  FL: {
     ID: 'FLAME',
     DELAY: 40,
     SPEED: 7,

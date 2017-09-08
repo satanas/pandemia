@@ -80,7 +80,7 @@ var Zombie = function(x, y) {
 
     // Collisions with bullets
     $.g.b.c(_, function(p, b) {
-      if (b.type !== WEAPONS.FLAME.ID) b.a = 0;
+      if (b.type !== WEAPONS.FL.ID) b.a = 0;
       _.health -= 1;
 
       if (_.health <= 0) {
@@ -88,15 +88,15 @@ var Zombie = function(x, y) {
         _.a = 0;
         if (rnd() >= DROP_RATE) {
           var i = rndr(2, 6),
-              x = _.x + (_.w / 2),
-              y = _.b.b - 32;
-          if (i === ITEMS.AMMO) {
+              x = _.x,
+              y = _.y;
+          if (i === ITEMS.AM) {
             $.g.i.add(new Ammo(x, y));
-          } else if (i === ITEMS.PISTOL) {
-            $.g.i.add(new Pistol(x, y));
-          } else if (i === ITEMS.SHOTGUN) {
+          } else if (i === ITEMS.MG) {
+            $.g.i.add(new Gun(x, y));
+          } else if (i === ITEMS.SG) {
             $.g.i.add(new Shotgun(x, y));
-          } else if (i === ITEMS.FLAME) {
+          } else if (i === ITEMS.FL) {
             $.g.i.add(new Flame(x, y));
           }
         }

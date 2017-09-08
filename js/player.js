@@ -17,7 +17,7 @@ var Player = function(x, y) {
   _.skinColor = '#ffe499';
   _.hairColor = '#795548';
   _.aim = new Point(0, 0);
-  _.weapon = WEAPONS.PISTOL;
+  _.weapon = WEAPONS.MG;
   _.anim = new Animator([0, 1], 150);
 
   //var x = room.x + (room.w / 2) - 32,
@@ -115,15 +115,15 @@ var Player = function(x, y) {
       i.a = 0;
       if (i.type === ITEMS.MEDIKIT) {
         _.hc = MEDIKIT_DURATION;
-      } else if (i.type === ITEMS.AMMO) {
+      } else if (i.type === ITEMS.AM) {
         _.ammo += AMMO_PER_BOX;
       } else {
-        if (i.type === ITEMS.PISTOL) {
-          _.weapon = WEAPONS.PISTOL;
-        } else if (i.type === ITEMS.SHOTGUN) {
-          _.weapon = WEAPONS.SHOTGUN;
-        } else if (i.type === ITEMS.FLAME) {
-          _.weapon = WEAPONS.FLAME;
+        if (i.type === ITEMS.MG) {
+          _.weapon = WEAPONS.MG;
+        } else if (i.type === ITEMS.SG) {
+          _.weapon = WEAPONS.SG;
+        } else if (i.type === ITEMS.FL) {
+          _.weapon = WEAPONS.FL;
         }
       }
     });
@@ -262,12 +262,12 @@ var Player = function(x, y) {
     var c = _.getCenter();
     _.ammo -= 1;
     $.g.b.add(new Bullet(c.x, c.y, _.angle, _.weapon));
-    if (_.weapon.ID === WEAPONS.SHOTGUN.ID) {
+    if (_.weapon.ID === WEAPONS.SG.ID) {
       $.g.b.add(new Bullet(c.x, c.y, _.angle + (rndr(4, 15) * PI / 180), _.weapon));
       $.g.b.add(new Bullet(c.x, c.y, _.angle - (rndr(4, 15) * PI / 180), _.weapon));
       _.ammo = iir(_.ammo - 2, 0);
       $.sn.p('sh');
-    } else if (_.weapon.ID === WEAPONS.FLAME.ID) {
+    } else if (_.weapon.ID === WEAPONS.FL.ID) {
       $.sn.p('fl');
     } else {
       $.sn.p('gu');

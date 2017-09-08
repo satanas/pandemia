@@ -5,7 +5,7 @@ var Bullet = function(cx, cy, angle, type) {
   _.speed = _.type.SPEED;
   _.damage = _.type.DAM;
   _.lifetime = 500; // only valid for flame
-  if (_.type.ID === WEAPONS.FLAME.ID) {
+  if (_.type.ID === WEAPONS.FL.ID) {
     _.angle += rndr(-8, 8) * PI / 180;
     _.angleVar = _.angle + (rnde([-20, -15, 0, 15, 20]) * PI / 180);
     _.xdecay = 20; //rndr(50, 80); // per second
@@ -21,7 +21,7 @@ var Bullet = function(cx, cy, angle, type) {
     _.y += _.speed * sin(_.angle);
 
     // Collisions with walls
-    if (_.type.ID !== WEAPONS.FLAME.ID) {
+    if (_.type.ID !== WEAPONS.FL.ID) {
       $.g.w.c(_, function(p, w) {
         _.a = 0;
       });
@@ -35,7 +35,7 @@ var Bullet = function(cx, cy, angle, type) {
     // lost more than 1 hour debugging
     _.updateRect();
 
-    if (_.type.ID === WEAPONS.FLAME.ID) {
+    if (_.type.ID === WEAPONS.FL.ID) {
       _.w = iir(_.w - ($.e * _.xdecay / 1000), 1);
       _.lifetime = iir(_.lifetime - $.e, 0);
       _.color = iir(_.color + ($.e / 12), 7, 22);
@@ -50,7 +50,7 @@ var Bullet = function(cx, cy, angle, type) {
   }
 
   _.r = function(p) {
-    if (_.type.ID === WEAPONS.FLAME.ID) {
+    if (_.type.ID === WEAPONS.FL.ID) {
       var c = _.color * 255 / 100,
           o = _.lifetime / 200;
       $.x.fs('hsla(' + c + ',100%,50%,' + o + ')');

@@ -20,86 +20,86 @@ var Ammo = function(x, y) {
   };
 }
 
-var Pistol = function(x, y) {
+var Gun = function(x, y) {
   var _ = this;
 
-  _.type = ITEMS.PISTOL;
+  _.type = ITEMS.MG;
   _.inherits(Sprite);
   Sprite.call(_, x, y, 32, 32);
 
   _.r = function(p) {
-    _.draw(p.x, p.y);
+    Gun.draw(p.x, p.y);
   };
+}
 
-  _.draw = function(x, y) {
-    $.x.fs('#5a5a5a');
-    $.x.fr(x + 8, y + 14, 51, 9);
-    $.x.fs('#2b2b2b');
-    $.x.fr(x, y + 23, 64, 6);
-    $.x.fr(x, y + 28, 4, 4);
-    $.x.fr(x + 8, y + 28, 51, 4);
-    $.x.fr(x + 12, y + 32, 42, 4);
-    $.x.fr(x + 20, y + 36, 4, 4);
-    $.x.fr(x + 8, y + 36, 11, 8);
-    $.x.fr(x + 4, y + 40, 11, 8);
-    $.x.fr(x + 28, y + 36, 10, 21);
-    $.x.fr(x + 46, y + 36, 8, 14);
-    $.x.fr(x + 12, y + 10, 8, 4);
-    $.x.fr(x + 52, y + 10, 4, 4);
-  }
+Gun.draw = function(x, y) {
+  $.x.fs('#5a5a5a');
+  $.x.fr(x + 8, y + 14, 51, 9);
+  $.x.fs('#2b2b2b');
+  $.x.fr(x, y + 23, 64, 6);
+  $.x.fr(x, y + 28, 4, 4);
+  $.x.fr(x + 8, y + 28, 51, 4);
+  $.x.fr(x + 12, y + 32, 42, 4);
+  $.x.fr(x + 20, y + 36, 4, 4);
+  $.x.fr(x + 8, y + 36, 11, 8);
+  $.x.fr(x + 4, y + 40, 11, 8);
+  $.x.fr(x + 28, y + 36, 10, 21);
+  $.x.fr(x + 46, y + 36, 8, 14);
+  $.x.fr(x + 12, y + 10, 8, 4);
+  $.x.fr(x + 52, y + 10, 4, 4);
 }
 
 var Shotgun = function(x, y) {
   var _ = this;
 
-  _.type = ITEMS.SHOTGUN;
+  _.type = ITEMS.SG;
   _.inherits(Sprite);
   Sprite.call(_, x, y, 32, 32);
 
   _.r = function(p) {
-    _.draw(p.x, p.y);
+    Shotgun.draw(p.x, p.y);
   };
+}
 
-  _.draw = function(x, y) {
-    $.x.fs('#9e9e9e');
-    $.x.fr(x + 12, y + 19, 52, 8);
-    $.x.fr(x + 57, y + 11, 4, 8);
-    $.x.fs('#5a5a5a');
-    $.x.fr(x + 12, y + 27, 52, 8);
-    $.x.fs('#795548');
-    $.x.fr(x, y + 31, 8, 24);
-    $.x.fr(x + 4, y + 27, 8, 24);
-    $.x.fr(x + 12, y + 35, 35, 8);
-  }
+Shotgun.draw = function(x, y) {
+  $.x.fs('#9e9e9e');
+  $.x.fr(x + 12, y + 19, 52, 8);
+  $.x.fr(x + 57, y + 11, 4, 8);
+  $.x.fs('#5a5a5a');
+  $.x.fr(x + 12, y + 27, 52, 8);
+  $.x.fs('#795548');
+  $.x.fr(x, y + 31, 8, 24);
+  $.x.fr(x + 4, y + 27, 8, 24);
+  $.x.fr(x + 12, y + 35, 35, 8);
 }
 
 var Flame = function(x, y) {
   var _ = this;
 
-  _.type = ITEMS.FLAME;
+  _.type = ITEMS.FL;
   _.inherits(Sprite);
   Sprite.call(_, x, y, 64, 64);
 
   _.r = function(p) {
-    _.draw(p.x, p.y);
+    Flame.draw(p.x, p.y);
   };
+}
 
-  _.draw = function(x, y) {
-    $.x.fs('#f44336');
-    $.x.fr(x + 10, y + 13, 30, 10);
-    $.x.fs('#ffeb3b');
-    $.x.fr(x + 40, y + 13, 4, 10);
-    $.x.fs('#000');
-    $.x.fr(x, y + 18, 4, 23);
-    $.x.fr(x, y + 22, 64, 4);
-    $.x.fr(x + 11, y + 18, 21, 4);
-    $.x.fr(x, y + 26, 45, 6);
-    $.x.fr(x + 5, y + 32, 5, 17);
-    $.x.fr(x + 10, y + 32, 7, 4);
-    $.x.fr(x + 8, y + 44, 7, 9);
-    $.x.fr(x + 15, y + 44, 10, 3);
-    $.x.fr(x + 21, y + 32, 4, 12);
-  }
+Flame.draw = function(x, y) {
+  $.x.fs('#f44336');
+  $.x.fr(x + 10, y + 13, 30, 10);
+  $.x.fs('#ffeb3b');
+  $.x.fr(x + 40, y + 13, 4, 10);
+  $.x.fs('#000');
+  $.x.fr(x, y + 18, 4, 23);
+  $.x.fr(x, y + 22, 64, 4);
+  $.x.fr(x + 11, y + 18, 21, 4);
+  $.x.fr(x, y + 26, 45, 6);
+  $.x.fr(x + 5, y + 32, 5, 17);
+  $.x.fr(x + 10, y + 32, 7, 4);
+  $.x.fr(x + 8, y + 44, 7, 9);
+  $.x.fr(x + 15, y + 44, 10, 3);
+  $.x.fr(x + 21, y + 32, 4, 12);
 }
 
 var Vaccine = function(x, y) {
