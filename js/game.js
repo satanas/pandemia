@@ -6,7 +6,7 @@ window.addEventListener('load', function() {
   // Collisions system
   $.o = new Collisions();
   // Bind keyboard
-  $.in.b([13, 65, 68, 87, 83]);
+  $.in.b([].concat(INPUT.L).concat(INPUT.R).concat(INPUT.U).concat(INPUT.D).concat(INPUT.E));
 
   // Collision groups
   $.g.w = new Group(); // Walls

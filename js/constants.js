@@ -14,11 +14,11 @@ ITEMS = {
   FL: 5
 }
 INPUT = {
-  LEFT: 65,   // A
-  RIGHT: 68,  // D
-  UP: 87,     // W
-  DOWN: 83,   // S
-  ENTER: 13,  // Enter
+  L: [65, 81, 37],  // A - Q
+  R: [68, 39],      // D
+  U: [87, 90, 38],  // W - Z
+  D: [83, 40],      // S
+  E: [13],          // Enter
 }
 DIR = {
   LEFT: 'l',

@@ -42,18 +42,18 @@ var Player = function(x, y) {
       // _.mxs = iir(_.mxs - (_.mxs * 0.2), MIN_PLAYER_SPEED);
     }
 
-    if ($.in.p(INPUT.LEFT)) {
+    if ($.in.p(INPUT.L)) {
       _.d = DIR.LEFT;
       _.dx -= _.s;
-    } else if ($.in.p(INPUT.RIGHT)) {
+    } else if ($.in.p(INPUT.R)) {
       _.d = DIR.RIGHT;
       _.dx += _.s;
     }
 
-    if ($.in.p(INPUT.UP)) {
+    if ($.in.p(INPUT.U)) {
       _.d = DIR.UP;
       _.dy -= _.s;
-    } else if ($.in.p(INPUT.DOWN)) {
+    } else if ($.in.p(INPUT.D)) {
       _.d = DIR.DOWN;
       _.dy += _.s;
     }
@@ -61,10 +61,10 @@ var Player = function(x, y) {
     _.dx = iir(_.dx, -_.mxs, _.mxs);
     _.dy = iir(_.dy, -_.mxs, _.mxs);
 
-    if (!$.in.p(INPUT.LEFT) && !$.in.p(INPUT.RIGHT)) {
+    if (!$.in.p(INPUT.L) && !$.in.p(INPUT.R)) {
       _.dx = 0;
     }
-    if (!$.in.p(INPUT.UP) && !$.in.p(INPUT.DOWN)) {
+    if (!$.in.p(INPUT.U) && !$.in.p(INPUT.D)) {
       _.dy = 0;
     }
 

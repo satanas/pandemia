@@ -22,7 +22,14 @@ var Input = function() {
 
   /* Is pressed */
   _.p = function(c) {
-    return !!ps[c];
+    if (c instanceof Array) {
+      for(var i=0; i < c.length; i++) {
+        if (!!ps[c[i]]) return 1;
+      }
+      return 0;
+    } else {
+      return !!ps[c];
+    }
   };
   /* Is released */
   _.r = function(c) {
