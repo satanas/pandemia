@@ -8,12 +8,12 @@ var StartZ = function(x, y) {
 
   _.u = function() {
     _.ac = iir(_.ac - $.e, 0);
+    if (_.ac) {
+      $.msg ='You cannot leave the lab without the vaccine';
+    }
   }
 
   _.r = function(p) {
-    if (_.ac) {
-      $.x.ct('You cannot leave the lab without the vaccine', 30, 200, '#fff', 'sans-serif');
-    }
   }
 
   // Show alert
@@ -29,16 +29,29 @@ var EndZ = function(cx, cy) {
   _.end = 1;
   _.ow = 256;
   _.oh = 160;
+  _.oc = 0; // Occupy counter
   _.inherits(Sprite);
-  Sprite.call(_, cx - 128, cy - 80, _.ow - 64, _.oh - 64);
+  Sprite.call(_, cx - 64, cy - 40, _.ow / 2, _.oh / 2);
+
+  _.u = function() {
+    _.oc = iir(_.oc - $.e, 0);
+    if (_.oc) {
+      $.msg = 'There are zombies in the safe point. Kill them first!';
+    }
+  }
 
   _.r = function(p) {
     $.x.fs('white');
-    $.x.fr(p.x, p.y, _.ow, _.oh);
+    $.x.fr(p.x - 64, p.y - 40, _.ow, _.oh);
     $.x.fs('limegreen');
-    $.x.fr(p.x, p.y + 130, _.ow, 30);
+    $.x.fr(p.x - 64, p.y + 90, _.ow, 30);
+    $.x.fs('red');
+    $.x.fr(p.x, p.y, _.w, _.h);
+  }
 
-    $.txt.r(p.x + 65, p.y + 140, 'Safe Point', 2, '#fff', {hspacing: 4});
+  // Occupy zone (used by zombies)
+  _.occ = function() {
+    _.oc = 1000;
   }
 }
 

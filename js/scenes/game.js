@@ -3,6 +3,7 @@ var GameScene = function() {
   _.maxBlur = 5;
   _.c = $.byId("c"); // canvas
   _.be = 0; // bite effect flag
+  _.end = 0; // ending flag. 1 = game over, 2 = win
 
   _.inherits(Scene);
   Scene.call(_);
@@ -42,6 +43,7 @@ var GameScene = function() {
 
   _.update = function() {
     $.x.clr('#404c54');
+    $.msg = 0; // Clearing the msg buffer
 
     _.be = iir(_.be - $.e, 0);
     // Update
@@ -52,23 +54,26 @@ var GameScene = function() {
     $.g.h.u();
     $.g.x.u();
     $.player.u();
+    $.g.n.u();
     $.g.b.u();
     $.cam.u();
     $.hud.u();
     $.ss.u();
 
     // Render
-    $.g.s.r();
-    $.g.z.r();
-    $.g.i.r();
+    $.g.s.r(); // spawners and floor
+    $.g.h.r(); // zones
+    $.g.w.r(); // walls
+    $.g.z.r(); // zombies
+    $.g.i.r(); // items
     $.cam.r($.player);
-    $.g.w.r();
-    $.g.h.r();
-    $.g.x.r();
-    $.g.b.r();
+    $.g.n.r(); // NPCs
+    $.g.x.r(); // vaccine
+    $.g.b.r(); // bullets
     $.player.drawAim();
     $.hud.r();
     _.fx();
+    _.pgm();
 
     if (_.intro) _.pi();
   };
@@ -99,4 +104,19 @@ var GameScene = function() {
     $.x.ct('MOUSE to aim and shoot', 20, 515, '#fff', 'sans-serif');
   }
 
+  _.over = function() {
+    _.end = 1;
+    $.sn.p('go');
+  }
+
+  _.win = function() {
+    _.end = 2;
+  }
+
+  // Print global message
+  _.pgm = function() {
+    if ($.msg) {
+      $.x.ct($.msg, 30, 200, '#fff', 'sans-serif');
+    }
+  }
 }

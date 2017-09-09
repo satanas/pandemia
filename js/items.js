@@ -1,7 +1,7 @@
 var Ammo = function(x, y) {
   var _ = this;
 
-  _.type = ITEMS.AMMO;
+  _.type = ITEMS.AM;
   _.inherits(Sprite);
   Sprite.call(_, x, y, 32, 32);
 

@@ -27,6 +27,8 @@ var Player = function(x, y) {
   Sprite.call(_, x, y, 64, 64);
 
   _.u = function() {
+    if ($.scn.game.end !== 0) return;
+
     if (_.hc > 0) {
       _.hc = iir(_.hc - $.e, 0);
     } else {
@@ -95,19 +97,18 @@ var Player = function(x, y) {
 
     // Collisions with zombies
     if (_.ic === 0) {
-      $.g.z.c(_, function(p, z) {
-        _.humanity -= z.bite();
-        _.ic = INVINCIBILITY_TIME;
-        _.dropVaccine();
-        $.scn.game.be = 30;
-        $.ss.shake(1.8, 200)
-        $.sn.p('ph');
-        if (_.humanity > 0) {
-        } else {
-          // game over
-          $.sn.p('go');
-        }
-      });
+      //$.g.z.c(_, function(p, z) {
+      //  _.humanity -= z.bite();
+      //  _.ic = INVINCIBILITY_TIME;
+      //  _.dropVaccine();
+      //  $.scn.game.be = 30;
+      //  $.ss.shake(1.8, 200)
+      //  $.sn.p('ph');
+      //  if (_.humanity > 0) {
+      //  } else {
+      //    $.scn.game.over();
+      //  }
+      //});
     }
 
     // Collisions with items
@@ -148,7 +149,8 @@ var Player = function(x, y) {
     }
 
     $.g.h.c(_, function(p, z) {
-      if (z.end && _.vaccine) {
+      if (z.end && _.vaccine && !z.o) {
+        $.scn.game.win();
         // Stop all the zombies, fade out, etc
         console.log('you win');
       } else if (z.intro) {
@@ -170,7 +172,6 @@ var Player = function(x, y) {
     if (_.shooting && !_.shotDelay) {
       _.shoot();
     }
-    //console.log('bullets', $.g.b.e.length);
   };
 
   _.r = function(p) {

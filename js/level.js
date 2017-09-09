@@ -40,7 +40,7 @@ var Level = function() {
     $.g.h.add(new StartZ(970, 202));
     $.player = new Player(640, 320);
     $.scientist = new Scientist(320, 320);
-    $.g.w.add($.scientist);
+    $.g.n.add($.scientist);
     $.g.h.add(new IntroZ(256, 256));
     $.g.x.add(new Vaccine(128, 128));
   }

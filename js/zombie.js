@@ -20,6 +20,8 @@ var Zombie = function(x, y) {
   AStar.call(_, $.lvl.ww, $.lvl.wh);
 
   _.u = function() {
+    if ($.scn.game.end === 2) return;
+
     // TODO: Move the seek behavior to a separated file inside ai folder
     _.ccount += $.e;
     _.hsc = iir(_.hsc - $.e, 0);
@@ -105,6 +107,12 @@ var Zombie = function(x, y) {
           $.sn.p('zh');
           _.hsc = 700;
         }
+      }
+    });
+
+    $.g.h.c(_, function(p, z) {
+      if (z.end) {
+        z.occ(); // Occupy safe zone to avoid delivering the vaccine
       }
     });
   };
