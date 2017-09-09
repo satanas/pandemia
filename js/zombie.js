@@ -24,10 +24,8 @@ var Zombie = function(x, y) {
     _.ccount += $.e;
     _.hsc = iir(_.hsc - $.e, 0);
     _.gc = iir(_.gc - $.e, 0);
-    if (_.bcount > 0) {
-      _.bcount = iir(_.bcount - $.e, 0);
-      return
-    }
+    _.bcount = iir(_.bcount - $.e, 0);
+
     if (!_.gc && (rnd() > 0.98) && _.trackingPos) {
       $.sn.p('zg');
       _.gc = rndr(1000, 4000);
@@ -35,45 +33,47 @@ var Zombie = function(x, y) {
     var d = _.getdist(_, $.player); // distance in pixels between zombie and player
 
     // The zombie doesn't have a path to walk
-    if (_.path.length === 0) {
-      if ((d <= _.mindist) && (round(d) > 40)) {
-        _.path = _.findpath(_, $.player, MAX_ZOMBIE_PATH_DISTANCE);
-        _.trackingPos = new Point($.player.x, $.player.y);
-      }
-    } else {
-      if (d > _.mindist) {
-        _.trackingPos = null;
-        _.path = [];
-        return;
-      }
-      var nextPos = _.path[0],
-          dist = _.getdist(_, nextPos),
-          appliedDist, dx, dy;
-      _.anim.u();
-      // The zombie reached the current node
-      if (dist === 0) {
-        // We remove the current node from the path and let the walking continue
-        _.path.shift();
-      } else {
-        _.angle = atan2(nextPos.y - _.y, nextPos.x - _.x);
-        appliedDist = min(dist, _.s);
-        dx = appliedDist * cos(_.angle);
-        dy = appliedDist * sin(_.angle);
-
-        if (abs(dx) > abs(dy)) {
-          _.d = (dx < 0) ? DIR.LEFT : DIR.RIGHT;
-        } else {
-          _.d = (dy < 0) ? DIR.UP : DIR.DOWN;
+    if (!_.bcount) {
+      if (_.path.length === 0) {
+        if ((d <= _.mindist) && (round(d) > 40)) {
+          _.path = _.findpath(_, $.player, MAX_ZOMBIE_PATH_DISTANCE);
+          _.trackingPos = new Point($.player.x, $.player.y);
         }
+      } else {
+        if (d > _.mindist) {
+          _.trackingPos = null;
+          _.path = [];
+          return;
+        }
+        var nextPos = _.path[0],
+            dist = _.getdist(_, nextPos),
+            appliedDist, dx, dy;
+        _.anim.u();
+        // The zombie reached the current node
+        if (dist === 0) {
+          // We remove the current node from the path and let the walking continue
+          _.path.shift();
+        } else {
+          _.angle = atan2(nextPos.y - _.y, nextPos.x - _.x);
+          appliedDist = min(dist, _.s);
+          dx = appliedDist * cos(_.angle);
+          dy = appliedDist * sin(_.angle);
 
-        _.x += dx;
-        _.y += dy;
+          if (abs(dx) > abs(dy)) {
+            _.d = (dx < 0) ? DIR.LEFT : DIR.RIGHT;
+          } else {
+            _.d = (dy < 0) ? DIR.UP : DIR.DOWN;
+          }
 
-        _.updateRect();
+          _.x += dx;
+          _.y += dy;
 
-        // Recalculate path if destination point changed
-        if (_.ccount >= _.ctimer && _.trackingPos !== null && ($.player.x !== _.trackingPos.x || $.player.y !== _.trackingPos.y)) {
-          _.clrPath();
+          _.updateRect();
+
+          // Recalculate path if destination point changed
+          if (_.ccount >= _.ctimer && _.trackingPos !== null && ($.player.x !== _.trackingPos.x || $.player.y !== _.trackingPos.y)) {
+            _.clrPath();
+          }
         }
       }
     }

@@ -3,17 +3,15 @@ var StartZ = function(x, y) {
   var _ = this;
   _.start = 1;
   _.ac = 0; // alert counter
-  _.anim = new Animator([0, 1]);
   _.inherits(Sprite);
   Sprite.call(_, x, y, 54, 172);
 
   _.u = function() {
     _.ac = iir(_.ac - $.e, 0);
-    _.anim.u();
   }
 
   _.r = function(p) {
-    if (_.ac && _.anim.g()) {
+    if (_.ac) {
       $.x.ct('You cannot leave the lab without the vaccine', 30, 200, '#fff', 'sans-serif');
     }
   }
