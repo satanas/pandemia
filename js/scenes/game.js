@@ -95,11 +95,8 @@ var GameScene = function() {
   _.pi = function() {
     $.x.fs('rgba(0,0,0,0.5)');
     $.x.fr(300, 460, 430, 70);
-    $.txt.r(0, _.wh - 100, 'wasd, zqsd and arrows to move\nMouse to aim and shoot', 2, '#fff', {
-      halign: 'center',
-      hspacing: 2,
-      vspacing: 20,
-    });
+    $.x.ct('WASD, ZQSD and ARROWS to move', 20, 490, '#fff', 'sans-serif');
+    $.x.ct('MOUSE to aim and shoot', 20, 515, '#fff', 'sans-serif');
   }
 
 }

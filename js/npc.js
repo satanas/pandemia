@@ -3,9 +3,18 @@ var Scientist = function(x, y) {
   _.st = 0; // State of dialog
   // Dialog array
   _.dg = [
-    'Sarge, come here\nI need your help...',
-    'Pick up the vaccine\nand bring it to me',
-    'Good! Now blow up the\nbarricade and take it\nto the safe point\nYou\'re our only hope'
+    [
+      'Sarge, come here. I need your help'
+    ],[
+      'the safe point. So, pick it up...',
+      'human race delivering the vaccine to',
+      'are all infected. But we can save the',
+      'The zombies overrun the place and we'
+    ], [
+      'your humanity. You are our only hope.',
+      'deliver the vaccine before you lose',
+      'Good! Now blow up the barricade and'
+    ]
   ]
   _.inherits(Sprite);
   Sprite.call(_, x, y, 64, 64);
@@ -25,7 +34,10 @@ var Scientist = function(x, y) {
     $.x.k();
     $.x.cp();
 
-    $.txt.r(p.x - 64, p.y - 60, _.dg[_.st], 2, '#fff', {vspacing: 5});
+    var i, y = 290;
+    for (i=0; i < _.dg[_.st].length; i++) {
+      $.x.ft(_.dg[_.st][i], 16, 250, y - (i * 20), '#fff', 'sans-serif');
+    }
     if (_.st === 1) {
       $.txt.r(100, 170, 'Vaccine', 2, '#fff');
     }

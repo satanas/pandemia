@@ -15,7 +15,7 @@ $.init = function(w, h) {
   $.g = {};
   // $.e = Elapsed time since previous frame
   $.e = 0;
-  // $.x = Canvas context
+  // Canvas context for drawing on-screen
   $.x = $.cv.getContext('2d');
   // Camera system
   $.cam = new Camera($.vw, $.vh);

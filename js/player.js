@@ -136,6 +136,10 @@ var Player = function(x, y) {
           b.pick();
           _.vaccine = b;
         }
+        var s = $.scientist;
+        if (s.st === 1) {
+          s.n();
+        }
       });
     }
     if (_.vaccine) {
@@ -149,9 +153,7 @@ var Player = function(x, y) {
         console.log('you win');
       } else if (z.intro) {
         var s = $.scientist;
-        if ($.scientist.st === 0) {
-          s.n();
-        } else if ($.scientist.st === 1 && _.vaccine) {
+        if (s.st === 0) {
           s.n();
         }
       } else if (z.start && _.vaccine) {

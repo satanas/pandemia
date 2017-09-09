@@ -27,27 +27,18 @@ var MenuScene = function() {
       for (i=0; i<20; i++) {
         $.x.mv((1024 * j) - (30 * (j + 1)), i * 30);
         $.x.lt((1024 * j) + 60, (i + 1) * 30);
-        $.x.k();
       }
     }
     $.x.cp();
+    $.x.k();
     $.x.fs('#f80');
     $.x.fr(50, 0, $.vw - 100, $.vh);
 
-    $.txt.r(0, 60, 'Pandemia', 15, '#fff', {
-      halign: 'center',
-      hspacing: 15,
-    });
+    $.x.ct('PANDEMIA', 125, 150, '#fff', 'sans-serif');
     if (_.anim.g()) {
-      $.txt.r(0, $.vh - 80, 'Press Enter to start', 4, '#fff', {
-        halign: 'center',
-        hspacing: 2,
-      });
+      $.x.ct('Press Enter to start', 35, 490, '#fff', 'sans-serif');
     }
-    $.txt.r(0, $.vh - 30, 'By satanas82 for js13k 2017', 1.7, '#fff', {
-      halign: 'center',
-      hspacing: 2,
-    });
+    $.x.ct('By @satanas82 for js13k 2017', 15, 550, '#eee', 'sans-serif');
     var cx = floor($.vw / 2),
         cy = floor($.vh / 2) + 40,
         r = 60, // radius
