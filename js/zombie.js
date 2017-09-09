@@ -118,85 +118,8 @@ var Zombie = function(x, y) {
   };
 
   _.r = function(p) {
-    // Head
-    $.x.fs('#a0d6ab');
-    $.x.fr(p.x + 2, p.y, 62, 38);
-    // Chest
-    $.x.fs('#83bd90');
-    $.x.fr(p.x + 16, p.y + 38, 34, 13);
-    // Waist
-    $.x.fs('#8b938d');
-    $.x.fr(p.x + 16, p.y + 50, 34, 5);
-    // Feet
-    // If the zombie is stopped
-    if (!_.trackingPos) {
-      $.x.fr(p.x + 16, p.y + 55, 14, 8);
-      $.x.fr(p.x + 36, p.y + 55, 14, 8);
-    } else if (_.anim.g()) {
-      $.x.fr(p.x + 16, p.y + 55, 14, 8);
-    } else if (!_.anim.g()) {
-      $.x.fr(p.x + 36, p.y + 55, 14, 8);
-    }
-
-    if (_.d === DIR.UP) {
-      // Arms
-      $.x.fs('#8ecc9b');
-      $.x.fr(p.x + 9, p.y + 39, 7, 5);
-      $.x.fr(p.x + 50, p.y + 39, 7, 5);
-    } else if (_.d === DIR.DOWN) {
-      // Arms
-      $.x.fs('#8ecc9b');
-      $.x.fr(p.x + 9, p.y + 39, 7, 10);
-      $.x.fr(p.x + 50, p.y + 39, 7, 10);
-      // Hands
-      $.x.fs('#84ae8d');
-      $.x.fr(p.x + 9, p.y + 49, 7, 5);
-      $.x.fr(p.x + 50, p.y + 49, 7, 5);
-      // Face
-      $.x.fs('#5a5a5a');
-      $.x.fr(p.x + 15, p.y + 19, 6, 6);
-      $.x.fr(p.x + 45, p.y + 19, 6, 6);
-      $.x.fr(p.x + 32, p.y + 26, 2, 9);
-      $.x.fr(p.x + 27, p.y + 31, 12, 2);
-    } else if (_.d === DIR.LEFT) {
-      // Arms
-      $.x.fs('#8ecc9b');
-      $.x.fr(p.x + 11, p.y + 40, 16, 7);
-      // Hands
-      $.x.fs('#84ae8d');
-      $.x.fr(p.x + 5, p.y + 40, 6, 7);
-      // Face
-      $.x.fs('#5a5a5a');
-      $.x.fr(p.x + 10, p.y + 19, 6, 6);
-      $.x.fr(p.x + 2, p.y + 26, 2, 9);
-      $.x.fr(p.x + 4, p.y + 31, 4, 2);
-    } else if (_.d === DIR.RIGHT) {
-      // Arms
-      $.x.fs('#8ecc9b');
-      $.x.fr(p.x + 39, p.y + 40, 16, 7);
-      // Hands
-      $.x.fs('#84ae8d');
-      $.x.fr(p.x + 55, p.y + 40, 6, 7);
-      // Face
-      $.x.fs('#5a5a5a');
-      $.x.fr(p.x + 50, p.y + 19, 6, 6);
-      $.x.fr(p.x + 62, p.y + 26, 2, 9);
-      $.x.fr(p.x + 58, p.y + 31, 4, 2);
-    }
-
-    //$.x.bp();
-    //$.x.ss('#11c1fc');
-    //$.x.arc(p.x + (_.w / 2), p.y + (_.h / 2), _.mindist, 0, 2 * PI);
-    //$.x.k();
-
-    //_.path.forEach(function(o) {
-    //  var z = $.cam.transformCoordinates(new Rect(o.x, o.y, 32, 32));
-    //  $.x.ss('#ff0000');
-    //  $.x.sr(z.x, z.y, 32, 32);
-    //});
-
-  };
-
+    Zombie.draw(p.x, p.y, _.d, _.trackingPos, _.anim);
+  }
   _.bite = function() {
     _.bcount = rndr(MIN_BITING_DURATION, MIN_BITING_DURATION + 200);
     return rndr(4, 8);
@@ -207,3 +130,86 @@ var Zombie = function(x, y) {
     _.ccount = 0;
   };
 };
+
+Zombie.draw = function(x, y, d, tp, an) {
+    // Head
+    $.x.fs('#a0d6ab');
+    $.x.fr(x + 2, y, 62, 38);
+    // Chest
+    $.x.fs('#83bd90');
+    $.x.fr(x + 16, y + 38, 34, 13);
+    // Waist
+    $.x.fs('#8b938d');
+    $.x.fr(x + 16, y + 50, 34, 5);
+    // Feet
+    // If the zombie is stopped
+    if (!tp) {
+      $.x.fr(x + 16, y + 55, 14, 8);
+      $.x.fr(x + 36, y + 55, 14, 8);
+    } else if (an){
+      if (an.g()) {
+        $.x.fr(x + 16, y + 55, 14, 8);
+      } else {
+        $.x.fr(x + 36, y + 55, 14, 8);
+      }
+    }
+
+    if (d === DIR.UP) {
+      // Arms
+      $.x.fs('#8ecc9b');
+      $.x.fr(x + 9, y + 39, 7, 5);
+      $.x.fr(x + 50, y + 39, 7, 5);
+    } else if (d === DIR.DOWN) {
+      // Arms
+      $.x.fs('#8ecc9b');
+      $.x.fr(x + 9, y + 39, 7, 10);
+      $.x.fr(x + 50, y + 39, 7, 10);
+      // Hands
+      $.x.fs('#84ae8d');
+      $.x.fr(x + 9, y + 49, 7, 5);
+      $.x.fr(x + 50, y + 49, 7, 5);
+      // Face
+      $.x.fs('#5a5a5a');
+      $.x.fr(x + 15, y + 19, 6, 6);
+      $.x.fr(x + 45, y + 19, 6, 6);
+      $.x.fr(x + 32, y + 26, 2, 9);
+      $.x.fr(x + 27, y + 31, 12, 2);
+    } else if (d === DIR.LEFT) {
+      // Arms
+      $.x.fs('#8ecc9b');
+      $.x.fr(x + 11, y + 40, 16, 7);
+      // Hands
+      $.x.fs('#84ae8d');
+      $.x.fr(x + 5, y + 40, 6, 7);
+      // Face
+      $.x.fs('#5a5a5a');
+      $.x.fr(x + 10, y + 19, 6, 6);
+      $.x.fr(x + 2, y + 26, 2, 9);
+      $.x.fr(x + 4, y + 31, 4, 2);
+    } else if (d === DIR.RIGHT) {
+      // Arms
+      $.x.fs('#8ecc9b');
+      $.x.fr(x + 39, y + 40, 16, 7);
+      // Hands
+      $.x.fs('#84ae8d');
+      $.x.fr(x + 55, y + 40, 6, 7);
+      // Face
+      $.x.fs('#5a5a5a');
+      $.x.fr(x + 50, y + 19, 6, 6);
+      $.x.fr(x + 62, y + 26, 2, 9);
+      $.x.fr(x + 58, y + 31, 4, 2);
+    }
+
+    //$.x.bp();
+    //$.x.ss('#11c1fc');
+    //$.x.arc(x + (_.w / 2), y + (_.h / 2), _.mindist, 0, 2 * PI);
+    //$.x.k();
+
+    //_.path.forEach(function(o) {
+    //  var z = $.cam.transformCoordinates(new Rect(o.x, o.y, 32, 32));
+    //  $.x.ss('#ff0000');
+    //  $.x.sr(z.x, z.y, 32, 32);
+    //});
+
+  };
+

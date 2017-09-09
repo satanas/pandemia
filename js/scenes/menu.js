@@ -13,8 +13,8 @@ var MenuScene = function() {
     _.xc = iir(_.xc - $.e, 0);
     if (_.xc === 0 && _.ef) {
       _.exit();
-      $.scn.game = new GameScene();
-      $.scn.game.intro();
+      $.scn.game.start();
+      //_.fout($.scn.game, 1000);
     } else if (!_.ef) {
       _.anim.u();
     }

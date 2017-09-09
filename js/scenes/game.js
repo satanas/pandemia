@@ -4,6 +4,7 @@ var GameScene = function() {
   _.c = $.byId("c"); // canvas
   _.be = 0; // bite effect flag
   _.end = 0; // ending flag. 1 = game over, 2 = win
+  _.fl = 0; // floor flag. 0 = intro
 
   _.inherits(Scene);
   Scene.call(_);
@@ -14,31 +15,30 @@ var GameScene = function() {
   _.init = function() {
     // Clear all groups before start
     Object.keys($.g).forEach(function(g) { $.g[g].clr() })
-    _.intro = 0;
-  }
+    _.be = 0;
+    _.end = 0;
+    $.msg = 0;
 
-  _.intro = function() {
-    _.reset();
-    _.init();
-    _.intro = 1;
-    _.ww = 1024;
-    _.wh = 576;
-    $.lvl.iroom(_.ww, _.wh);
+    // If intro
+    if (!_.fl) {
+      _.ww = 1024;
+      _.wh = 576;
+      $.lvl.iroom(_.ww, _.wh);
+    } else {
+      _.ww = 3200;
+      _.wh = 3200;
+      $.lvl.gen(_.ww, _.wh);
+    }
     $.cam.setWorldSize(_.ww, _.wh);
     $.cam.setTarget($.player);
-    _.loop();
+    _.iz = 1;
   }
 
-  _.game = function() {
+  // Next floor
+  _.nf = function() {
+    _.fl += 1;
     _.reset();
     _.init();
-    _.ww = 3200;
-    _.wh = 3200;
-    $.lvl.gen(_.ww, _.wh);
-    $.cam.setWorldSize(_.ww, _.wh);
-    $.cam.setTarget($.player);
-    // No need to run loop here because it ran first in the intro
-    //_.loop();
   }
 
   _.update = function() {
@@ -73,9 +73,10 @@ var GameScene = function() {
     $.player.drawAim();
     $.hud.r();
     _.fx();
-    _.pgm();
+    _.gm();
 
-    if (_.intro) _.pi();
+    if (!_.fl) _.pi();
+    _.mod();
   };
 
   _.fx = function() {
@@ -104,19 +105,68 @@ var GameScene = function() {
     $.x.ct('MOUSE to aim and shoot', 20, 515, '#fff', 'sans-serif');
   }
 
+  // To be called on game over
   _.over = function() {
     _.end = 1;
     $.sn.p('go');
   }
 
+  // To be called when the player reaches the goal
   _.win = function() {
     _.end = 2;
   }
 
   // Print global message
-  _.pgm = function() {
+  _.gm = function() {
     if ($.msg) {
       $.x.ct($.msg, 30, 200, '#fff', 'sans-serif');
+    }
+  }
+
+  // Render modal for gameover/win
+  _.mod = function() {
+    if (!_.end) return;
+
+    var w = 600,
+        h = 500,
+        c = '#fff',
+        s = 'sans-serif',
+        x = ($.vw - w) / 2,
+        y = ($.vh - h) / 2;
+    $.x.globalAlpha = 0.9;
+    $.x.fs(c);
+    $.x.fr(x, y, w, h);
+    if (_.end === 1) {
+      $.x.fs('#111');
+      $.x.fr(x + 30, y, w - 60, h);
+
+      Zombie.draw(410, y + 160, DIR.DOWN);
+      Vaccine.draw(430, y + 245);
+
+      $.x.ct('GAME OVER', 50, y + 80, c, s);
+      $.x.ft('x  100', 30, 500, y + 200, c, s);
+      $.x.ft('x  1', 30, 500, y + 270, c, s);
+      $.x.ct('You could not save the human race.', 18, y + 350, c, s);
+    } else if (_.end === 2) {
+      $.x.fs('#f80');
+      $.x.fr(x + 30, y, w - 60, h);
+
+      $.x.ct('WELL DONE!', 50, y + 80, c, s);
+      $.x.ct('You delivered the vaccine to the safe zone at the cost', 18, y + 150, c, s);
+      $.x.ct('of your own life to save the human race. You are A HERO', 18, y + 175, c, s);
+
+      Zombie.draw(420, y + 220, DIR.DOWN);
+      $.x.ft('x  100', 30, 510, y + 260, c, s);
+
+      $.x.ct('Thanks for playing!', 25, y + 360, c, s);
+    }
+    $.x.ct('ENTER to play again. ESC to exit.', 20, y + 450, c, s);
+
+    $.x.globalAlpha = 1;
+
+    if ($.in.p(INPUT.E)) {
+      _.fl = 0
+      _.init();
     }
   }
 }
