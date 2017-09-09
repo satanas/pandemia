@@ -156,8 +156,12 @@ var Player = function(x, y) {
         if (s.st === 0) {
           s.n();
         }
-      } else if (z.start && _.vaccine) {
-        $.scn.game.game();
+      } else if (z.start) {
+        if (_.vaccine) {
+          $.scn.game.game();
+        } else {
+          z.al();
+        }
       }
     });
 

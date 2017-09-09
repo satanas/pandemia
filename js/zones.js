@@ -2,12 +2,26 @@
 var StartZ = function(x, y) {
   var _ = this;
   _.start = 1;
+  _.ac = 0; // alert counter
+  _.anim = new Animator([0, 1]);
   _.inherits(Sprite);
   Sprite.call(_, x, y, 54, 172);
 
+  _.u = function() {
+    _.ac = iir(_.ac - $.e, 0);
+    _.anim.u();
+  }
+
   _.r = function(p) {
-    //$.x.fs('red');
-    //$.x.fr(p.x, p.y, _.w, _.h);
+    if (_.ac && _.anim.g()) {
+      $.x.ct('You cannot leave the lab without the vaccine', 30, 200, '#fff', 'sans-serif');
+    }
+  }
+
+  // Show alert
+  _.al = function() {
+    if (_.ac) return;
+    _.ac = 2000;
   }
 }
 
@@ -38,7 +52,5 @@ var IntroZ = function(x, y) {
   Sprite.call(_, x, y, 192, 192);
 
   _.r = function(p) {
-    $.x.fs('red');
-    $.x.fr(p.x, p.y, _.w, _.h);
   };
 }

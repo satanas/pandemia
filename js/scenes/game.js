@@ -59,11 +59,11 @@ var GameScene = function() {
 
     // Render
     $.g.s.r();
-    $.g.h.r();
     $.g.z.r();
     $.g.i.r();
     $.cam.r($.player);
     $.g.w.r();
+    $.g.h.r();
     $.g.x.r();
     $.g.b.r();
     $.player.drawAim();

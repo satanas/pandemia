@@ -22,6 +22,8 @@ var Barricade = function(x, y) {
       _.health -= 1;
       if (_.health <= 0) {
         _.a = 0;
+        // Set the barricade flag off so the message disappear
+        $.scientist.ba = 0;
         $.sn.p('ex');
       }
     });

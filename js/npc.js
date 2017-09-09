@@ -1,6 +1,8 @@
 var Scientist = function(x, y) {
   var _ = this;
+  _.anim = new Animator([0, 1], 300);
   _.st = 0; // State of dialog
+  _.ba = 1; // Barricade alive flag
   // Dialog array
   _.dg = [
     [
@@ -20,12 +22,18 @@ var Scientist = function(x, y) {
   Sprite.call(_, x, y, 64, 64);
 
   _.u = function() {
+    _.anim.u();
   }
 
   _.r = function(p) {
+    var i,
+        y = 290,
+        c = '#fff',
+        s = 'sans-serif';
+
     $.x.fs('#fff000');
     $.x.fr(p.x, p.y, _.w, _.h);
-    $.x.ss('#fff');
+    $.x.ss(c);
     $.x.bp();
     $.x.mv(p.x - 64, p.y - 20);
     $.x.lt(p.x + 64 * 2, p.y - 20);
@@ -34,12 +42,13 @@ var Scientist = function(x, y) {
     $.x.k();
     $.x.cp();
 
-    var i, y = 290;
     for (i=0; i < _.dg[_.st].length; i++) {
-      $.x.ft(_.dg[_.st][i], 16, 250, y - (i * 20), '#fff', 'sans-serif');
+      $.x.ft(_.dg[_.st][i], 16, 250, y - (i * 20), c, s);
     }
-    if (_.st === 1) {
-      $.txt.r(100, 170, 'Vaccine', 2, '#fff');
+    if (_.st === 1 && _.anim.g()) {
+      $.x.ft('VACCINE', 16, 110, 180, c, s);
+    } else if (_.st === 2 && _.anim.g() && _.ba) {
+      $.x.ft('BARRICADE', 16, 880, 300, c, s);
     }
   }
 
