@@ -39,7 +39,7 @@ WEAPONS= {
     DELAY: 300,
     SPEED: 30,
     SIZE: 16,
-    DAM: 3
+    DAM: 5
   },
   FL: {
     ID: 'FLAME',

@@ -278,6 +278,8 @@ var Player = function(x, y) {
     if (_.weapon.ID === WEAPONS.SG.ID) {
       $.g.b.add(new Bullet(c.x, c.y, _.angle + (rndr(4, 15) * PI / 180), _.weapon));
       $.g.b.add(new Bullet(c.x, c.y, _.angle - (rndr(4, 15) * PI / 180), _.weapon));
+      $.g.b.add(new Bullet(c.x, c.y, _.angle - (rndr(4, 15) * PI / 180), _.weapon));
+      $.g.b.add(new Bullet(c.x, c.y, _.angle - (rndr(4, 15) * PI / 180), _.weapon));
       _.ammo = iir(_.ammo - 2, 0);
       $.sn.p('sh');
     } else if (_.weapon.ID === WEAPONS.FL.ID) {
