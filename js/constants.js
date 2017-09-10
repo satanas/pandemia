@@ -47,6 +47,12 @@ WPN = {
 VACC_PD = 1300; // Vaccine pick up delay (in ms)
 DROP_RATE = 0.3;
 AMMO_BOX = 30;
-WH = '#fff';
-BL = '#000';
+// Colors
+WH = '#fff'; // White
+BL = '#000'; // Black
+// Player and NPC colors
+FC = '#5a5a5a'; // Eyes color
+AC = '#4b4e44'; // Arms color
+HC = '#f3c17f'; // Hands color
+
 FN = 'sans-serif';

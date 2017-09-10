@@ -37,7 +37,7 @@ var Gun = function(x, y) {
 }
 
 Gun.draw = function(x, y) {
-  $.x.fs('#5a5a5a');
+  $.x.fs(FC);
   $.x.fr(x + 8, y + 14, 51, 9);
   $.x.fs('#2b2b2b');
   $.x.fr(x, y + 23, 64, 6);
@@ -69,7 +69,7 @@ Shotgun.draw = function(x, y) {
   $.x.fs('#9e9e9e');
   $.x.fr(x + 12, y + 19, 52, 8);
   $.x.fr(x + 57, y + 11, 4, 8);
-  $.x.fs('#5a5a5a');
+  $.x.fs(FC);
   $.x.fr(x + 12, y + 27, 52, 8);
   $.x.fs('#795548');
   $.x.fr(x, y + 31, 8, 24);

@@ -6,7 +6,7 @@ var Scientist = function(x, y) {
   // Dialog array
   _.fda = [
     [
-      'Sarge, come here. I need your help'
+      'Soldier, come here. I need your help'
     ],[
       'the safe zone. So, pick it up...',
       'human race delivering the vaccine to',
@@ -61,7 +61,7 @@ var Scientist = function(x, y) {
     $.x.fs(bc);
     $.x.fr(p.x + 30, p.y + 51, 6, 7);
     // Face
-    $.x.fs('#5a5a5a');
+    $.x.fs(FC);
     $.x.fr(p.x + 50, p.y + 19, 6, 6);
     $.x.fr(p.x + 58, p.y + 31, 4, 2);
 
@@ -110,15 +110,15 @@ var Soldier = function(x, y) {
     $.x.fr(p.x + 16, p.y + 55, 14, 8);
     $.x.fr(p.x + 36, p.y + 55, 14, 8);
     // Arms
-    $.x.fs('#4b4e44');
+    $.x.fs(AC);
     $.x.fr(p.x + 9, p.y + 39, 7, 5);
     $.x.fr(p.x + 50, p.y + 39, 7, 5);
     // Hands
-    $.x.fs('#f3c17f');
+    $.x.fs(HC);
     $.x.fr(p.x + 9, p.y + 44, 7, 5);
     $.x.fr(p.x + 50, p.y + 44, 7, 5);
     // Face
-    $.x.fs('#5a5a5a');
+    $.x.fs(FC);
     $.x.fr(p.x + 15, p.y + 19, 6, 6);
     $.x.fr(p.x + 45, p.y + 19, 6, 6);
     $.x.fr(p.x + 27, p.y + 31, 12, 2);

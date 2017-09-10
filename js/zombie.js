@@ -137,14 +137,13 @@ var Zombie = function(x, y, s) {
 };
 
 Zombie.draw = function(x, y, d, tp, an, sol) {
-  var cc, wc, ac, hc, fc, bc; // Chest, waist, arms, head, face and body colors
+  var cc, wc, ac, hc, bc; // Chest, waist, arms, head, face and body colors
   hc = '#84ae8d';
-  fc = '#5a5a5a';
   if (sol) {
     bc = '#607d8b';
     cc = '#727254';
     wc = '#203622';
-    ac = '#4b4e44';
+    ac = AC;
   } else {
     bc = '#a0d6ab';
     cc = '#83bd90';
@@ -188,7 +187,7 @@ Zombie.draw = function(x, y, d, tp, an, sol) {
     $.x.fr(x + 9, y + 49, 7, 5);
     $.x.fr(x + 50, y + 49, 7, 5);
     // Face
-    $.x.fs(fc);
+    $.x.fs(FC);
     $.x.fr(x + 15, y + 19, 6, 6);
     $.x.fr(x + 45, y + 19, 6, 6);
     $.x.fr(x + 32, y + 26, 2, 9);
@@ -201,7 +200,7 @@ Zombie.draw = function(x, y, d, tp, an, sol) {
     $.x.fs(hc);
     $.x.fr(x + 5, y + 40, 6, 7);
     // Face
-    $.x.fs(fc);
+    $.x.fs(FC);
     $.x.fr(x + 10, y + 19, 6, 6);
     $.x.fr(x + 2, y + 26, 2, 9);
     $.x.fr(x + 4, y + 31, 4, 2);
@@ -213,7 +212,7 @@ Zombie.draw = function(x, y, d, tp, an, sol) {
     $.x.fs(hc);
     $.x.fr(x + 55, y + 40, 6, 7);
     // Face
-    $.x.fs(fc);
+    $.x.fs(FC);
     $.x.fr(x + 50, y + 19, 6, 6);
     $.x.fr(x + 62, y + 26, 2, 9);
     $.x.fr(x + 58, y + 31, 4, 2);

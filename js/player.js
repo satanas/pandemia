@@ -148,15 +148,12 @@ var Player = function(x, y) {
     // Collisions with zones/sensors
     $.g.h.c(_, function(p, z) {
       if (z.end && _.vaccine && !z.o) {
-        $.scn.game.win();
         // Stop all the zombies, fade out, etc
-        console.log('you win');
+        $.scn.game.win();
       } else if (z.intro) {
         if ($.scn.game.tries) return;
         var s = $.scientist;
-        if (s.st === 0) {
-          s.n();
-        }
+        if (s.st === 0) s.n();
       } else if (z.start) {
         if (!$.scn.game.tries) {
           if (_.vaccine) {
@@ -172,9 +169,7 @@ var Player = function(x, y) {
 
     _.updateRect();
 
-    if (_.shooting && !_.sd) {
-      _.shoot();
-    }
+    if (_.shooting && !_.sd) _.shoot();
   };
 
   _.r = function(p) {
@@ -185,7 +180,7 @@ var Player = function(x, y) {
         Vaccine.draw(p.x + 16, p.y - 6);
       } else {
         // Hands
-        $.x.fs('#f3c17f');
+        $.x.fs(HC);
         $.x.fr(p.x + 9, p.y + 44, 7, 5);
         $.x.fr(p.x + 50, p.y + 44, 7, 5);
       }
@@ -212,17 +207,17 @@ var Player = function(x, y) {
 
     if (_.d === DIR.UP || _.d === DIR.DOWN) {
       // Arms
-      $.x.fs('#4b4e44');
+      $.x.fs(AC);
       $.x.fr(p.x + 9, p.y + 39, 7, 5);
       $.x.fr(p.x + 50, p.y + 39, 7, 5);
     }
     if (_.d === DIR.DOWN) {
       // Hands
-      $.x.fs('#f3c17f');
+      $.x.fs(HC);
       $.x.fr(p.x + 9, p.y + 44, 7, 5);
       $.x.fr(p.x + 50, p.y + 44, 7, 5);
       // Face
-      $.x.fs('#5a5a5a');
+      $.x.fs(FC);
       $.x.fr(p.x + 15, p.y + 19, 6, 6);
       $.x.fr(p.x + 45, p.y + 19, 6, 6);
       $.x.fr(p.x + 27, p.y + 31, 12, 2);
@@ -231,30 +226,30 @@ var Player = function(x, y) {
       }
     } else if (_.d === DIR.LEFT) {
       // Arms
-      $.x.fs('#4b4e44');
+      $.x.fs(AC);
       $.x.fr(p.x + 11, p.y + 40, 16, 7);
       // Hands
-      $.x.fs('#f3c17f');
+      $.x.fs(HC);
       $.x.fr(p.x + 5, p.y + 40, 6, 7);
       if (_.vaccine) {
         Vaccine.draw(p.x - 30, p.y + 16);
       }
       // Face
-      $.x.fs('#5a5a5a');
+      $.x.fs(FC);
       $.x.fr(p.x + 10, p.y + 19, 6, 6);
       $.x.fr(p.x + 4, p.y + 31, 4, 2);
     } else if (_.d === DIR.RIGHT) {
       // Arms
-      $.x.fs('#4b4e44');
+      $.x.fs(AC);
       $.x.fr(p.x + 39, p.y + 40, 16, 7);
       // Hands
-      $.x.fs('#f3c17f');
+      $.x.fs(HC);
       $.x.fr(p.x + 55, p.y + 40, 6, 7);
       if (_.vaccine) {
         Vaccine.draw(p.x + 62, p.y + 16);
       }
       // Face
-      $.x.fs('#5a5a5a');
+      $.x.fs(FC);
       $.x.fr(p.x + 50, p.y + 19, 6, 6);
       $.x.fr(p.x + 58, p.y + 31, 4, 2);
     }
