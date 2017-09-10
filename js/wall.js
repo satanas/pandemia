@@ -10,6 +10,13 @@ var Wall = function(x, y) {
     $.x.ss('#949494');
     $.x.fr(p.x, p.y, _.w, _.h);
     $.x.sr(p.x, p.y, _.w, _.h);
+    //$.x.bp();
+    //$.x.mv(p.x, p.y + 32);
+    //$.x.lt(p.x + 64, p.y + 32);
+    //$.x.mv(p.x + 32, p.y);
+    //$.x.lt(p.x + 32, p.y + 64);
+    //$.x.cp();
+    //$.x.k();
   }
 };
 
@@ -73,6 +80,15 @@ var Floor = function(x, y) {
     $.x.ss('#696969');
     $.x.fr(p.x, p.y, _.w, _.h);
     $.x.sr(p.x, p.y, _.w, _.h);
+    $.x.bp();
+    $.x.mv(p.x, p.y + 32);
+    $.x.lt(p.x + 64, p.y + 32);
+    $.x.mv(p.x + 32, p.y);
+    $.x.lt(p.x + 32, p.y + 64);
+    $.x.cp();
+    $.x.k();
+
+
     //$.x.fillStyle = '#433641';
     //$.x.fillRect(p.x, p.y, 32, 32);
     //$.x.fillRect(p.x + 32, p.y + 32, 64, 64);
