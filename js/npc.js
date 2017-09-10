@@ -38,18 +38,41 @@ var Scientist = function(x, y) {
     var i,
         y = 290,
         c = '#fff',
-        s = 'sans-serif';
+        s = 'sans-serif',
+        bc = '#c68642'; // body color
 
-    $.x.fs('#fff000');
-    $.x.fr(p.x, p.y, _.w, _.h);
+    // Head
+    $.x.fs(bc);
+    $.x.fr(p.x + 2, p.y, 62, 38);
+    // Chest
+    $.x.fs(c);
+    $.x.fr(p.x + 16, p.y + 38, 34, 13);
+    $.x.fr(p.x + 16, p.y + 50, 34, 5);
+    $.x.fs('#2196f3');
+    $.x.fr(p.x + 43, p.y + 38, 7, 18);
+    // Feet
+    $.x.fs('#333');
+    $.x.fr(p.x + 16, p.y + 55, 14, 8);
+    $.x.fr(p.x + 36, p.y + 55, 14, 8);
+    // Arms
+    $.x.fs('#ededed');
+    $.x.fr(p.x + 30, p.y + 40, 7, 16);
+    // Hands
+    $.x.fs(bc);
+    $.x.fr(p.x + 30, p.y + 51, 6, 7);
+    // Face
+    $.x.fs('#5a5a5a');
+    $.x.fr(p.x + 50, p.y + 19, 6, 6);
+    $.x.fr(p.x + 58, p.y + 31, 4, 2);
+
     $.x.ss(c);
     $.x.bp();
     $.x.mv(p.x - 64, p.y - 20);
     $.x.lt(p.x + 64 * 2, p.y - 20);
     $.x.mv(p.x + (_.w / 2), p.y);
     $.x.lt(p.x - 5, p.y - 20);
-    $.x.k();
     $.x.cp();
+    $.x.k();
 
 
     for (i=0; i < _.dg[_.st].length; i++) {
