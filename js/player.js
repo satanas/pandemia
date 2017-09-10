@@ -97,26 +97,25 @@ var Player = function(x, y) {
 
     // Collisions with zombies
     if (_.ic === 0) {
-      $.g.z.c(_, function(p, z) {
-        _.humanity -= z.bite();
-        _.ic = INVINCIBILITY_TIME;
-        _.dropVaccine();
-        $.scn.game.be = 30;
-        $.ss.shake(1.8, 200)
-        $.sn.p('ph');
-        if (_.humanity > 0) {
-        } else {
-          $.scn.game.over();
-        }
-      });
+      //$.g.z.c(_, function(p, z) {
+      //  _.humanity -= z.bite();
+      //  _.ic = INVINCIBILITY_TIME;
+      //  _.dropVaccine();
+      //  $.scn.game.be = 30;
+      //  $.ss.shake(1.8, 200)
+      //  $.sn.p('ph');
+      //  if (_.humanity > 0) {
+      //  } else {
+      //    $.scn.game.over();
+      //  }
+      //});
     }
 
     // Collisions with items
     $.g.i.c(_, function(p, i) {
       i.a = 0;
-      if (i.type === ITEMS.MEDIKIT) {
-        _.hc = MEDIKIT_DURATION;
-      } else if (i.type === ITEMS.AM) {
+      $.sn.p('it');
+      if (i.type === ITEMS.AM) {
         _.ammo += AMMO_PER_BOX;
       } else {
         if (i.type === ITEMS.MG) {
@@ -148,6 +147,7 @@ var Player = function(x, y) {
       _.vaccine.y = _.y;
     }
 
+    // Collisions with zones/sensors
     $.g.h.c(_, function(p, z) {
       if (z.end && _.vaccine && !z.o) {
         $.scn.game.win();
