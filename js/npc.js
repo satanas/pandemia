@@ -13,17 +13,14 @@ var Scientist = function(x, y) {
       'are all infected. But we can save the',
       'The zombies overrun the place and we'
     ], [
-      'your humanity. You are our only hope.',
-      'deliver the vaccine before you lose',
-      'Good! Now blow up the barricade and'
+      'the vaccine before you lose your humanity.',
+      'Now blow up the barricade and deliver'
     ]
   ];
   _.sda = [
     [
-      'please. It is our last chance.',
-      'Get it back and take it to the safe zone,',
-      'vaccine is out there, in great danger.',
-      'Well, seems like Sarge is dead and the'
+      'take it to the safe zone.',
+      'Go soldier! Retrieve the vaccine and',
     ]
   ];
   _.dg = ($.scn.game.tries) ? _.sda : _.fda;
