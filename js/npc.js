@@ -8,7 +8,7 @@ var Scientist = function(x, y) {
     [
       'Sarge, come here. I need your help'
     ],[
-      'the safe point. So, pick it up...',
+      'the safe zone. So, pick it up...',
       'human race delivering the vaccine to',
       'are all infected. But we can save the',
       'The zombies overrun the place and we'

@@ -43,7 +43,7 @@ var EndZ = function(cx, cy) {
   _.u = function() {
     _.oc = iir(_.oc - $.e, 0);
     if (_.oc) {
-      $.msg = 'There are zombies in the safe point. Kill them first!';
+      $.msg = 'There are zombies in the safe zone. Kill them first!';
     }
   }
 
