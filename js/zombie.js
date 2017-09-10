@@ -90,17 +90,20 @@ var Zombie = function(x, y, sol) {
         $.sn.p('zd');
         _.a = 0;
         if (rnd() >= DROP_RATE) {
-          var i = rndr(2, 6),
+          var i = rndr(3, 6),
               x = _.x,
               y = _.y;
-          if (i === ITEMS.AM) {
+          // Probability: 0-8 ammo, 9-10 weapon
+          if (rnd() <= 0.8) {
             $.g.i.add(new Ammo(x, y));
-          } else if (i === ITEMS.MG) {
-            $.g.i.add(new Gun(x, y));
-          } else if (i === ITEMS.SG) {
-            $.g.i.add(new Shotgun(x, y));
-          } else if (i === ITEMS.FL) {
-            $.g.i.add(new Flame(x, y));
+          } else {
+            if (i === ITEMS.MG) {
+              $.g.i.add(new Gun(x, y));
+            } else if (i === ITEMS.SG) {
+              $.g.i.add(new Shotgun(x, y));
+            } else if (i === ITEMS.FL) {
+              $.g.i.add(new Flame(x, y));
+            }
           }
         }
       } else {
@@ -214,16 +217,4 @@ Zombie.draw = function(x, y, d, tp, an, sol) {
     $.x.fr(x + 62, y + 26, 2, 9);
     $.x.fr(x + 58, y + 31, 4, 2);
   }
-
-  //$.x.bp();
-  //$.x.ss('#11c1fc');
-  //$.x.arc(x + (_.w / 2), y + (_.h / 2), _.mindist, 0, 2 * PI);
-  //$.x.k();
-
-  //_.path.forEach(function(o) {
-  //  var z = $.cam.transformCoordinates(new Rect(o.x, o.y, 32, 32));
-  //  $.x.ss('#ff0000');
-  //  $.x.sr(z.x, z.y, 32, 32);
-  //});
-
 };

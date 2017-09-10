@@ -50,7 +50,7 @@ WEAPONS= {
   }
 }
 VACCINE_PICKUP_DELAY = 1500; // ms
-DROP_RATE = 0.4;
+DROP_RATE = 0.3;
 AMMO_PER_BOX = 30;
 
 // ZQSD for frenchies
