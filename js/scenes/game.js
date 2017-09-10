@@ -48,7 +48,7 @@ var GameScene = function() {
   }
 
   _.update = function() {
-    $.x.clr('#404c54');
+    $.x.clr('#787878');
     $.msg = 0; // Clearing the msg buffer
 
     _.be = iir(_.be - $.e, 0);

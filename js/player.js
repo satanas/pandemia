@@ -337,10 +337,10 @@ var Player = function(x, y) {
     $.x.arc(_.aim.x, _.aim.y, 2, 0, 2 * PI);
     $.x.cp();
     $.x.f();
-    $.x.fr(_.aim.x, _.aim.y - 14, 1, 8);
-    $.x.fr(_.aim.x, _.aim.y + 7, 1, 8);
-    $.x.fr(_.aim.x - 14, _.aim.y, 8, 1);
-    $.x.fr(_.aim.x + 7, _.aim.y, 8, 1);
+    $.x.fr(_.aim.x - 2, _.aim.y - 18, 5, 12);
+    $.x.fr(_.aim.x - 2, _.aim.y + 7, 5, 12);
+    $.x.fr(_.aim.x - 18, _.aim.y - 2, 12, 5);
+    $.x.fr(_.aim.x + 7, _.aim.y - 2, 12, 5);
   }
 
   $.cv.addEventListener('mousemove', function(e) {

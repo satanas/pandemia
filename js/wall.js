@@ -5,8 +5,11 @@ var Wall = function(x, y) {
   Sprite.call(_, x, y, GRID_SIZE, GRID_SIZE);
 
   _.r = function(p) {
-    $.x.fs('#888');
+    $.x.lineWidth = 1;
+    $.x.fs('#c2c2c2');
+    $.x.ss('#949494');
     $.x.fr(p.x, p.y, _.w, _.h);
+    $.x.sr(p.x, p.y, _.w, _.h);
   }
 };
 
@@ -36,22 +39,22 @@ var Barricade = function(x, y) {
       $.x.fr(p.x, p.y, _.w, _.h);
       $.x.ss('#522900');
       $.x.bp();
-      $.x.mv(p.x + 15, p.y + 0);
+      $.x.mv(p.x, p.y);
+      $.x.lt(p.x + 64, p.y);
+      $.x.mv(p.x + 15, p.y);
       $.x.lt(p.x + 15, p.y + 21);
-      $.x.mv(p.x + 54, p.y + 0);
+      $.x.mv(p.x + 54, p.y);
       $.x.lt(p.x + 54, p.y + 21);
-      $.x.mv(p.x + 0, p.y + 21);
+      $.x.mv(p.x, p.y + 21);
       $.x.lt(p.x + 64, p.y + 21);
       $.x.mv(p.x + 32, p.y + 22);
       $.x.lt(p.x + 32, p.y + 43);
-      $.x.mv(p.x + 0, p.y + 44);
+      $.x.mv(p.x, p.y + 44);
       $.x.lt(p.x + 64, p.y + 44);
       $.x.mv(p.x + 15, p.y + 45);
       $.x.lt(p.x + 15, p.y + 64);
       $.x.mv(p.x + 54, p.y + 45);
       $.x.lt(p.x + 54, p.y + 64);
-      //$.x.mv(p.x + 0, p.y + 64);
-      //$.x.lt(p.x + 64, p.y + 64);
       $.x.cp();
       $.x.k();
     }
@@ -65,21 +68,33 @@ var Floor = function(x, y) {
   Sprite.call(_, x, y, 64, 64);
 
   _.r = function(p) {
-    $.x.fillStyle = '#433641';
-    $.x.fillRect(p.x, p.y, 32, 32);
-    $.x.fillRect(p.x + 32, p.y + 32, 64, 64);
-    $.x.fillStyle = '#50434e';
-    $.x.fillRect(p.x + 32, p.y, 64, 32);
-    $.x.fillRect(p.x, p.y + 32, 32, 64);
+    $.x.lineWidth = 1;
+    $.x.fs('#787878');
+    $.x.ss('#696969');
+    $.x.fr(p.x, p.y, _.w, _.h);
+    $.x.sr(p.x, p.y, _.w, _.h);
+    //$.x.fillStyle = '#433641';
+    //$.x.fillRect(p.x, p.y, 32, 32);
+    //$.x.fillRect(p.x + 32, p.y + 32, 64, 64);
+    //$.x.fillStyle = '#50434e';
+    //$.x.fillRect(p.x + 32, p.y, 64, 32);
+    //$.x.fillRect(p.x, p.y + 32, 32, 64);
+    //
+    //$.x.fillStyle = '#433641';
+    //$.x.fillRect(p.x, p.y, 32, 32);
+    //$.x.fillRect(p.x + 32, p.y + 32, 64, 64);
+    //$.x.fillStyle = '#50434e';
+    //$.x.fillRect(p.x + 32, p.y, 64, 32);
+    //$.x.fillRect(p.x, p.y + 32, 32, 64);
 
-    $.x.fillStyle = '#4b3746';
-    $.x.fillRect(p.x, p.y, 32, 4);
-    $.x.fillRect(p.x + 32, p.y + 32, 32, 4);
-    $.x.fillStyle = '#3e2a3e';
-    $.x.fillRect(p.x + 32, p.y, 32, 4);
-    $.x.fillRect(p.x, p.y + 32, 32, 4);
-    $.x.fillStyle = '#5b4e59';
-    $.x.fillRect(p.x + 32, p.y + 28, 32, 4);
-    $.x.fillRect(p.x, p.y + 60, 32, 4);
+    //$.x.fillStyle = '#4b3746';
+    //$.x.fillRect(p.x, p.y, 32, 4);
+    //$.x.fillRect(p.x + 32, p.y + 32, 32, 4);
+    //$.x.fillStyle = '#3e2a3e';
+    //$.x.fillRect(p.x + 32, p.y, 32, 4);
+    //$.x.fillRect(p.x, p.y + 32, 32, 4);
+    //$.x.fillStyle = '#5b4e59';
+    //$.x.fillRect(p.x + 32, p.y + 28, 32, 4);
+    //$.x.fillRect(p.x, p.y + 60, 32, 4);
   }
 }
