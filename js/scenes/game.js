@@ -140,6 +140,8 @@ var GameScene = function() {
         s = 'sans-serif',
         x = ($.vw - w) / 2,
         y = ($.vh - h) / 2;
+
+    _.rstfx();
     $.x.globalAlpha = 0.9;
     $.x.fs(c);
     $.x.fr(x, y, w, h);
@@ -190,11 +192,15 @@ var GameScene = function() {
     $.x.globalAlpha = 1;
   }
 
+  _.rstfx = function() {
+    _.c.style.filter = ""; // reset fx
+  }
+
   _.goToMenu = function() {
     _.tries = 0;
     _.zn = 0;
     _.exit();
-    _.c.style.filter = ""; // reset fx
+    _.rstfx();
     $.scn.menu.start();
   }
 }
