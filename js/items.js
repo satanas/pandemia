@@ -110,20 +110,20 @@ var Vaccine = function(x, y) {
   var _ = this;
   _.pk = 0; // picked flag
   _.anim = new Animator([0, 1], 100);
-  _.pickupDelay = 0;
+  _.pd = 0;
   _.inherits(Sprite);
   Sprite.call(_, x, y, 32, 32);
 
   _.u = function() {
     _.anim.u();
-    _.pickupDelay = iir(_.pickupDelay - $.e, 0);
+    _.pd = iir(_.pd - $.e, 0);
     _.updateRect();
   }
 
   _.r = function(p) {
     if (_.pk) return;
 
-    if (_.pickupDelay > 0) {
+    if (_.pd > 0) {
       if (_.anim.g()) {
         $.x.fs('#f00');
         $.x.fr(p.x, p.y, _.w, _.h);
@@ -136,7 +136,7 @@ var Vaccine = function(x, y) {
   };
 
   _.isPickable = function() {
-    return !_.pickupDelay;
+    return !_.pd;
   }
 
   _.pick = function() {
@@ -147,7 +147,7 @@ var Vaccine = function(x, y) {
     // p = player position
     _.pk = 0;
     $.sn.p('vd');
-    _.pickupDelay = VACCINE_PICKUP_DELAY;
+    _.pd = VACC_PD;
     _.x = p.x + 16;
     _.y = p.b.b - 32;
   }

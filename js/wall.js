@@ -2,10 +2,10 @@ var Wall = function(x, y) {
   var _ = this;
 
   _.inherits(Sprite);
-  Sprite.call(_, x, y, GRID_SIZE, GRID_SIZE);
+  Sprite.call(_, x, y, GS, GS);
 
   _.r = function(p) {
-    $.x.lineWidth = 1;
+    $.x.lw(1);
     $.x.fs('#c2c2c2');
     $.x.ss('#949494');
     $.x.fr(p.x, p.y, _.w, _.h);
@@ -25,7 +25,7 @@ var Barricade = function(x, y) {
 
   _.health = rndr(4, 6);
   _.inherits(Sprite);
-  Sprite.call(_, x, y, GRID_SIZE, GRID_SIZE);
+  Sprite.call(_, x, y, GS, GS);
 
   _.u = function() {
     $.g.b.c(_, function(w, b) {
@@ -40,7 +40,7 @@ var Barricade = function(x, y) {
   }
 
   _.r = function(p) {
-    $.x.lineWidth = 1;
+    $.x.lw(1);
     for (var i=0; i<3; i++) {
       $.x.fs('#8d5524');
       $.x.fr(p.x, p.y, _.w, _.h);
@@ -75,7 +75,7 @@ var Floor = function(x, y) {
   Sprite.call(_, x, y, 64, 64);
 
   _.r = function(p) {
-    $.x.lineWidth = 1;
+    $.x.lw(1);
     $.x.fs('#787878');
     $.x.ss('#696969');
     $.x.fr(p.x, p.y, _.w, _.h);

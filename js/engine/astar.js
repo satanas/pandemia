@@ -101,7 +101,7 @@ var AStar = function(ww, wh, maxpath) {
       if (xnode.v === end.v) { // is it the destination node?
         xpath = lclosed[lclosed.push(xnode) - 1];
         do {
-          res.push(new Point(xpath.x * GRID_SIZE, xpath.y * GRID_SIZE));
+          res.push(new Point(xpath.x * GS, xpath.y * GS));
           // Abort the calculation if the target is too far away
           if (res.length > _.maxpath) return [];
         } while (xpath = xpath.p);

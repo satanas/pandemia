@@ -19,14 +19,15 @@ var Camera = function(w, h, ww, wh) {
     _.tg = t;
   };
 
-  _.transformPointCoordinates = function(x, y) {
+  // Transform point coordinates
+  _.txPCoord = function(x, y) {
     return {
       x: x - _.ofx,
       y: y - _.ofy,
     };
   };
-  // Transform coordinates
-  _.transformRectCoordinates = function(o) {
+  // Transform rect coordinates
+  _.txRCoord = function(o) {
     return {
       x: o.x - _.ofx,
       y: o.y - _.ofy,
@@ -38,7 +39,7 @@ var Camera = function(w, h, ww, wh) {
   // In view: indicates if the object is inside the viewport
   // Used to avoid rendering objects outside the view
   _.inView = function(o) {
-    var t = _.transformRectCoordinates(o);
+    var t = _.txRCoord(o);
     return ((t.r >= 0 && t.r <= _.w) || (t.x >= 0 && t.x <= _.w)) &&
            ((t.b >= 0 && t.b <= _.h) || (t.y >= 0 && t.y <= _.h));
   };
@@ -86,7 +87,7 @@ var Camera = function(w, h, ww, wh) {
 
     k.forEach(function(o) {
       if (_.inView(o)) {
-        var t = _.transformRectCoordinates(o);
+        var t = _.txRCoord(o);
         o.r(t);
       }
     });

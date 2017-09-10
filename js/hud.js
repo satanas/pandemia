@@ -1,7 +1,7 @@
 var HUD = function() {
   var _ = this;
-  _.bmxw = 300;
-  _.barWidth = _.bmxw;
+  _.bmx = 300;
+  _.bw = _.bmx;
   _.mm = new Rect($.vw - 140, $.vh - 140, 120, 120); // Minimap width and height
 
   _.sws = function(w, h) {
@@ -10,19 +10,18 @@ var HUD = function() {
   }
 
   _.u = function() {
-    _.barWidth = $.player.humanity * _.bmxw / 100;
+    _.bw = $.player.hum * _.bmx / 100;
   };
 
   _.r = function() {
-    var weapon,
-        c = '#fff', // text color
+    var c = '#fff', // text color
         s = 'sans-serif'; // font family
 
     // Humanity bar
     $.x.fs('#333');
-    $.x.fr(50, 30, _.bmxw, 30);
+    $.x.fr(50, 30, _.bmx, 30);
     $.x.fs('#f00');
-    $.x.fr(50, 30, _.barWidth, 30);
+    $.x.fr(50, 30, _.bw, 30);
     $.x.ft('HUMANITY', 26, 60, 55, c, s);
 
     // Ammo
@@ -36,13 +35,13 @@ var HUD = function() {
     $.x.fs('rgba(220,220,220,0.6)');
     $.x.fr(cx - 2, 14, 68, 68);
     $.x.ss(c);
-    $.x.lineWidth = 4
+    $.x.lw(4);
     $.x.sr(cx - 2, 14, 68, 68);
-    if ($.player.weapon.ID === WEAPONS.MG.ID) {
+    if ($.player.wpn.ID === WPN.MG.ID) {
       Gun.draw(cx, 16, 64, 64);
-    } else if ($.player.weapon.ID === WEAPONS.SG.ID) {
+    } else if ($.player.wpn.ID === WPN.SG.ID) {
       Shotgun.draw(cx, 16, 64, 64);
-    } else if ($.player.weapon.ID === WEAPONS.FL.ID) {
+    } else if ($.player.wpn.ID === WPN.FL.ID) {
       Flame.draw(cx, 16, 64, 64);
     }
 
@@ -53,7 +52,7 @@ var HUD = function() {
       Vaccine.draw(cx + 16, 32);
       wn = 'VACCINE';
     } else {
-      wn = $.player.weapon.ID;
+      wn = $.player.wpn.ID;
     }
     $.x.ct(wn, 18, 105, c, s);
 
@@ -66,7 +65,7 @@ var HUD = function() {
       $.x.ga(0.7);
 
       // Draw player position
-      _.rp($.player.x, $.player.y, '#fff');
+      _.rp($.player.x, $.player.y, c);
 
       // Draw safe zone position
       _.rp($.endzone.x, $.endzone.y, '#0f0');

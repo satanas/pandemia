@@ -20,8 +20,8 @@ var Level = function() {
   // Generate intro room
   _.iroom = function(w, h) {
     var i = 0, j = 0;
-    _.ww = w / GRID_SIZE;
-    _.wh = h / GRID_SIZE;
+    _.ww = w / GS;
+    _.wh = h / GS;
 
     for (j=0; j<_.wh; j++) {
       _.map[j] = [];
@@ -29,16 +29,16 @@ var Level = function() {
         if (j === 0 || j === _.wh - 1 || i === 0 || i === _.ww - 1) {
           if ((j >= 3 && j <= 5) && i === 15) {
             if (!$.scn.game.tries) {
-              $.g.w.add(new Barricade((i - 1) * GRID_SIZE, j * GRID_SIZE));
+              $.g.w.add(new Barricade((i - 1) * GS, j * GS));
             }
             continue;
           }
 
           _.map[j][i] = "#"
-          $.g.w.add(new Wall(i * GRID_SIZE, j * GRID_SIZE));
+          $.g.w.add(new Wall(i * GS, j * GS));
         } else {
           _.map[j][i] = "."
-          $.g.d.add(new Floor(i * GRID_SIZE, j * GRID_SIZE));
+          $.g.d.add(new Floor(i * GS, j * GS));
         }
       }
     }
@@ -60,8 +60,8 @@ var Level = function() {
 
   _.gen = function(w, h) {
     var i = 0, j = 0;
-    _.ww = w / GRID_SIZE;
-    _.wh = h / GRID_SIZE;
+    _.ww = w / GS;
+    _.wh = h / GS;
     _.os.w = _.ww;
     _.os.h = _.wh;
 
@@ -96,7 +96,7 @@ var Level = function() {
         for (j=room.y; j<room.y + room.h; j++) {
           for (i=room.x; i<room.x + room.w; i++) {
             _.map[j][i] = ".";
-            $.g.d.add(new Floor(i * GRID_SIZE, j * GRID_SIZE));
+            $.g.d.add(new Floor(i * GS, j * GS));
           }
         }
       }
@@ -107,7 +107,7 @@ var Level = function() {
         for (j=hall.y; j<hall.y + hall.h; j++) {
           for (i=hall.x; i<hall.x + hall.w; i++) {
             _.map[j][i] = ".";
-            $.g.d.add(new Floor(i * GRID_SIZE, j * GRID_SIZE));
+            $.g.d.add(new Floor(i * GS, j * GS));
           }
         }
       });
@@ -117,7 +117,7 @@ var Level = function() {
     for (j=0; j<_.wh; j++) {
       for (i=0; i<_.ww; i++) {
         if (_.isWall(i, j)) {
-          $.g.w.add(new Wall(i * GRID_SIZE, j * GRID_SIZE));
+          $.g.w.add(new Wall(i * GS, j * GS));
         }
       }
     }
@@ -169,9 +169,9 @@ var Level = function() {
       for (i=0; i<_.ww; i++) {
         var x = _.map[j][i];
         if (x === '#') {
-          $.g.w.add(new Wall(i * GRID_SIZE, j * GRID_SIZE));
+          $.g.w.add(new Wall(i * GS, j * GS));
         } else if (x === '.') {
-          $.g.d.add(new Floor(i * GRID_SIZE, j * GRID_SIZE));
+          $.g.d.add(new Floor(i * GS, j * GS));
         }
       }
     }
@@ -186,7 +186,7 @@ var Level = function() {
   }
 
   _.getWorldSize = function() {
-    return new Rect(0, 0, _.ww * GRID_SIZE, _.wh * GRID_SIZE);
+    return new Rect(0, 0, _.ww * GS, _.wh * GS);
   };
 
   _.length = function() {

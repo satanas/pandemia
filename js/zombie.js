@@ -1,19 +1,19 @@
-var Zombie = function(x, y, sol) {
+var Zombie = function(x, y, s) {
   var _ = this;
   _.mindist = 500; // min distance to start chasing the player
   _.path = []; // points of path
   _.ctimer = 300; // check time in ms
   _.ccount = 0; // time counter before checking new route
-  _.angle = 0;
-  _.trackingPos;
+  _.an = 0;
+  _.tp = 0; // Tracking pos
   _.bcount = 0; // biting counter
-  _.s = rnd() + MZS; // speed
+  _.s = rnd() + MIN_ZS; // speed
   _.hsc = 0; // hurt sound counter
   _.gc = rndr(0, 4000); // growl counter
   _.d = 'd'; // direction
   _.anim = new Animator([0, 1], 150);
-  _.sol = sol; // If sol = true, means that this zombie was a soldier before and should have more health
-  _.health = (sol) ? rndr(15, 20) : rndr(3, 5);
+  _.sol = s; // If sol = true, means that this zombie was a soldier before and should have more health
+  _.health = (s) ? rndr(15, 20) : rndr(3, 5);
 
   _.inherits(Sprite);
   _.inherits(AStar);
@@ -29,7 +29,7 @@ var Zombie = function(x, y, sol) {
     _.gc = iir(_.gc - $.e, 0);
     _.bcount = iir(_.bcount - $.e, 0);
 
-    if (!_.gc && (rnd() > 0.98) && _.trackingPos) {
+    if (!_.gc && (rnd() > 0.98) && _.tp) {
       $.sn.p('zg');
       _.gc = rndr(1000, 4000);
     }
@@ -39,28 +39,29 @@ var Zombie = function(x, y, sol) {
     if (!_.bcount) {
       if (_.path.length === 0) {
         if ((d <= _.mindist) && (round(d) > 40)) {
-          _.path = _.findpath(_, $.player, MAX_ZOMBIE_PATH_DISTANCE);
-          _.trackingPos = new Point($.player.x, $.player.y);
+          _.path = _.findpath(_, $.player, MAX_ZPD);
+          _.tp = new Point($.player.x, $.player.y);
         }
       } else {
         if (d > _.mindist) {
-          _.trackingPos = null;
+          _.tp = null;
           _.path = [];
           return;
         }
-        var nextPos = _.path[0],
-            dist = _.getdist(_, nextPos),
-            appliedDist, dx, dy;
+        var np = _.path[0], // next pos
+            dist = _.getdist(_, np),
+            ad, // Applied dist
+            dx, dy;
         _.anim.u();
         // The zombie reached the current node
         if (dist === 0) {
           // We remove the current node from the path and let the walking continue
           _.path.shift();
         } else {
-          _.angle = atan2(nextPos.y - _.y, nextPos.x - _.x);
-          appliedDist = min(dist, _.s);
-          dx = appliedDist * cos(_.angle);
-          dy = appliedDist * sin(_.angle);
+          _.an = atan2(np.y - _.y, np.x - _.x);
+          ad = min(dist, _.s);
+          dx = ad * cos(_.an);
+          dy = ad * sin(_.an);
 
           if (abs(dx) > abs(dy)) {
             _.d = (dx < 0) ? DIR.LEFT : DIR.RIGHT;
@@ -74,7 +75,7 @@ var Zombie = function(x, y, sol) {
           _.updateRect();
 
           // Recalculate path if destination point changed
-          if (_.ccount >= _.ctimer && _.trackingPos !== null && ($.player.x !== _.trackingPos.x || $.player.y !== _.trackingPos.y)) {
+          if (_.ccount >= _.ctimer && _.tp !== null && ($.player.x !== _.tp.x || $.player.y !== _.tp.y)) {
             _.clrPath();
           }
         }
@@ -83,7 +84,7 @@ var Zombie = function(x, y, sol) {
 
     // Collisions with bullets
     $.g.b.c(_, function(p, b) {
-      if (b.type !== WEAPONS.FL.ID) b.a = 0;
+      if (b.type !== WPN.FL.ID) b.a = 0;
       _.health -= 1;
 
       if (_.health <= 0) {
@@ -122,10 +123,10 @@ var Zombie = function(x, y, sol) {
   };
 
   _.r = function(p) {
-    Zombie.draw(p.x, p.y, _.d, _.trackingPos, _.anim, _.sol);
+    Zombie.draw(p.x, p.y, _.d, _.tp, _.anim, _.sol);
   }
   _.bite = function() {
-    _.bcount = rndr(MIN_BITING_DURATION, MIN_BITING_DURATION + 200);
+    _.bcount = rndr(MIN_BD, MIN_BD + 200);
     return rndr(4, 8);
   }
 

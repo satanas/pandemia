@@ -1,12 +1,9 @@
-GRID_SIZE = 64;
-MIN_PLAYER_SPEED = 1.55;
-MZS = 1; // Min zombie speed
-MAX_ZOMBIE_PATH_DISTANCE = 15; // Nodes
-INVINCIBILITY_TIME = 800; // ms
-INTENSITY_PER_ATTACK = 50;
-INTENSITY_DECAY = 0.5 // per second
-MEDIKIT_DURATION = 1500; // ms
-MIN_BITING_DURATION = 900; // ms
+GS = 64; // Grid size
+MIN_PS = 1.55; // Min player speed
+MIN_ZS = 1; // Min zombie speed
+MAX_ZPD = 15; // Max zombie path distance (in nodes)
+INV_TIME = 800; // Invincibility time (in ms)
+MIN_BD = 900; // Min biting duration (in ms)
 MAX_SOLD = 3; // max number of soldiers
 ITEMS = {
   AM: 2,
@@ -27,30 +24,26 @@ DIR = {
   UP: 'u',
   DOWN: 'd'
 }
-WEAPONS= {
+WPN = {
   MG: {
     ID: 'MACHINEGUN',
-    DELAY: 50,
-    SPEED: 50,
-    SIZE: 10,
-    DAM: 1
+    DL: 50,
+    SP: 50,
+    SI: 10
   },
   SG: {
     ID: 'SHOTGUN',
-    DELAY: 300,
-    SPEED: 30,
-    SIZE: 16,
-    DAM: 5
+    DL: 300,
+    SP: 30,
+    SI: 16
   },
   FL: {
     ID: 'FLAME',
-    DELAY: 40,
-    SPEED: 7,
-    SIZE: 60
+    DL: 40,
+    SP: 7,
+    SI: 60
   }
 }
-VACCINE_PICKUP_DELAY = 1500; // ms
+VACC_PD = 1300; // Vaccine pick up delay (in ms)
 DROP_RATE = 0.3;
-AMMO_PER_BOX = 30;
-
-// ZQSD for frenchies
+AMMO_BOX = 30;

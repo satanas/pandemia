@@ -37,6 +37,10 @@ $.init = function(w, h) {
   $.x.mv = $.x.moveTo;
   $.x.lt = $.x.lineTo;
   $.x.e = $.x.ellipse;
+  // lineWidth
+  $.x.lw = function(w) {
+    $.x.lineWidth = w;
+  }
   // fillRect
   $.x.fr = function(x, y, w, h) {
     // To avoid anti-aliasing
@@ -45,21 +49,21 @@ $.init = function(w, h) {
   // Set fillStyle
   $.x.fs = function(c) {
     $.x.fillStyle = c;
-  };
+  }
   // Set strokeStyle
   $.x.ss = function(c) {
     $.x.strokeStyle = c;
-  };
+  }
   // Clear screen
   $.x.clr = function(c) {
     $.x.cr(0, 0, $.vw, $.vh);
     $.x.fs(c || "black");
     $.x.fr(0, 0, $.vw, $.vh);
-  };
+  }
   // Global alpha
   $.x.ga = function(a) {
     $.x.globalAlpha = a;
-  };
+  }
   // Set text style
   // s: font size
   // c: font color

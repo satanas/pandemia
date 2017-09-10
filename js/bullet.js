@@ -1,33 +1,32 @@
-var Bullet = function(cx, cy, angle, type) {
+var Bullet = function(cx, cy, an, type) {
   var _ = this;
-  _.angle = angle;
+  _.an = an;
   _.type = type;
-  _.speed = _.type.SPEED;
-  _.damage = _.type.DAM;
-  _.lifetime = 500; // only valid for flame
-  if (_.type.ID === WEAPONS.FL.ID) {
-    _.angle += rndr(-8, 8) * PI / 180;
-    _.angleVar = _.angle + (rnde([-20, -15, 0, 15, 20]) * PI / 180);
+  _.sp = _.type.SP;
+  _.lt = 500; // only valid for flame
+  if (_.type.ID === WPN.FL.ID) {
+    _.an += rndr(-8, 8) * PI / 180;
+    _.anVar = _.an + (rnde([-20, -15, 0, 15, 20]) * PI / 180);
     _.xdecay = 20; //rndr(50, 80); // per second
     _.color = 7;
     _.w = rndr(40, 60);
   }
 
   _.inherits(Sprite);
-  Sprite.call(_, cx, cy, _.type.SIZE, _.type.SIZE);
+  Sprite.call(_, cx, cy, _.type.SI, _.type.SI);
 
   _.u = function() {
-    _.x += _.speed * cos(_.angle);
-    _.y += _.speed * sin(_.angle);
+    _.x += _.sp * cos(_.an);
+    _.y += _.sp * sin(_.an);
 
     // Collisions with walls
-    if (_.type.ID !== WEAPONS.FL.ID) {
+    if (_.type.ID !== WPN.FL.ID) {
       $.g.w.c(_, function(p, w) {
         _.a = 0;
       });
     }
 
-    if (!$.cam.inView(_) || !_.lifetime) {
+    if (!$.cam.inView(_) || !_.lt) {
       _.a = 0;
     }
 
@@ -35,24 +34,24 @@ var Bullet = function(cx, cy, angle, type) {
     // lost more than 1 hour debugging
     _.updateRect();
 
-    if (_.type.ID === WEAPONS.FL.ID) {
+    if (_.type.ID === WPN.FL.ID) {
       _.w = iir(_.w - ($.e * _.xdecay / 1000), 1);
-      _.lifetime = iir(_.lifetime - $.e, 0);
+      _.lt = iir(_.lt - $.e, 0);
       _.color = iir(_.color + ($.e / 12), 7, 22);
-      if (_.lifetime < 400 && _.angleVar) {
-        _.angle = _.angleVar;
-        _.angleVar = 0;
+      if (_.lt < 400 && _.anVar) {
+        _.an = _.anVar;
+        _.anVar = 0;
       }
-      if (_.lifetime < 200 && _.damage) {
-        _.damage = 0;
-      }
+      //if (_.lt < 200 && _.dam) {
+      //  _.dam = 0;
+      //}
     }
   }
 
   _.r = function(p) {
-    if (_.type.ID === WEAPONS.FL.ID) {
+    if (_.type.ID === WPN.FL.ID) {
       var c = _.color * 255 / 100,
-          o = _.lifetime / 200;
+          o = _.lt / 200;
       $.x.fs('hsla(' + c + ',100%,50%,' + o + ')');
     } else {
       $.x.fs('white');

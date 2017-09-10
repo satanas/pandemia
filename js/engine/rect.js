@@ -16,7 +16,7 @@ var Rect = function(x, y, w, h) {
   };
 
   _.toGrid = function() {
-    return new Rect(floor(_.x / GRID_SIZE), floor(_.y / GRID_SIZE), _.w / GRID_SIZE, _.h / GRID_SIZE);
+    return new Rect(floor(_.x / GS), floor(_.y / GS), _.w / GS, _.h / GS);
   };
 
   _.center = function() {
@@ -27,5 +27,5 @@ var Rect = function(x, y, w, h) {
 };
 
 Rect.fromGrid = function(o) {
-  return new Rect(o.x * GRID_SIZE, o.y * GRID_SIZE, o.w * GRID_SIZE, o.h * GRID_SIZE);
+  return new Rect(o.x * GS, o.y * GS, o.w * GS, o.h * GS);
 };

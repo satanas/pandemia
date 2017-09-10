@@ -25,7 +25,7 @@ var MenuScene = function() {
     $.x.ss('#f80');
 
     $.x.bp();
-    $.x.lineWidth = 12;
+    $.x.lw(12);
     for (j=0; j<2; j++) {
       for (i=0; i<20; i++) {
         $.x.mv((1024 * j) - (30 * (j + 1)), i * 30);

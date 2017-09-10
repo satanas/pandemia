@@ -77,7 +77,7 @@ var GameScene = function() {
     $.g.n.r(); // NPCs
     $.g.x.r(); // vaccine
     $.g.b.r(); // bullets
-    $.player.drawAim();
+    $.player.dAim();
     $.hud.r();
     _.fx();
     _.gm();
@@ -87,7 +87,7 @@ var GameScene = function() {
   };
 
   _.fx = function() {
-    var h = $.player.humanity,
+    var h = $.player.hum,
         g = 0,
         b = 0;
 

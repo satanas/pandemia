@@ -1,23 +1,23 @@
 var Player = function(x, y) {
   var _ = this;
-  _.mxs = 0; // max speed
-  _.d = DIR.LEFT; // direction
-  _.s = 0.35; // speed
+  _.mxs = 0; // Max speed
+  _.d = DIR.LEFT; // Direction
+  _.s = 0.35; // Speed
 
   _.dx = 0;
   _.dy = 0;
-  _.ic = 0; // invincibility counter
-  _.humanity = 100;
-  _.humanityDecay = _.humanity / (7 * 60); // 7 min
+  _.ic = 0; // Invincibility counter
+  _.hum = 100; // Humanity
+  _.hd = _.hum / (7 * 60); // Humanity decay 7 min
   _.hc = 0; // healing counter
   _.vaccine = 0;
-  _.angle = 0;
+  _.an = 0;
   _.ammo = 500;
 
   _.skinColor = '#ffe499';
   _.hairColor = '#795548';
   _.aim = new Point(0, 0);
-  _.weapon = WEAPONS.MG;
+  _.wpn = WPN.MG;
   _.anim = new Animator([0, 1], 150);
 
   //var x = room.x + (room.w / 2) - 32,
@@ -32,16 +32,14 @@ var Player = function(x, y) {
     if (_.hc > 0) {
       _.hc = iir(_.hc - $.e, 0);
     } else {
-      _.humanity = iir(_.humanity - ($.e * _.humanityDecay / 1000), 0.1);
+      _.hum = iir(_.hum - ($.e * _.hd / 1000), 0.1);
     }
-    _.mxs = iir(-1.5 + (_.humanity / 10), MIN_PLAYER_SPEED);
-    _.shotDelay = iir(_.shotDelay - $.e, 0);
+    _.mxs = iir(-1.5 + (_.hum / 10), MIN_PS);
+    _.sd = iir(_.sd - $.e, 0);
     _.anim.u();
 
     if (_.ic > 0) {
       _.ic = iir(_.ic - $.e, 0);
-      // Slow down 20% if recovering
-      // _.mxs = iir(_.mxs - (_.mxs * 0.2), MIN_PLAYER_SPEED);
     }
 
     if ($.in.p(INPUT.L)) {
@@ -97,18 +95,18 @@ var Player = function(x, y) {
 
     // Collisions with zombies
     if (_.ic === 0) {
-      //$.g.z.c(_, function(p, z) {
-      //  _.humanity -= z.bite();
-      //  _.ic = INVINCIBILITY_TIME;
-      //  _.dropVaccine();
-      //  $.scn.game.be = 30;
-      //  $.ss.shake(1.8, 200)
-      //  $.sn.p('ph');
-      //  if (_.humanity > 0) {
-      //  } else {
-      //    $.scn.game.over();
-      //  }
-      //});
+      $.g.z.c(_, function(p, z) {
+        _.hum -= z.bite();
+        _.ic = INV_TIME;
+        _.dropVaccine();
+        $.scn.game.be = 30;
+        $.ss.shake(1.8, 200)
+        $.sn.p('ph');
+        if (_.hum > 0) {
+        } else {
+          $.scn.game.over();
+        }
+      });
     }
 
     // Collisions with items
@@ -116,14 +114,14 @@ var Player = function(x, y) {
       i.a = 0;
       $.sn.p('it');
       if (i.type === ITEMS.AM) {
-        _.ammo += AMMO_PER_BOX;
+        _.ammo += AMMO_BOX;
       } else {
         if (i.type === ITEMS.MG) {
-          _.weapon = WEAPONS.MG;
+          _.wpn = WPN.MG;
         } else if (i.type === ITEMS.SG) {
-          _.weapon = WEAPONS.SG;
+          _.wpn = WPN.SG;
         } else if (i.type === ITEMS.FL) {
-          _.weapon = WEAPONS.FL;
+          _.wpn = WPN.FL;
         }
       }
     });
@@ -174,7 +172,7 @@ var Player = function(x, y) {
 
     _.updateRect();
 
-    if (_.shooting && !_.shotDelay) {
+    if (_.shooting && !_.sd) {
       _.shoot();
     }
   };
@@ -262,13 +260,13 @@ var Player = function(x, y) {
     }
 
     // debug
-    $.x.lineWidth = 1;
-    var c = _.getOffsetCenter(p),
+    $.x.lw(1);
+    var c = _.offc(p),
         mag = 100
     $.x.ss('#f00');
     $.x.bp();
     $.x.mv(c.x, c.y);
-    $.x.lt(c.x + (mag * cos(_.angle)), c.y + (mag * sin(_.angle)));
+    $.x.lt(c.x + (mag * cos(_.an)), c.y + (mag * sin(_.an)));
     $.x.k();
   }
 
@@ -277,18 +275,17 @@ var Player = function(x, y) {
       return
     }
     _.dropVaccine();
-    _.shotDelay = _.weapon.DELAY;
-    var c = _.getCenter();
+    _.sd = _.wpn.DL; // shoot delay
+    var i, c = _.getCenter();
     _.ammo -= 1;
-    $.g.b.add(new Bullet(c.x, c.y, _.angle, _.weapon));
-    if (_.weapon.ID === WEAPONS.SG.ID) {
-      $.g.b.add(new Bullet(c.x, c.y, _.angle + (rndr(4, 15) * PI / 180), _.weapon));
-      $.g.b.add(new Bullet(c.x, c.y, _.angle - (rndr(4, 15) * PI / 180), _.weapon));
-      $.g.b.add(new Bullet(c.x, c.y, _.angle - (rndr(4, 15) * PI / 180), _.weapon));
-      $.g.b.add(new Bullet(c.x, c.y, _.angle - (rndr(4, 15) * PI / 180), _.weapon));
-      _.ammo = iir(_.ammo - 2, 0);
+    $.g.b.add(new Bullet(c.x, c.y, _.an, _.wpn));
+    if (_.wpn.ID === WPN.SG.ID) {
+      for (i=4;i--;) {
+        $.g.b.add(new Bullet(c.x, c.y, _.an + (rndr(4, 15) * PI / 180), _.wpn));
+        _.ammo = iir(_.ammo - 1, 0);
+      }
       $.sn.p('sh');
-    } else if (_.weapon.ID === WEAPONS.FL.ID) {
+    } else if (_.wpn.ID === WPN.FL.ID) {
       $.sn.p('fl');
     } else {
       $.sn.p('gu');
@@ -313,25 +310,26 @@ var Player = function(x, y) {
     return new Point(_.x + (_.w / 2), _.y + (_.h / 2));
   }
 
-  _.getOffsetCenter = function(p) {
+  // Get offset center
+  _.offc = function(p) {
     // p is the transformed point of the sprite
     return new Point(p.x + (_.w * _.scaleX / 2), p.y + (_.h * _.scaleY / 2));
   }
 
-  _.updateAim = function(e) {
+  _.uAim = function(e) {
     var rect = $.cv.getBoundingClientRect(),
-        p = $.cam.transformPointCoordinates(_.x, _.y), // transform coordinates to viewport coords
-        c = _.getOffsetCenter(p);
+        p = $.cam.txPCoord(_.x, _.y), // transform coordinates to viewport coords
+        c = _.offc(p);
 
     _.scaleX = $.cv.width / rect.width;
     _.scaleY = $.cv.height / rect.height;
 
     _.aim.x = (e.clientX - rect.left) * _.scaleX;
     _.aim.y = (e.clientY - rect.top) * _.scaleY;
-    _.angle = atan2((_.aim.y - c.y), (_.aim.x - c.x));
+    _.an = atan2((_.aim.y - c.y), (_.aim.x - c.x));
   }
 
-  _.drawAim = function() {
+  _.dAim = function() {
     $.x.fs('#f00');
     $.x.bp();
     $.x.arc(_.aim.x, _.aim.y, 2, 0, 2 * PI);
@@ -344,7 +342,7 @@ var Player = function(x, y) {
   }
 
   $.cv.addEventListener('mousemove', function(e) {
-    _.updateAim(e);
+    _.uAim(e);
   }, false);
 
   $.cv.addEventListener('mousedown', function(e) {
