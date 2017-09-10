@@ -130,18 +130,12 @@ var Level = function() {
     $.g.x.add($.vaccine);
     _.pcoord = new Point(c.x, c.y);
     $.player.reset(c.x, c.y);
-    do {
-      px = rndr(_.arooms[i].x, _.arooms[i].b.r);
-    } while (px === c.x);
-    do {
-      py = rndr(_.arooms[i].y, _.arooms[i].b.b);
-    } while (py === c.y);
     assignedIndexes.push(i);
     // Add ending room
     do {
-      i = rndr(0, _.arooms.length)
-    } while (assignedIndexes.indexOf(i) !== -1);
-    c = _.arooms[i].center();
+      j = rndr(0, _.arooms.length)
+    } while (j !== i && _.getdist(c, _.arooms[j]) <= 2000);
+    c = _.arooms[j].center();
     $.endzone = new EndZ(c.x, c.y);
     $.g.h.add($.endzone);
 
@@ -250,6 +244,10 @@ var Level = function() {
     }
   };
 
+  _.getdist = function(p, q) {
+    return sqrt(pow(p.x - q.x, 2) + pow(p.y - q.y, 2));
+    //return abs(p.x - q.x) + abs(p.y - q.y);
+  };
 };
 
 var Leaf = function(x, y, w, h) {
