@@ -162,6 +162,10 @@ var Level = function() {
     _.wh = _.os.h;
     $.g.h.add($.endzone);
     $.g.x.add($.vaccine);
+    for (var i=0; i < $.scn.game.tries; i++) {
+      // Add zombie soldiers around the lost vaccine
+      $.g.z.add(new Zombie($.vaccine.x, $.vaccine.y, 1));
+    }
     $.player.reset(_.pcoord.x, _.pcoord.y);
 
     // Load the walls
