@@ -42,7 +42,7 @@ var Level = function() {
         }
       }
     }
-    _.print();
+    //_.print();
     $.g.h.add(new StartZ(970, 202));
     $.player = new Player(640, 320);
     $.scientist = new Scientist(320, 320);
@@ -51,6 +51,10 @@ var Level = function() {
     // Create the vaccine only the first time
     if (!$.scn.game.tries) {
       $.g.x.add(new Vaccine(128, 128));
+    }
+    // Add remaining soldiers
+    for (i=0; i < MAX_SOLD - $.scn.game.tries; i++) {
+      $.g.n.add(new Soldier(378 + (i * 100), 110));
     }
   }
 
@@ -153,7 +157,7 @@ var Level = function() {
     // Save the map for later
     _.bkmap = _.map.slice(0);
     // Printing map to console
-    _.print();
+    //_.print();
   };
 
   _.reload = function() {
@@ -162,10 +166,8 @@ var Level = function() {
     _.wh = _.os.h;
     $.g.h.add($.endzone);
     $.g.x.add($.vaccine);
-    for (var i=0; i < $.scn.game.tries; i++) {
-      // Add zombie soldiers around the lost vaccine
-      $.g.z.add(new Zombie($.vaccine.x, $.vaccine.y, 1));
-    }
+    // Add zombie soldiers around the lost vaccine
+    $.g.z.add(new Zombie($.vaccine.x, $.vaccine.y, 1));
     $.player.reset(_.pcoord.x, _.pcoord.y);
 
     // Load the walls

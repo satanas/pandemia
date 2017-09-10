@@ -35,11 +35,9 @@ var GameScene = function() {
         $.lvl.reload();
       }
     }
-    console.log('spawners', $.g.s.e.length);
     $.cam.setWorldSize(_.ww, _.wh);
     $.hud.sws(_.ww, _.wh); // Set world size
     $.cam.setTarget($.player);
-    _.iz = 1;
   }
 
   // Next floor
@@ -152,10 +150,26 @@ var GameScene = function() {
       Zombie.draw(410, y + 160, DIR.DOWN);
       Vaccine.draw(430, y + 245);
 
-      $.x.ct('GAME OVER', 50, y + 80, c, s);
       $.x.ft('x  100', 30, 500, y + 200, c, s);
       $.x.ft('x  1', 30, 500, y + 270, c, s);
-      $.x.ct('You could not save the human race.', 18, y + 350, c, s);
+
+      // You still have soldiers left
+      if (_.tries < MAX_SOLD) {
+        $.x.ct('YOU DIED', 50, y + 80, c, s);
+        $.x.ct('ENTER to send another soldier. ESC to exit.', 20, y + 450, c, s);
+
+        if ($.in.p(INPUT.E)) {
+          _.zn = 0
+          _.tries += 1;
+          _.init();
+        }
+      } else {
+        $.x.ct('GAME OVER', 50, y + 80, c, s);
+        $.x.ct('You could not save the human race.', 18, y + 350, c, s);
+        if ($.in.p(INPUT.E)) {
+          _.goToMenu();
+        }
+      }
     } else if (_.end === 2) {
       $.x.fs('#f80');
       $.x.fr(x + 30, y, w - 60, h);
@@ -168,14 +182,19 @@ var GameScene = function() {
       $.x.ft('x  100', 30, 510, y + 260, c, s);
 
       $.x.ct('Thanks for playing!', 25, y + 360, c, s);
+      $.x.ct('ENTER to continue.', 20, y + 450, c, s);
+      if ($.in.p(INPUT.E)) {
+        _.goToMenu();
+      }
     }
-    $.x.ct('ENTER to play again. ESC to exit.', 20, y + 450, c, s);
     $.x.globalAlpha = 1;
+  }
 
-    if ($.in.p(INPUT.E)) {
-      _.zn = 0
-      _.tries += 1;
-      _.init();
-    }
+  _.goToMenu = function() {
+    _.tries = 0;
+    _.zn = 0;
+    _.exit();
+    _.c.style.filter = ""; // reset fx
+    $.scn.menu.start();
   }
 }

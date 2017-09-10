@@ -7,6 +7,7 @@ INTENSITY_PER_ATTACK = 50;
 INTENSITY_DECAY = 0.5 // per second
 MEDIKIT_DURATION = 1500; // ms
 MIN_BITING_DURATION = 900; // ms
+MAX_SOLD = 3; // max number of soldiers
 ITEMS = {
   AM: 2,
   MG: 3,

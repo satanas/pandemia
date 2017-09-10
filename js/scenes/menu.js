@@ -4,17 +4,20 @@ var MenuScene = function() {
   Scene.call(_);
 
   _.anim = new Animator([0, 1], 150);
-  _.xc = 0; // exit counter
-  _.ef = 0; // exiting flag
 
+  _.init = function() {
+    _.xc = 0; // exit counter
+    _.de = 400 // delay before accepting keyboard events
+    _.ef = 0; // exiting flag
+  }
 
   _.update = function() {
     var i, j;
+    _.de = iir(_.de - $.e, 0);
     _.xc = iir(_.xc - $.e, 0);
     if (_.xc === 0 && _.ef) {
       _.exit();
       $.scn.game.start();
-      //_.fout($.scn.game, 1000);
     } else if (!_.ef) {
       _.anim.u();
     }
@@ -56,7 +59,7 @@ var MenuScene = function() {
     _.dc(cx + o + 30, cy + o, s);
     _.dc(cx, cy, d);
 
-    if ($.in.p(INPUT.E) && !_.ef) {
+    if ($.in.p(INPUT.E) && !_.ef && !_.de) {
       _.ef = 1;
       _.xc = 300;
       _.anim.f = 0; // Turn off the press enter message
