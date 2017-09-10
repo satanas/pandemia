@@ -54,7 +54,7 @@ var Bullet = function(cx, cy, an, type) {
           o = _.lt / 200;
       $.x.fs('hsla(' + c + ',100%,50%,' + o + ')');
     } else {
-      $.x.fs('white');
+      $.x.fs(WH);
     }
     $.x.bp();
     $.x.arc(p.x, p.y, _.w / 2, 0, 2 * PI);

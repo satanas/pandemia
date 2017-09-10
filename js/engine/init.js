@@ -57,7 +57,7 @@ $.init = function(w, h) {
   // Clear screen
   $.x.clr = function(c) {
     $.x.cr(0, 0, $.vw, $.vh);
-    $.x.fs(c || "black");
+    $.x.fs(c || "#000");
     $.x.fr(0, 0, $.vw, $.vh);
   }
   // Global alpha

@@ -14,8 +14,8 @@ var HUD = function() {
   };
 
   _.r = function() {
-    var c = '#fff', // text color
-        s = 'sans-serif'; // font family
+    var c = WH, // text color
+        s = FN; // font family
 
     // Humanity bar
     $.x.fs('#333');

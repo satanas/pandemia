@@ -108,8 +108,8 @@ var GameScene = function() {
   _.pi = function() {
     $.x.fs('rgba(0,0,0,0.5)');
     $.x.fr(300, 460, 430, 70);
-    $.x.ct('WASD, ZQSD and ARROWS to move', 20, 490, '#fff', 'sans-serif');
-    $.x.ct('MOUSE to aim and shoot', 20, 515, '#fff', 'sans-serif');
+    $.x.ct('WASD, ZQSD and ARROWS to move', 20, 490, WH, FN);
+    $.x.ct('MOUSE to aim and shoot', 20, 515, WH, FN);
   }
 
   // To be called on game over
@@ -126,7 +126,7 @@ var GameScene = function() {
   // Print global message
   _.gm = function() {
     if ($.msg) {
-      $.x.ct($.msg, 30, 200, '#fff', 'sans-serif');
+      $.x.ct($.msg, 30, 200, WH, FN);
     }
   }
 
@@ -136,13 +136,13 @@ var GameScene = function() {
 
     var w = 600,
         h = 500,
-        c = '#fff',
-        s = 'sans-serif',
+        c = WH,
+        s = FN,
         x = ($.vw - w) / 2,
         y = ($.vh - h) / 2;
 
     _.rstfx();
-    $.x.globalAlpha = 0.9;
+    $.x.ga(0.9);
     $.x.fs(c);
     $.x.fr(x, y, w, h);
     if (_.end === 1) {
@@ -167,7 +167,7 @@ var GameScene = function() {
         }
       } else {
         $.x.ct('GAME OVER', 50, y + 80, c, s);
-        $.x.ct('You could not save the human race.', 18, y + 350, c, s);
+        //$.x.ct('You could not save the human race.', 18, y + 350, c, s);
         if ($.in.p(INPUT.E)) {
           _.goToMenu();
         }
@@ -189,7 +189,7 @@ var GameScene = function() {
         _.goToMenu();
       }
     }
-    $.x.globalAlpha = 1;
+    $.x.ga(1);
   }
 
   _.rstfx = function() {

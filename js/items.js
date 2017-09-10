@@ -94,7 +94,7 @@ Flame.draw = function(x, y) {
   $.x.fr(x + 10, y + 13, 30, 10);
   $.x.fs('#ffeb3b');
   $.x.fr(x + 40, y + 13, 4, 10);
-  $.x.fs('#000');
+  $.x.fs(BL);
   $.x.fr(x, y + 18, 4, 23);
   $.x.fr(x, y + 22, 64, 4);
   $.x.fr(x + 11, y + 18, 21, 4);

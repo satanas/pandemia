@@ -47,3 +47,6 @@ WPN = {
 VACC_PD = 1300; // Vaccine pick up delay (in ms)
 DROP_RATE = 0.3;
 AMMO_BOX = 30;
+WH = '#fff';
+BL = '#000';
+FN = 'sans-serif';

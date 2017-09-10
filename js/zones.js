@@ -54,7 +54,7 @@ var EndZ = function(cx, cy) {
         d; // d: double coord value
 
     _.cx.lineWidth = 1;
-    _.cx.fillStyle = '#000';
+    _.cx.fillStyle = BL;
     _.cx.beginPath();
     for (i=1; i<=13; i++) {
       d = _.lw * 2 * i;
@@ -69,9 +69,9 @@ var EndZ = function(cx, cy) {
     $.x.fs('yellow');
     $.x.fr(x, y, _.ow, _.oh);
     $.x.di(_.ca, 0, 0, 256, 160, x, y, 256, 160);
-    $.x.fs('#000');
+    $.x.fs(BL);
     $.x.fr(p.x - 64, p.y + 90, _.ow, 30);
-    $.x.ft('SAFE ZONE', 18, p.x + 10, p.y + 110, '#fff', 'sans-serif');
+    $.x.ft('SAFE ZONE', 18, p.x + 10, p.y + 110, WH, FN);
   }
 
   // Occupy zone (used by zombies)

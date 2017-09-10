@@ -37,8 +37,8 @@ var Scientist = function(x, y) {
   _.r = function(p) {
     var i,
         y = 290,
-        c = '#fff',
-        s = 'sans-serif',
+        c = WH,
+        s = FN,
         bc = '#c68642'; // body color
 
     // Head

@@ -21,7 +21,7 @@ var MenuScene = function() {
     } else if (!_.ef) {
       _.anim.u();
     }
-    $.x.clr('#fff');
+    $.x.clr(WH);
     $.x.ss('#f80');
 
     $.x.bp();
@@ -37,18 +37,18 @@ var MenuScene = function() {
     $.x.fs('#f80');
     $.x.fr(50, 0, $.vw - 100, $.vh);
 
-    $.x.ct('PANDEMIA', 125, 150, '#fff', 'sans-serif');
+    $.x.ct('PANDEMIA', 125, 150, WH, FN);
     if (_.anim.g()) {
-      $.x.ct('Press Enter to start', 35, 490, '#fff', 'sans-serif');
+      $.x.ct('Press ENTER to start', 35, 490, WH, FN);
     }
-    $.x.ct('By @satanas82 for js13k 2017', 15, 550, '#eee', 'sans-serif');
+    $.x.ct('By @satanas82 for js13k 2017', 15, 550, '#eee', FN);
     var cx = floor($.vw / 2),
         cy = floor($.vh / 2) + 40,
         r = 60, // radius
         s = 40, // radius 2
         d = 10, // depth
         o = (r * 2) - (s * 2); // offset
-    $.x.fs('white');
+    $.x.fs(WH);
     _.dc(cx, cy - r + d, r);
     _.dc(cx - r + d, cy + (r / 2), r);
     _.dc(cx + r - d, cy + (r / 2), r);
