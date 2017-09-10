@@ -154,15 +154,20 @@ var Player = function(x, y) {
         // Stop all the zombies, fade out, etc
         console.log('you win');
       } else if (z.intro) {
+        if ($.scn.game.tries) return;
         var s = $.scientist;
         if (s.st === 0) {
           s.n();
         }
       } else if (z.start) {
-        if (_.vaccine) {
-          $.scn.game.nf();
+        if (!$.scn.game.tries) {
+          if (_.vaccine) {
+            $.scn.game.nz();
+          } else {
+            z.al();
+          }
         } else {
-          z.al();
+          $.scn.game.nz();
         }
       }
     });

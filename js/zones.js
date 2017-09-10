@@ -8,7 +8,7 @@ var StartZ = function(x, y) {
 
   _.u = function() {
     _.ac = iir(_.ac - $.e, 0);
-    if (_.ac) {
+    if (_.ac && !$.scn.game.tries) {
       $.msg ='You cannot leave the lab without the vaccine';
     }
   }

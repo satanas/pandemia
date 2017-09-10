@@ -1,10 +1,11 @@
 var GameScene = function() {
   var _ = this;
   _.maxBlur = 5;
-  _.c = $.byId("c"); // canvas
-  _.be = 0; // bite effect flag
-  _.end = 0; // ending flag. 1 = game over, 2 = win
-  _.fl = 0; // floor flag. 0 = intro
+  _.c = $.byId("c"); // Canvas ref
+  _.be = 0; // Bite effect flag
+  _.end = 0; // Ending flag. 1 = game over, 2 = win
+  _.zn = 0; // Zone flag. 0 = intro, 1 = lab
+  _.tries = 0;
 
   _.inherits(Scene);
   Scene.call(_);
@@ -13,22 +14,28 @@ var GameScene = function() {
   $.hud = new HUD();
 
   _.init = function() {
-    // Clear all groups before start
-    Object.keys($.g).forEach(function(g) { $.g[g].clr() })
     _.be = 0;
     _.end = 0;
     $.msg = 0;
 
     // If intro
-    if (!_.fl) {
+    if (!_.zn) {
+      Object.keys($.g).forEach(function(g) { $.g[g].clr() })
       _.ww = 1024;
       _.wh = 576;
       $.lvl.iroom(_.ww, _.wh);
     } else {
+      // Clear all groups before start
+      Object.keys($.g).forEach(function(g) { $.g[g].clr() })
       _.ww = 3200;
       _.wh = 3200;
-      $.lvl.gen(_.ww, _.wh);
+      if (!_.tries) {
+        $.lvl.gen(_.ww, _.wh);
+      } else {
+        $.lvl.reload();
+      }
     }
+    console.log('spawners', $.g.s.e.length);
     $.cam.setWorldSize(_.ww, _.wh);
     $.hud.sws(_.ww, _.wh); // Set world size
     $.cam.setTarget($.player);
@@ -36,8 +43,8 @@ var GameScene = function() {
   }
 
   // Next floor
-  _.nf = function() {
-    _.fl += 1;
+  _.nz = function() {
+    _.zn += 1;
     _.reset();
     _.init();
   }
@@ -62,7 +69,8 @@ var GameScene = function() {
     $.ss.u();
 
     // Render
-    $.g.s.r(); // spawners and floor
+    $.g.s.r(); // spawners
+    $.g.d.r(); // floor and decorations
     $.g.h.r(); // zones
     $.g.w.r(); // walls
     $.g.z.r(); // zombies
@@ -76,7 +84,7 @@ var GameScene = function() {
     _.fx();
     _.gm();
 
-    if (!_.fl) _.pi();
+    if (!_.zn) _.pi();
     _.mod();
   };
 
@@ -162,11 +170,11 @@ var GameScene = function() {
       $.x.ct('Thanks for playing!', 25, y + 360, c, s);
     }
     $.x.ct('ENTER to play again. ESC to exit.', 20, y + 450, c, s);
-
     $.x.globalAlpha = 1;
 
     if ($.in.p(INPUT.E)) {
-      _.fl = 0
+      _.zn = 0
+      _.tries += 1;
       _.init();
     }
   }

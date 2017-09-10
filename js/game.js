@@ -17,6 +17,7 @@ window.addEventListener('load', function() {
   $.g.b = new Group(); // Bullets
   $.g.x = new Group(); // Pushables boxes
   $.g.n = new Group(); // NPCs
+  $.g.d = new Group(); // Decorations
 
   $.lvl = new Level();
   $.txt = new Text();

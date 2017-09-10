@@ -6,12 +6,16 @@ var Level = function() {
   _.ww = 0;
   _.wh = 0;
   _.map = [];
+  _.bkmap = []; // to save the map for the retries
   _.leafs = [];
   _.root = null;
   // TODO: Pass maxLeafSize as parameter
   _.maxLeafSize = 20;
 
   _.arooms = [];
+  _.srooms = [];
+  _.pcoord = 0;
+  _.os = new Rect(0, 0, 0, 0); // Original map size
 
   // Generate intro room
   _.iroom = function(w, h) {
@@ -24,7 +28,9 @@ var Level = function() {
       for (i=0; i<_.ww; i++) {
         if (j === 0 || j === _.wh - 1 || i === 0 || i === _.ww - 1) {
           if ((j >= 3 && j <= 5) && i === 15) {
-            $.g.w.add(new Barricade((i - 1) * GRID_SIZE, j * GRID_SIZE));
+            if (!$.scn.game.tries) {
+              $.g.w.add(new Barricade((i - 1) * GRID_SIZE, j * GRID_SIZE));
+            }
             continue;
           }
 
@@ -32,7 +38,7 @@ var Level = function() {
           $.g.w.add(new Wall(i * GRID_SIZE, j * GRID_SIZE));
         } else {
           _.map[j][i] = "."
-          $.g.s.add(new Floor(i * GRID_SIZE, j * GRID_SIZE));
+          $.g.d.add(new Floor(i * GRID_SIZE, j * GRID_SIZE));
         }
       }
     }
@@ -42,13 +48,18 @@ var Level = function() {
     $.scientist = new Scientist(320, 320);
     $.g.n.add($.scientist);
     $.g.h.add(new IntroZ(256, 256));
-    $.g.x.add(new Vaccine(128, 128));
+    // Create the vaccine only the first time
+    if (!$.scn.game.tries) {
+      $.g.x.add(new Vaccine(128, 128));
+    }
   }
 
   _.gen = function(w, h) {
     var i = 0, j = 0;
     _.ww = w / GRID_SIZE;
     _.wh = h / GRID_SIZE;
+    _.os.w = _.ww;
+    _.os.h = _.wh;
 
     _.makeLeafs();
     _.root.createRooms();
@@ -81,7 +92,7 @@ var Level = function() {
         for (j=room.y; j<room.y + room.h; j++) {
           for (i=room.x; i<room.x + room.w; i++) {
             _.map[j][i] = ".";
-            $.g.s.add(new Floor(i * GRID_SIZE, j * GRID_SIZE));
+            $.g.d.add(new Floor(i * GRID_SIZE, j * GRID_SIZE));
           }
         }
       }
@@ -92,7 +103,7 @@ var Level = function() {
         for (j=hall.y; j<hall.y + hall.h; j++) {
           for (i=hall.x; i<hall.x + hall.w; i++) {
             _.map[j][i] = ".";
-            $.g.s.add(new Floor(i * GRID_SIZE, j * GRID_SIZE));
+            $.g.d.add(new Floor(i * GRID_SIZE, j * GRID_SIZE));
           }
         }
       });
@@ -111,9 +122,9 @@ var Level = function() {
     // Add player and vaccine in starting room
     i = rndr(0, _.arooms.length)
     c = _.arooms[i].center();
-    //$.g.h.add(new StartZ(c.x, c.y));
     $.vaccine = new Vaccine(c.x, c.y);
     $.g.x.add($.vaccine);
+    _.pcoord = new Point(c.x, c.y);
     $.player.reset(c.x, c.y);
     do {
       px = rndr(_.arooms[i].x, _.arooms[i].b.r);
@@ -133,12 +144,42 @@ var Level = function() {
     // Extract the arooms from the array once they're used. Use a while loop
     // to avoid modifying the condition for the for loop
     for (i=0; i < _.arooms.length; i++) {
-      if (assignedIndexes.indexOf(i) === -1) _.addSpawner(_.arooms[i]);
+      if (assignedIndexes.indexOf(i) === -1) {
+        _.addSpawner(_.arooms[i]);
+        _.srooms.push(_.arooms[i]);
+      }
     }
 
+    // Save the map for later
+    _.bkmap = _.map.slice(0);
     // Printing map to console
     _.print();
   };
+
+  _.reload = function() {
+    _.map = _.bkmap.slice(0);
+    _.ww = _.os.w;
+    _.wh = _.os.h;
+    $.g.h.add($.endzone);
+    $.g.x.add($.vaccine);
+    $.player.reset(_.pcoord.x, _.pcoord.y);
+
+    // Load the walls
+    for (j=0; j<_.wh; j++) {
+      for (i=0; i<_.ww; i++) {
+        var x = _.map[j][i];
+        if (x === '#') {
+          $.g.w.add(new Wall(i * GRID_SIZE, j * GRID_SIZE));
+        } else if (x === '.') {
+          $.g.d.add(new Floor(i * GRID_SIZE, j * GRID_SIZE));
+        }
+      }
+    }
+
+    for (i=0; i < _.srooms.length; i++) {
+      $.g.s.add(new Spawner(_.srooms[i]));
+    }
+  }
 
   _.isWall = function(x, y) {
     return (_.map[y][x] === '#');

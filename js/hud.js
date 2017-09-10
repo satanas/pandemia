@@ -59,7 +59,7 @@ var HUD = function() {
 
     // Minimap
     var px, py;
-    if ($.scn.game.fl) {
+    if ($.scn.game.zn) {
       $.x.ga(0.5);
       $.x.fs('#04d');
       $.x.fr(_.mm.x, _.mm.y, _.mm.w, _.mm.h);

@@ -20,15 +20,15 @@ this.noise = function(x, y, z) {
    49,192,214, 31,181,199,106,157,184, 84,204,176,115,121,50,45,127, 4,150,254,
    138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180
    ];
-   for (var i=0; i < 256 ; i++) 
- p[256+i] = p[i] = permutation[i]; 
+   for (var i=0; i < 256 ; i++)
+ p[256+i] = p[i] = permutation[i];
 
-      var X = Math.floor(x) & 255,                  // FIND UNIT CUBE THAT
-          Y = Math.floor(y) & 255,                  // CONTAINS POINT.
-          Z = Math.floor(z) & 255;
-      x -= Math.floor(x);                                // FIND RELATIVE X,Y,Z
-      y -= Math.floor(y);                                // OF POINT IN CUBE.
-      z -= Math.floor(z);
+      var X = floor(x) & 255,                  // FIND UNIT CUBE THAT
+          Y = floor(y) & 255,                  // CONTAINS POINT.
+          Z = floor(z) & 255;
+      x -= floor(x);                                // FIND RELATIVE X,Y,Z
+      y -= floor(y);                                // OF POINT IN CUBE.
+      z -= floor(z);
       var    u = fade(x),                                // COMPUTE FADE CURVES
              v = fade(y),                                // FOR EACH OF X,Y,Z.
              w = fade(z);

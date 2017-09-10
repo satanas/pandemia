@@ -4,7 +4,7 @@ var Scientist = function(x, y) {
   _.st = 0; // State of dialog
   _.ba = 1; // Barricade alive flag
   // Dialog array
-  _.dg = [
+  _.fda = [
     [
       'Sarge, come here. I need your help'
     ],[
@@ -17,7 +17,16 @@ var Scientist = function(x, y) {
       'deliver the vaccine before you lose',
       'Good! Now blow up the barricade and'
     ]
-  ]
+  ];
+  _.sda = [
+    [
+      'please. It is our last chance.',
+      'Get it back and take it to the safe zone,',
+      'vaccine is out there, in great danger.',
+      'Well, seems like Sarge is dead and the'
+    ]
+  ];
+  _.dg = ($.scn.game.tries) ? _.sda : _.fda;
   _.inherits(Sprite);
   Sprite.call(_, x, y, 64, 64);
 
@@ -41,6 +50,7 @@ var Scientist = function(x, y) {
     $.x.lt(p.x - 5, p.y - 20);
     $.x.k();
     $.x.cp();
+
 
     for (i=0; i < _.dg[_.st].length; i++) {
       $.x.ft(_.dg[_.st][i], 16, 250, y - (i * 20), c, s);
