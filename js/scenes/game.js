@@ -30,6 +30,7 @@ var GameScene = function() {
       $.lvl.gen(_.ww, _.wh);
     }
     $.cam.setWorldSize(_.ww, _.wh);
+    $.hud.sws(_.ww, _.wh); // Set world size
     $.cam.setTarget($.player);
     _.iz = 1;
   }

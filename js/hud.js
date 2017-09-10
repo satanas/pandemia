@@ -2,6 +2,12 @@ var HUD = function() {
   var _ = this;
   _.bmxw = 300;
   _.barWidth = _.bmxw;
+  _.mm = new Rect($.vw - 140, $.vh - 140, 120, 120); // Minimap width and height
+
+  _.sws = function(w, h) {
+    _.ww = w;
+    _.wh = h;
+  }
 
   _.u = function() {
     _.barWidth = $.player.humanity * _.bmxw / 100;
@@ -50,5 +56,36 @@ var HUD = function() {
       wn = $.player.weapon.ID;
     }
     $.x.ct(wn, 18, 105, c, s);
+
+    // Minimap
+    var px, py;
+    if ($.scn.game.fl) {
+      $.x.ga(0.5);
+      $.x.fs('#04d');
+      $.x.fr(_.mm.x, _.mm.y, _.mm.w, _.mm.h);
+      $.x.ga(0.7);
+
+      // Draw player position
+      _.rp($.player.x, $.player.y, '#fff');
+
+      // Draw safe zone position
+      _.rp($.endzone.x, $.endzone.y, '#0f0');
+
+      // Draw vaccine position
+      _.rp($.vaccine.x, $.vaccine.y, '#f0f');
+
+      $.x.ga(1);
+    }
+  }
+
+  // Render point position
+  _.rp = function(x, y, c) {
+    var px = floor(x * 120 / _.ww),
+        py = floor(y * 120 / _.wh);
+    $.x.fs(c);
+    $.x.bp();
+    $.x.arc(_.mm.x + px, _.mm.y + py, 2, 0, 2 * PI);
+    $.x.cp();
+    $.x.f();
   }
 };

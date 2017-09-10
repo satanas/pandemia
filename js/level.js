@@ -112,7 +112,8 @@ var Level = function() {
     i = rndr(0, _.arooms.length)
     c = _.arooms[i].center();
     //$.g.h.add(new StartZ(c.x, c.y));
-    $.g.x.add(new Vaccine(c.x, c.y));
+    $.vaccine = new Vaccine(c.x, c.y);
+    $.g.x.add($.vaccine);
     $.player.reset(c.x, c.y);
     do {
       px = rndr(_.arooms[i].x, _.arooms[i].b.r);
@@ -126,7 +127,8 @@ var Level = function() {
       i = rndr(0, _.arooms.length)
     } while (assignedIndexes.indexOf(i) !== -1);
     c = _.arooms[i].center();
-    $.g.h.add(new EndZ(c.x, c.y));
+    $.endzone = new EndZ(c.x, c.y);
+    $.g.h.add($.endzone);
 
     // Extract the arooms from the array once they're used. Use a while loop
     // to avoid modifying the condition for the for loop
@@ -143,7 +145,7 @@ var Level = function() {
   }
 
   _.getWorldSize = function() {
-    return [_.ww, _.wh];
+    return new Rect(0, 0, _.ww * GRID_SIZE, _.wh * GRID_SIZE);
   };
 
   _.length = function() {
