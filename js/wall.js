@@ -30,8 +30,31 @@ var Barricade = function(x, y) {
   }
 
   _.r = function(p) {
-    $.x.fs('#f0f');
-    $.x.fr(p.x, p.y, _.w, _.h);
+    $.x.lineWidth = 1;
+    for (var i=0; i<3; i++) {
+      $.x.fs('#8d5524');
+      $.x.fr(p.x, p.y, _.w, _.h);
+      $.x.ss('#522900');
+      $.x.bp();
+      $.x.mv(p.x + 15, p.y + 0);
+      $.x.lt(p.x + 15, p.y + 21);
+      $.x.mv(p.x + 54, p.y + 0);
+      $.x.lt(p.x + 54, p.y + 21);
+      $.x.mv(p.x + 0, p.y + 21);
+      $.x.lt(p.x + 64, p.y + 21);
+      $.x.mv(p.x + 32, p.y + 22);
+      $.x.lt(p.x + 32, p.y + 43);
+      $.x.mv(p.x + 0, p.y + 44);
+      $.x.lt(p.x + 64, p.y + 44);
+      $.x.mv(p.x + 15, p.y + 45);
+      $.x.lt(p.x + 15, p.y + 64);
+      $.x.mv(p.x + 54, p.y + 45);
+      $.x.lt(p.x + 54, p.y + 64);
+      //$.x.mv(p.x + 0, p.y + 64);
+      //$.x.lt(p.x + 64, p.y + 64);
+      $.x.cp();
+      $.x.k();
+    }
   }
 };
 
