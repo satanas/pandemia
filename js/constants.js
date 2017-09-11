@@ -46,7 +46,7 @@ WPN = {
 }
 VACC_PD = 1300; // Vaccine pick up delay (in ms)
 DROP = 0.3;
-AMMO = 30;
+AMMO = 10;
 // Colors
 WH = '#fff'; // White
 BL = '#000'; // Black

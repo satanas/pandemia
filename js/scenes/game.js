@@ -26,8 +26,7 @@ var GameScene = function() {
     } else {
       // Clear all groups before start
       Object.keys($.g).forEach(function(g) { $.g[g].clr() })
-      _.ww = 3200;
-      _.wh = 3200;
+      _.ww = _.wh = 5376;
       if (!_.tries) {
         $.lvl.gen(_.ww, _.wh);
       } else {
@@ -70,8 +69,8 @@ var GameScene = function() {
     $.g.d.r(); // floor and decorations
     $.g.h.r(); // zones
     $.g.w.r(); // walls
-    $.g.z.r(); // zombies
     $.g.i.r(); // items
+    $.g.z.r(); // zombies
     $.cam.r($.player);
     $.g.n.r(); // NPCs
     $.g.x.r(); // vaccine

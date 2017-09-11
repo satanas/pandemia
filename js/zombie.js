@@ -13,7 +13,7 @@ var Zombie = function(x, y, s) {
   _.d = 'd'; // direction
   _.anim = new Animator([0, 1]);
   _.sol = s; // If sol = true, means that this zombie was a soldier before and should have more health
-  _.health = (s) ? rndr(15, 20) : rndr(3, 5);
+  _.health = (s) ? 50 : rndr(3, 5);
 
   _.inherits(Sprite);
   _.inherits(AStar);

@@ -16,6 +16,7 @@ var Level = function() {
   _.srooms = [];
   _.pcoord = 0;
   _.os = new R(0, 0, 0, 0); // Original map size
+  _.ds = []; // Dead soldier coord
 
   // Generate intro room
   _.iroom = function(w, h) {
@@ -134,7 +135,7 @@ var Level = function() {
     // Add ending room
     do {
       j = rndr(0, _.arooms.length)
-    } while (j === i || _.getdist(c, _.arooms[j]) <= 2000);
+    } while (j === i || _.getdist(c, _.arooms[j]) <= _.ww / 2);
     c = _.arooms[j].center();
     $.endzone = new EndZ(c.x, c.y);
     $.g.h.add($.endzone);
