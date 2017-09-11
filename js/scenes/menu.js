@@ -3,7 +3,7 @@ var MenuScene = function() {
   _.inherits(Scene);
   Scene.call(_);
 
-  _.anim = new Animator([0, 1], 150);
+  _.anim = new Animator([0, 1]);
 
   _.init = function() {
     _.xc = 0; // exit counter

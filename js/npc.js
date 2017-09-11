@@ -1,6 +1,6 @@
 var Scientist = function(x, y) {
   var _ = this;
-  _.anim = new Animator([0, 1], 300);
+  _.anim = new Animator([0, 1]);
   _.st = 0; // State of dialog
   _.ba = 1; // Barricade alive flag
   // Dialog array

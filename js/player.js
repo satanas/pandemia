@@ -16,7 +16,7 @@ var Player = function(x, y) {
 
   _.aim = new Point(0, 0);
   _.wpn = WPN.MG;
-  _.anim = new Animator([0, 1], 150);
+  _.anim = new Animator([0, 1]);
 
   //var x = room.x + (room.w / 2) - 32,
   //    y = room.y + (room.h / 2) - 32;

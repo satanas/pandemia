@@ -109,7 +109,7 @@ Flame.d = function(x, y) {
 var Vaccine = function(x, y) {
   var _ = this;
   _.pk = 0; // picked flag
-  _.anim = new Animator([0, 1], 100);
+  _.anim = new Animator([0, 1]);
   _.pd = 0;
   _.inherits(Sprite);
   Sprite.call(_, x, y, 32, 32);

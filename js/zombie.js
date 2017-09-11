@@ -11,7 +11,7 @@ var Zombie = function(x, y, s) {
   _.hsc = 0; // hurt sound counter
   _.gc = rndr(0, 4000); // growl counter
   _.d = 'd'; // direction
-  _.anim = new Animator([0, 1], 150);
+  _.anim = new Animator([0, 1]);
   _.sol = s; // If sol = true, means that this zombie was a soldier before and should have more health
   _.health = (s) ? rndr(15, 20) : rndr(3, 5);
 
