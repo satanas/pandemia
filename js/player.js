@@ -196,7 +196,19 @@ var Player = function(x, y) {
       $.x.fr(p.x + 9, p.y + 39, 7, 5);
       $.x.fr(p.x + 50, p.y + 39, 7, 5);
     }
-    if (_.d === DIR.DOWN) {
+    // Head band
+    $.x.fs(RD);
+    $.x.fr(p.x + 2, p.y + 5, 62, 4);
+    if (_.d === DIR.UP) {
+      // Back of head band
+      $.x.ss(RD);
+      $.x.lw(3);
+      $.x.bp();
+      $.x.mv(p.x + 20, p.y + 20);
+      $.x.lt(p.x + 32, p.y + 8);
+      $.x.lt(p.x + 42, p.y + 20);
+      $.x.k();
+    } else if (_.d === DIR.DOWN) {
       // Hands
       $.x.fs(HC);
       $.x.fr(p.x + 9, p.y + 44, 7, 5);
