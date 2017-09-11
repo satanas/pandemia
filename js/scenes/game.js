@@ -135,7 +135,7 @@ var GameScene = function() {
         h = 500,
         c = WH,
         s = FN,
-        t = 'exit',
+        t = 'play again',
         e,
         m,
         x = ($.vw - w) / 2,

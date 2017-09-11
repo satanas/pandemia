@@ -62,3 +62,25 @@ var Bullet = function(cx, cy, an, type) {
     $.x.f();
   }
 }
+
+var Exp = function(x, y) {
+  var _ = this;
+
+  _.l = 100;
+  _.inherits(Sprite);
+  Sprite.call(_, x, y, 64, 64);
+
+  _.u = function() {
+    _.l -= $.e;
+    _.w = iir(_.w - ($.e * 64 / 100), 0);
+    if (_.l < 0) _.a = 0;
+  }
+
+  _.r = function(p) {
+    $.x.fs(WH);
+    $.x.bp();
+    $.x.arc(p.x + 32, p.y + 32, _.w, 0, 2 * PI);
+    $.x.cp();
+    $.x.f();
+  }
+}

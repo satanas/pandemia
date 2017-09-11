@@ -31,6 +31,7 @@ var Barricade = function(x, y) {
     $.g.b.c(_, function(w, b) {
       _.health -= 1;
       if (_.health <= 0) {
+        $.g.n.add(new Exp(_.x, _.y));
         _.a = 0;
         // Set the barricade flag off so the message disappear
         $.scientist.ba = 0;

@@ -90,6 +90,8 @@ var Zombie = function(x, y, s) {
       if (_.health <= 0) {
         $.sn.p('zd');
         _.a = 0;
+        // Create explosion in NPC groups to avoid the need of creating a new one
+        $.g.n.add(new Exp(_.x, _.y));
         if (rnd() >= DROP) {
           var i = rndr(3, 6),
               x = _.x,
