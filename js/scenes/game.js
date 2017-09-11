@@ -125,9 +125,7 @@ var GameScene = function() {
 
   // Print global message
   _.gm = function() {
-    if ($.msg) {
-      $.x.ct($.msg, 30, 200, WH, FN);
-    }
+    if ($.msg) $.x.ct($.msg, 30, 200, WH, FN);
   }
 
   // Render modal for gameover/win
@@ -138,6 +136,8 @@ var GameScene = function() {
         h = 500,
         c = WH,
         s = FN,
+        t = 'ENTER to ',
+        e,
         x = ($.vw - w) / 2,
         y = ($.vh - h) / 2;
 
@@ -149,15 +149,10 @@ var GameScene = function() {
       $.x.fs('#111');
       $.x.fr(x + 30, y, w - 60, h);
 
-      Zombie.d(410, y + 160, DIR.DOWN);
-
-      $.x.ft('x  100', 30, 500, y + 200, c, s);
-      $.x.ft('x  1', 30, 500, y + 270, c, s);
-
       // You still have soldiers left
       if (_.tries < MAX_SOLD) {
-        $.x.ct('YOU DIED', 50, y + 80, c, s);
-        $.x.ct('ENTER to send another soldier.', 20, y + 450, c, s);
+        e = 'YOU DIED';
+        t += 'send another soldier.';
 
         if ($.in.p(IN.E)) {
           _.zn = 0
@@ -165,28 +160,22 @@ var GameScene = function() {
           _.init();
         }
       } else {
-        $.x.ct('GAME OVER', 50, y + 80, c, s);
-        //$.x.ct('You could not save the human race.', 18, y + 350, c, s);
-        if ($.in.p(IN.E)) {
-          _.goToMenu();
-        }
+        e = 'GAME OVER';
+        t += 'exit.';
+        if ($.in.p(IN.E)) _.goToMenu();
       }
     } else if (_.end === 2) {
       $.x.fs('#f80');
       $.x.fr(x + 30, y, w - 60, h);
 
-      $.x.ct('WELL DONE!', 50, y + 80, c, s);
+      e = 'WELL DONE!';
       $.x.ct('You delivered the vaccine and saved the human race.', 18, y + 150, c, s);
 
-      Zombie.d(420, y + 220, DIR.DOWN);
-      $.x.ft('x  100', 30, 510, y + 260, c, s);
-
-      //$.x.ct('Thanks for playing!', 25, y + 360, c, s);
-      $.x.ct('ENTER to continue.', 20, y + 450, c, s);
-      if ($.in.p(IN.E)) {
-        _.goToMenu();
-      }
+      t += 'exit.';
+      if ($.in.p(IN.E)) _.goToMenu();
     }
+    $.x.ct(e, 50, y + 80, c, s);
+    $.x.ct(t, 20, y + 450, c, s);
     $.x.ga(1);
   }
 

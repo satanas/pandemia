@@ -50,7 +50,8 @@ AMMO = 30;
 // Colors
 WH = '#fff'; // White
 BL = '#000'; // Black
-RD = '#f00';
+RD = '#f00'; // Red
+
 // Player and NPC colors
 FC = '#5a5a5a'; // Eyes color
 AC = '#4b4e44'; // Arms color

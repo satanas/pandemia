@@ -23,7 +23,8 @@ gulp.task('minify_js', function() {
     compress: {
       drop_console: true,
       unsafe_math: true,
-      unused: true
+      unused: true,
+      //unsafe: true
     }
   }))
   .on('error', function (err) { gutil.log(gutil.colors.red('[Error]'), err.toString()); })
