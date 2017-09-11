@@ -81,17 +81,17 @@ var Player = function(x, y) {
     });
 
     // Collisions with zombies
-    if (_.ic === 0) {
-      $.g.z.c(_, function(p, z) {
-        _.hum -= z.bite();
-        _.ic = INV_TIME;
+    $.g.z.c(_, function(p, z) {
+      if (_.ic === 0) {
+        _.hum = iir(_.hum - z.bite(), 0);
+        _.ic = 300; // Invincibility time (in ms)
         _.drop();
         $.scn.game.be = 30;
         $.ss.shake(4, 200)
         $.sn.p('ph');
-        if (_.hum < 0) $.scn.game.over();
-      });
-    }
+        if (_.hum <= 0) $.scn.game.over();
+      }
+    });
 
     // Collisions with items
     $.g.i.c(_, function(p, i) {

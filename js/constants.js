@@ -2,7 +2,6 @@ GS = 64; // Grid size
 MIN_PS = 1.55; // Min player speed
 MIN_ZS = 1; // Min zombie speed
 MAX_ZPD = 15; // Max zombie path distance (in nodes)
-INV_TIME = 800; // Invincibility time (in ms)
 MIN_BD = 900; // Min biting duration (in ms)
 LIVES = 3; // max number of soldiers
 IT = {

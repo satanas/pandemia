@@ -91,12 +91,11 @@ var GameScene = function() {
 
     g = iir((100 - h) * 2, 0, 100);
     if (h <= 70 && h > 0) {
-      b = iir((70 - h) * 2, 0, 100);
+      b = iir((50 - h) * 2, 0, 100);
     }
     $.cv.style.filter = "grayscale(" + g + "%) blur(" + (b * _.maxBlur / 100) + "px)";
 
     if (_.be) {
-      //$.x.fs("rgba(255,0,0," + lim(_.t.fo / t, 1) +")");
       $.x.fs("rgba(255,0,0,0.4)");
       $.x.fr(0, 0, $.vw, $.vh);
     }

@@ -8,7 +8,7 @@ var ScreenShake = function() {
   _.perc = 0; // percentage completed
 
   _.u = function() {
-    if (_.duration !== 0 && _.elapsed < _.duration) {
+    if (_.duration && _.elapsed < _.duration) {
       _.elapsed += $.e;
       var perc = _.elapsed / _.duration,
           damper = 1 - iir(4 * perc - 3, 0, 0.1),
@@ -19,11 +19,10 @@ var ScreenShake = function() {
       y *= _.magnitude * damper;
       $.cam.ofx += x;
       $.cam.ofy += y;
-      if (_.elapsed >= _.duration) {
-        _.duration = 0;
-      }
+      if (_.elapsed >= _.duration) _.duration = 0;
     }
   }
+
   _.shake = function(mag, dur) {
     _.elapsed = 0
     _.perc = 0;
