@@ -9,7 +9,6 @@ var Player = function(x, y) {
   _.ic = 0; // Invincibility counter
   _.hum = 100; // Humanity
   _.hd = _.hum / (7 * 60); // Humanity decay 7 min
-  _.hc = 0; // healing counter
   _.vaccine = 0;
   _.an = 0; // Angle
   _.ammo = 500;
@@ -27,18 +26,12 @@ var Player = function(x, y) {
   _.u = function() {
     if ($.scn.game.end !== 0) return;
 
-    if (_.hc > 0) {
-      _.hc = iir(_.hc - $.e, 0);
-    } else {
-      _.hum = iir(_.hum - ($.e * _.hd / 1000), 0.1);
-    }
+    _.hum = iir(_.hum - ($.e * _.hd / 1000), 0.1);
     _.mxs = iir(-1.5 + (_.hum / 10), MIN_PS);
     _.sd = iir(_.sd - $.e, 0);
-    _.anim.u();
+    _.ic = iir(_.ic - $.e, 0);
 
-    if (_.ic > 0) {
-      _.ic = iir(_.ic - $.e, 0);
-    }
+    _.anim.u();
 
     if ($.in.p(IN.L)) {
       _.d = DIR.LEFT;
@@ -59,12 +52,8 @@ var Player = function(x, y) {
     _.dx = iir(_.dx, -_.mxs, _.mxs);
     _.dy = iir(_.dy, -_.mxs, _.mxs);
 
-    if (!$.in.p(IN.L) && !$.in.p(IN.R)) {
-      _.dx = 0;
-    }
-    if (!$.in.p(IN.U) && !$.in.p(IN.D)) {
-      _.dy = 0;
-    }
+    if (!$.in.p(IN.L) && !$.in.p(IN.R)) _.dx = 0;
+    if (!$.in.p(IN.U) && !$.in.p(IN.D)) _.dy = 0;
 
     _.x += _.dx;
     _.y += _.dy;
@@ -133,9 +122,7 @@ var Player = function(x, y) {
           _.vaccine = b;
         }
         var s = $.scientist;
-        if (s.st === 1) {
-          s.n();
-        }
+        if (s.st === 1) s.n();
       });
     }
     if (_.vaccine) {
@@ -219,9 +206,7 @@ var Player = function(x, y) {
       $.x.fr(p.x + 15, p.y + 19, 6, 6);
       $.x.fr(p.x + 45, p.y + 19, 6, 6);
       $.x.fr(p.x + 27, p.y + 31, 12, 2);
-      if (_.vaccine) {
-        Vaccine.d(p.x + 16, p.y + 16);
-      }
+      if (_.vaccine) Vaccine.d(p.x + 16, p.y + 16);
     } else if (_.d === DIR.LEFT) {
       // Arms
       $.x.fs(AC);
@@ -229,9 +214,7 @@ var Player = function(x, y) {
       // Hands
       $.x.fs(HC);
       $.x.fr(p.x + 5, p.y + 40, 6, 7);
-      if (_.vaccine) {
-        Vaccine.d(p.x - 30, p.y + 16);
-      }
+      if (_.vaccine) Vaccine.d(p.x - 30, p.y + 16);
       // Face
       $.x.fs(FC);
       $.x.fr(p.x + 10, p.y + 19, 6, 6);
@@ -243,9 +226,7 @@ var Player = function(x, y) {
       // Hands
       $.x.fs(HC);
       $.x.fr(p.x + 55, p.y + 40, 6, 7);
-      if (_.vaccine) {
-        Vaccine.d(p.x + 62, p.y + 16);
-      }
+      if (_.vaccine) Vaccine.d(p.x + 62, p.y + 16);
       // Face
       $.x.fs(FC);
       $.x.fr(p.x + 50, p.y + 19, 6, 6);
