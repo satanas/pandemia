@@ -12,8 +12,8 @@ var ScreenShake = function() {
       _.elapsed += $.e;
       var perc = _.elapsed / _.duration,
           damper = 1 - iir(4 * perc - 3, 0, 0.1),
-          x = ((PerlinNoise.noise(Date.now() / _.speed, 0, 0) * 2) - 1) * 10,
-          y = ((PerlinNoise.noise(0, Date.now() / _.speed, 0) * 2) - 1) * 10;
+          x = (rnd() % 32768) * rnde([-1, 1]);
+          y = (rnd() % 32768) * rnde([-1, 1]);
 
       x *= _.magnitude * damper;
       y *= _.magnitude * damper;

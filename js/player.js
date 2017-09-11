@@ -87,11 +87,9 @@ var Player = function(x, y) {
         _.ic = INV_TIME;
         _.drop();
         $.scn.game.be = 30;
-        //$.ss.shake(1.8, 200)
+        $.ss.shake(4, 200)
         $.sn.p('ph');
-        if (_.hum < 0) {
-          $.scn.game.over();
-        }
+        if (_.hum < 0) $.scn.game.over();
       });
     }
 
@@ -257,6 +255,8 @@ var Player = function(x, y) {
 
   _.shoot = function() {
     if (!_.ammo) return;
+
+    $.ss.shake(1, 100)
     _.drop();
     _.sd = _.wpn.DL; // shoot delay
     var i, c = _.getCenter();

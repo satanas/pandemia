@@ -9,7 +9,7 @@ var GameScene = function() {
   _.inherits(Scene);
   Scene.call(_);
 
-  //$.ss = new ScreenShake();
+  $.ss = new ScreenShake();
   $.hud = new HUD();
 
   _.init = function() {
@@ -62,7 +62,7 @@ var GameScene = function() {
     $.g.b.u();
     $.cam.u();
     $.hud.u();
-    //$.ss.u();
+    $.ss.u();
 
     // Render
     $.g.s.r(); // spawners
