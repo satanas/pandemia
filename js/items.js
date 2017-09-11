@@ -1,16 +1,16 @@
 var Ammo = function(x, y) {
   var _ = this;
 
-  _.type = ITEMS.AM;
+  _.t = IT.A;
   _.inherits(Sprite);
   Sprite.call(_, x, y, 32, 32);
 
   _.r = function(p) {
-    Ammo.draw(p.x, p.y);
+    Ammo.d(p.x, p.y);
   };
 }
 
-Ammo.draw = function(x, y) {
+Ammo.d = function(x, y) {
   $.x.fs('#f6de88');
   $.x.fr(x, y, 32, 6);
   $.x.fs('#f2c010');
@@ -27,16 +27,16 @@ Ammo.draw = function(x, y) {
 var Gun = function(x, y) {
   var _ = this;
 
-  _.type = ITEMS.MG;
+  _.t = IT.M;
   _.inherits(Sprite);
   Sprite.call(_, x, y, 32, 32);
 
   _.r = function(p) {
-    Gun.draw(p.x, p.y);
+    Gun.d(p.x, p.y);
   };
 }
 
-Gun.draw = function(x, y) {
+Gun.d = function(x, y) {
   $.x.fs(FC);
   $.x.fr(x + 8, y + 14, 51, 9);
   $.x.fs('#2b2b2b');
@@ -56,16 +56,16 @@ Gun.draw = function(x, y) {
 var Shotgun = function(x, y) {
   var _ = this;
 
-  _.type = ITEMS.SG;
+  _.t = IT.S;
   _.inherits(Sprite);
   Sprite.call(_, x, y, 32, 32);
 
   _.r = function(p) {
-    Shotgun.draw(p.x, p.y);
+    Shotgun.d(p.x, p.y);
   };
 }
 
-Shotgun.draw = function(x, y) {
+Shotgun.d = function(x, y) {
   $.x.fs('#9e9e9e');
   $.x.fr(x + 12, y + 19, 52, 8);
   $.x.fr(x + 57, y + 11, 4, 8);
@@ -80,16 +80,16 @@ Shotgun.draw = function(x, y) {
 var Flame = function(x, y) {
   var _ = this;
 
-  _.type = ITEMS.FL;
+  _.t = IT.F;
   _.inherits(Sprite);
   Sprite.call(_, x, y, 64, 64);
 
   _.r = function(p) {
-    Flame.draw(p.x, p.y);
+    Flame.d(p.x, p.y);
   };
 }
 
-Flame.draw = function(x, y) {
+Flame.d = function(x, y) {
   $.x.fs('#f44336');
   $.x.fr(x + 10, y + 13, 30, 10);
   $.x.fs('#ffeb3b');
@@ -125,13 +125,13 @@ var Vaccine = function(x, y) {
 
     if (_.pd > 0) {
       if (_.anim.g()) {
-        $.x.fs('#f00');
+        $.x.fs(RD);
         $.x.fr(p.x, p.y, _.w, _.h);
       } else {
-        Vaccine.draw(p.x, p.y);
+        Vaccine.d(p.x, p.y);
       }
     } else {
-      Vaccine.draw(p.x, p.y);
+      Vaccine.d(p.x, p.y);
     }
   };
 
@@ -154,7 +154,7 @@ var Vaccine = function(x, y) {
 }
 
 // d is the direction of the render
-Vaccine.draw = function(x, y, d) {
+Vaccine.d = function(x, y, d) {
   $.x.fs('#3f51b5');
   $.x.fr(x, y, 32, 32);
   $.x.fs('#4caf50');

@@ -15,7 +15,7 @@ var Level = function() {
   _.arooms = [];
   _.srooms = [];
   _.pcoord = 0;
-  _.os = new Rect(0, 0, 0, 0); // Original map size
+  _.os = new R(0, 0, 0, 0); // Original map size
 
   // Generate intro room
   _.iroom = function(w, h) {
@@ -92,7 +92,7 @@ var Level = function() {
     _.leafs.forEach(function(leaf) {
       var room = leaf.room;
       if (room !== null) {
-        _.arooms.push(Rect.fromGrid(room));
+        _.arooms.push(R.fromGrid(room));
         for (j=room.y; j<room.y + room.h; j++) {
           for (i=room.x; i<room.x + room.w; i++) {
             _.map[j][i] = ".";
@@ -103,7 +103,7 @@ var Level = function() {
 
       leaf.halls.forEach(function(hall) {
         if (hall === null || hall === undefined) return;
-        //_.arooms.push(Rect.fromGrid(hall));
+        //_.arooms.push(R.fromGrid(hall));
         for (j=hall.y; j<hall.y + hall.h; j++) {
           for (i=hall.x; i<hall.x + hall.w; i++) {
             _.map[j][i] = ".";
@@ -186,7 +186,7 @@ var Level = function() {
   }
 
   _.getWorldSize = function() {
-    return new Rect(0, 0, _.ww * GS, _.wh * GS);
+    return new R(0, 0, _.ww * GS, _.wh * GS);
   };
 
   _.length = function() {
@@ -195,7 +195,7 @@ var Level = function() {
 
   _.addSpawner = function(room) {
     var s = new Spawner(room),
-        rect = new Rect(s.x, s.y, s.w, s.h).toGrid();
+        rect = new R(s.x, s.y, s.w, s.h).toGrid();
 
     $.g.s.add(s);
     for (j=rect.y; j<rect.b.b; j++) {
@@ -264,31 +264,30 @@ var Leaf = function(x, y, w, h) {
 
   _.split = function() {
     // Abort if the lead if already splitted
-    if (_.lc !== null || _.rc !== null)
-      return false;
+    if (_.lc || _.rc) return 0;
 
     // Determine direction of split
     // if the width is >25% larger than the height, we split vertically
     // if the height is >25% larger than the width, we split horizontally
     // else we split randomly
-    var splith = !!rndr(0, 2);
+    var sh = !!rndr(0, 2); // Split horizontally
     if (_.w > _.h && _.w / _.h >= 1.25) {
-      splith = false;
+      sh = 0;
     } else if (_.h > _.w && _.h / _.w >= 1.25) {
-      splith = true;
+      sh = 1;
     }
 
     // Determine max height or width
-    var max = (splith ? _.h : _.w) - _.min;
+    var max = (sh ? _.h : _.w) - _.min;
     // Abort if the area is too small to split
     if (max <= _.min)
-      return false;
+      return 0;
 
     // Determine where we're going to split
     var split = rndr(_.min, max + 1);
 
     // Create the left and right children
-    if (splith) {
+    if (sh) {
       _.lc = new Leaf(_.x, _.y, _.w, split);
       _.rc = new Leaf(_.x, _.y + split, _.w, _.h - split);
     } else {
@@ -296,7 +295,7 @@ var Leaf = function(x, y, w, h) {
       _.rc = new Leaf(_.x + split, _.y, _.w - split, _.h);
     }
 
-    return true;
+    return 1;
   };
 
   // This function generates all the rooms and hallways for this lead and its children
@@ -317,89 +316,97 @@ var Leaf = function(x, y, w, h) {
           h = rndr(5, _.h - 2),
           x = rndr(1, _.w - w - 1),
           y = rndr(1, _.h - h - 1);
-      _.room = new Rect(_.x + x, _.y + y, w, h);
+      _.room = new R(_.x + x, _.y + y, w, h);
     }
   };
 
   // Iterate all the through these leafs to find a room, if one exists.
   _.getRoom = function() {
-    if (_.room !== null) {
+    if (_.room) {
       return _.room;
     } else {
-      var lRoom, rRoom;
-      if (_.lc !== null)
-        lRoom = _.lc.getRoom();
-      if (_.rc !== null)
-        rRoom = _.rc.getRoom();
+      var lr, rr; // Left and right rooms
+      if (_.lc)
+        lr = _.lc.getRoom();
+      if (_.rc)
+        rr = _.rc.getRoom();
 
-      if (lRoom === null && rRoom === null)
+      if (!lr && !rr)
         return null;
-      else if (rRoom === null)
-        return lRoom;
-      else if (lRoom === null)
-        return rRoom;
+      else if (!rr)
+        return lr;
+      else if (!lr)
+        return rr;
       else if (rnd() > 0.5)
-        return lRoom;
+        return lr;
       else
-        return rRoom;
+        return rr;
     }
   };
 
   // TODO: Pass hall height as parameter
   // Now we'll connect these two rooms together with hallways
-  _.createHall = function(lRoom, rRoom) {
-    var p1 = new Point(rndr(lRoom.b.l + 1, lRoom.b.r - 2), rndr(lRoom.b.t + 1, lRoom.b.b - 2)),
-        p2 = new Point(rndr(rRoom.b.l + 1, rRoom.b.r - 2), rndr(rRoom.b.t + 1, rRoom.b.b - 2)),
+  // lr = lRoom
+  // rr = rRoom
+  _.createHall = function(lr, rr) {
+    var p1 = new Point(rndr(lr.b.l + 1, lr.b.r - 2), rndr(lr.b.t + 1, lr.b.b - 2)),
+        p2 = new Point(rndr(rr.b.l + 1, rr.b.r - 2), rndr(rr.b.t + 1, rr.b.b - 2)),
         w = p2.x - p1.x,
         h = p2.y - p1.y,
-        hallHeight = 3;
+        hh = 3;
 
     if (w < 0) {
       if (h < 0) {
         if (rnd() < 0.5) {
-          _.halls.push(new Rect(p2.x, p1.y, abs(w), hallHeight));
-          _.halls.push(new Rect(p2.x, p2.y, hallHeight, abs(h)));
+          hadd(p2.x, p1.y, abs(w), hh);
+          hadd(p2.x, p2.y, hh, abs(h));
         } else {
-          _.halls.push(new Rect(p2.x, p2.y, abs(w), hallHeight));
-          _.halls.push(new Rect(p1.x, p2.y, hallHeight, abs(h)));
+          hadd(p2.x, p2.y, abs(w), hh);
+          hadd(p1.x, p2.y, hh, abs(h));
         }
       } else if (h > 0) {
         if (rnd() < 0.5) {
-          _.halls.push(new Rect(p2.x, p1.y, abs(w), hallHeight));
-          _.halls.push(new Rect(p2.x, p1.y, hallHeight, abs(h)));
+          hadd(p2.x, p1.y, abs(w), hh);
+          hadd(p2.x, p1.y, hh, abs(h));
         } else {
-          _.halls.push(new Rect(p2.x, p2.y, abs(w), hallHeight));
-          _.halls.push(new Rect(p1.x, p1.y, hallHeight, abs(h)));
+          hadd(p2.x, p2.y, abs(w), hh);
+          hadd(p1.x, p1.y, hh, abs(h));
         }
       } else { // if (h === 0)
-          _.halls.push(new Rect(p2.x, p2.y, abs(w), hallHeight));
+          hadd(p2.x, p2.y, abs(w), hh);
       }
     } else if (w > 0) {
       if (h < 0) {
         if (rnd() < 0.5) {
-          _.halls.push(new Rect(p1.x, p2.y, abs(w), hallHeight));
-          _.halls.push(new Rect(p1.x, p2.y, hallHeight, abs(h)));
+          hadd(p1.x, p2.y, abs(w), hh);
+          hadd(p1.x, p2.y, hh, abs(h));
         } else {
-          _.halls.push(new Rect(p1.x, p1.y, abs(w), hallHeight));
-          _.halls.push(new Rect(p2.x, p2.y, hallHeight, abs(h)));
+          hadd(p1.x, p1.y, abs(w), hh);
+          hadd(p2.x, p2.y, hh, abs(h));
         }
       } else if (h > 0) {
         if (rnd() < 0.5) {
-          _.halls.push(new Rect(p1.x, p1.y, abs(w), hallHeight));
-          _.halls.push(new Rect(p2.x, p1.y, hallHeight, abs(h)));
+          hadd(p1.x, p1.y, abs(w), hh);
+          hadd(p2.x, p1.y, hh, abs(h));
         } else {
-          _.halls.push(new Rect(p1.x, p2.y, abs(w), hallHeight));
-          _.halls.push(new Rect(p1.x, p1.y, hallHeight, abs(h)));
+          hadd(p1.x, p2.y, abs(w), hh);
+          hadd(p1.x, p1.y, hh, abs(h));
         }
       } else { // if (h === 0)
-          _.halls.push(new Rect(p1.x, p1.y, abs(w), hallHeight));
+          hadd(p1.x, p1.y, abs(w), hh);
       }
     } else { // if (w === 0)
       if (h < 0) {
-          _.halls.push(new Rect(p2.x, p2.y, hallHeight, abs(h)));
+          hadd(p2.x, p2.y, hh, abs(h));
       } else if (h > 0) {
-          _.halls.push(new Rect(p1.x, p1.y, hallHeight, abs(h)));
+          hadd(p1.x, p1.y, hh, abs(h));
       }
+    }
+
+
+    // Function to avoid repeating too much code when creating halls
+    function hadd(x, y, w, h) {
+      _.halls.push(new R(x, y, w, h));
     }
   };
 };

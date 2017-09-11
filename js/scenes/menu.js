@@ -59,7 +59,7 @@ var MenuScene = function() {
     _.dc(cx + o + 30, cy + o, s);
     _.dc(cx, cy, d);
 
-    if ($.in.p(INPUT.E) && !_.ef && !_.de) {
+    if ($.in.p(IN.E) && !_.ef && !_.de) {
       _.ef = 1;
       _.xc = 300;
       _.anim.f = 0; // Turn off the press enter message

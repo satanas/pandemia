@@ -6,7 +6,7 @@ window.addEventListener('load', function() {
   // Collisions system
   $.o = new Collisions();
   // Bind keyboard
-  $.in.b([].concat(INPUT.L).concat(INPUT.R).concat(INPUT.U).concat(INPUT.D).concat(INPUT.E));
+  $.in.b([].concat(IN.L).concat(IN.R).concat(IN.U).concat(IN.D).concat(IN.E));
 
   // Collision groups
   $.g.w = new Group(); // Walls
@@ -20,7 +20,6 @@ window.addEventListener('load', function() {
   $.g.d = new Group(); // Decorations
 
   $.lvl = new Level();
-  $.txt = new Text();
 
   // Sound manager
   $.sn = new Sound();

@@ -2,7 +2,7 @@ var HUD = function() {
   var _ = this;
   _.bmx = 300;
   _.bw = _.bmx;
-  _.mm = new Rect($.vw - 140, $.vh - 140, 120, 120); // Minimap width and height
+  _.mm = new R($.vw - 140, $.vh - 140, 120, 120); // Minimap width and height
 
   _.sws = function(w, h) {
     _.ww = w;
@@ -20,12 +20,12 @@ var HUD = function() {
     // Humanity bar
     $.x.fs('#333');
     $.x.fr(50, 30, _.bmx, 30);
-    $.x.fs('#f00');
+    $.x.fs(RD);
     $.x.fr(50, 30, _.bw, 30);
     $.x.ft('HUMANITY', 26, 60, 55, c, s);
 
     // Ammo
-    Ammo.draw(670, 30);
+    Ammo.d(670, 30);
     $.x.ft('AMMO:', 26, 720, 55, c, s);
     $.x.ft($.player.ammo + '', 26, 820, 55, c, s);
 
@@ -38,18 +38,18 @@ var HUD = function() {
     $.x.lw(4);
     $.x.sr(cx - 2, 14, 68, 68);
     if ($.player.wpn.ID === WPN.MG.ID) {
-      Gun.draw(cx, 16, 64, 64);
+      Gun.d(cx, 16, 64, 64);
     } else if ($.player.wpn.ID === WPN.SG.ID) {
-      Shotgun.draw(cx, 16, 64, 64);
+      Shotgun.d(cx, 16, 64, 64);
     } else if ($.player.wpn.ID === WPN.FL.ID) {
-      Flame.draw(cx, 16, 64, 64);
+      Flame.d(cx, 16, 64, 64);
     }
 
     // Weapon overlay for vaccine
     if ($.player.vaccine) {
       $.x.fs('rgba(0,0,0,0.8)');
       $.x.fr(cx, 16, 64, 64);
-      Vaccine.draw(cx + 16, 32);
+      Vaccine.d(cx + 16, 32);
       wn = 'VACCINE';
     } else {
       wn = $.player.wpn.ID;

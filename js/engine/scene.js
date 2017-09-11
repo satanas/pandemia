@@ -23,16 +23,16 @@ var Scene = function() {
   };
 
   // Fade out to another scene (calling recurrently)
-  _.fout = function(scene, t) {
-    _.t.fo += $.e;
-     $.x.fs("rgba(0,0,0," + lim(_.t.fo / t, 1) +")");
-     $.x.fr(0, 0, $.vw, $.vh);
+  //_.fout = function(scene, t) {
+  //  _.t.fo += $.e;
+  //   $.x.fs("rgba(0,0,0," + lim(_.t.fo / t, 1) +")");
+  //   $.x.fr(0, 0, $.vw, $.vh);
 
-     if (_.t.fo >= t) {
-       _.exit();
-       scene.start();
-     }
-  };
+  //   if (_.t.fo >= t) {
+  //     _.exit();
+  //     scene.start();
+  //   }
+  //};
 
   _.loop = function() {
     // Calculate elapsed time
@@ -48,7 +48,7 @@ var Scene = function() {
     // Set start time
     _.t.s = now();
     if (!_.ex) {
-      window['raf'](_.loop.bind(_));
+      raf(_.loop.bind(_));
       //setTimeout(_.loop.bind(_), 20);
     } else {
       return;

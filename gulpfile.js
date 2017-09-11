@@ -16,7 +16,16 @@ var execSync = require('child_process').execSync;
 gulp.task('minify_js', function() {
   return gulp.src(config.sourceFiles)
   .pipe(concat('all.min.js'))
-  .pipe(uglify({mangle: {toplevel: true}}))
+  .pipe(uglify({
+    mangle: {
+      toplevel: true,
+    },
+    compress: {
+      drop_console: true,
+      unsafe_math: true,
+      unused: true
+    }
+  }))
   .on('error', function (err) { gutil.log(gutil.colors.red('[Error]'), err.toString()); })
   .pipe(gulp.dest('min'));
 });
@@ -73,5 +82,5 @@ gulp.task('build', ['minify_html', 'minify_css', 'minify_js'], function() {
 });
 
 gulp.task('minify_js_closure', function() {
-  execSync('java -jar closure-compiler.jar --compilation_level SIMPLE --js js/ --js_output_file min/all.min.js');
+  execSync('java -jar closure-compiler.jar --compilation_level ADVANCED --js js/ --js_output_file min/all.min.js');
 });

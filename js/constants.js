@@ -5,13 +5,13 @@ MAX_ZPD = 15; // Max zombie path distance (in nodes)
 INV_TIME = 800; // Invincibility time (in ms)
 MIN_BD = 900; // Min biting duration (in ms)
 MAX_SOLD = 3; // max number of soldiers
-ITEMS = {
-  AM: 2,
-  MG: 3,
-  SG: 4,
-  FL: 5
+IT = {
+  A: 2,
+  M: 3,
+  S: 4,
+  F: 5
 }
-INPUT = {
+IN = {
   L: [65, 81, 37],  // A - Q
   R: [68, 39],      // D
   U: [87, 90, 38],  // W - Z
@@ -45,11 +45,12 @@ WPN = {
   }
 }
 VACC_PD = 1300; // Vaccine pick up delay (in ms)
-DROP_RATE = 0.3;
-AMMO_BOX = 30;
+DROP = 0.3;
+AMMO = 30;
 // Colors
 WH = '#fff'; // White
 BL = '#000'; // Black
+RD = '#f00';
 // Player and NPC colors
 FC = '#5a5a5a'; // Eyes color
 AC = '#4b4e44'; // Arms color

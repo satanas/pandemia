@@ -27,7 +27,7 @@ module.exports = {
     "js/spawner.js",
     "js/items.js",
     "js/hud.js",
-    "js/perlin_noise.js",
+    //"js/perlin_noise.js",
     "js/effects.js",
     "js/bullet.js",
     "js/zones.js",

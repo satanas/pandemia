@@ -90,7 +90,7 @@ var Zombie = function(x, y, s) {
       if (_.health <= 0) {
         $.sn.p('zd');
         _.a = 0;
-        if (rnd() >= DROP_RATE) {
+        if (rnd() >= DROP) {
           var i = rndr(3, 6),
               x = _.x,
               y = _.y;
@@ -98,11 +98,11 @@ var Zombie = function(x, y, s) {
           if (rnd() <= 0.8) {
             $.g.i.add(new Ammo(x, y));
           } else {
-            if (i === ITEMS.MG) {
+            if (i === IT.M) {
               $.g.i.add(new Gun(x, y));
-            } else if (i === ITEMS.SG) {
+            } else if (i === IT.S) {
               $.g.i.add(new Shotgun(x, y));
-            } else if (i === ITEMS.FL) {
+            } else if (i === IT.F) {
               $.g.i.add(new Flame(x, y));
             }
           }
@@ -123,7 +123,7 @@ var Zombie = function(x, y, s) {
   };
 
   _.r = function(p) {
-    Zombie.draw(p.x, p.y, _.d, _.tp, _.anim, _.sol);
+    Zombie.d(p.x, p.y, _.d, _.tp, _.anim, _.sol);
   }
   _.bite = function() {
     _.bcount = rndr(MIN_BD, MIN_BD + 200);
@@ -136,7 +136,7 @@ var Zombie = function(x, y, s) {
   };
 };
 
-Zombie.draw = function(x, y, d, tp, an, sol) {
+Zombie.d = function(x, y, d, tp, an, sol) {
   var cc, wc, ac, hc, bc; // Chest, waist, arms, head, face and body colors
   hc = '#84ae8d';
   if (sol) {

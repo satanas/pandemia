@@ -42,18 +42,18 @@ var Player = function(x, y) {
       _.ic = iir(_.ic - $.e, 0);
     }
 
-    if ($.in.p(INPUT.L)) {
+    if ($.in.p(IN.L)) {
       _.d = DIR.LEFT;
       _.dx -= _.s;
-    } else if ($.in.p(INPUT.R)) {
+    } else if ($.in.p(IN.R)) {
       _.d = DIR.RIGHT;
       _.dx += _.s;
     }
 
-    if ($.in.p(INPUT.U)) {
+    if ($.in.p(IN.U)) {
       _.d = DIR.UP;
       _.dy -= _.s;
-    } else if ($.in.p(INPUT.D)) {
+    } else if ($.in.p(IN.D)) {
       _.d = DIR.DOWN;
       _.dy += _.s;
     }
@@ -61,10 +61,10 @@ var Player = function(x, y) {
     _.dx = iir(_.dx, -_.mxs, _.mxs);
     _.dy = iir(_.dy, -_.mxs, _.mxs);
 
-    if (!$.in.p(INPUT.L) && !$.in.p(INPUT.R)) {
+    if (!$.in.p(IN.L) && !$.in.p(IN.R)) {
       _.dx = 0;
     }
-    if (!$.in.p(INPUT.U) && !$.in.p(INPUT.D)) {
+    if (!$.in.p(IN.U) && !$.in.p(IN.D)) {
       _.dy = 0;
     }
 
@@ -98,9 +98,9 @@ var Player = function(x, y) {
       $.g.z.c(_, function(p, z) {
         _.hum -= z.bite();
         _.ic = INV_TIME;
-        _.dropVaccine();
+        _.drop();
         $.scn.game.be = 30;
-        $.ss.shake(1.8, 200)
+        //$.ss.shake(1.8, 200)
         $.sn.p('ph');
         if (_.hum > 0) {
         } else {
@@ -113,14 +113,14 @@ var Player = function(x, y) {
     $.g.i.c(_, function(p, i) {
       i.a = 0;
       $.sn.p('it');
-      if (i.type === ITEMS.AM) {
-        _.ammo += AMMO_BOX;
+      if (i.t === IT.A) {
+        _.ammo += AMMO;
       } else {
-        if (i.type === ITEMS.MG) {
+        if (i.t === IT.M) {
           _.wpn = WPN.MG;
-        } else if (i.type === ITEMS.SG) {
+        } else if (i.t === IT.S) {
           _.wpn = WPN.SG;
-        } else if (i.type === ITEMS.FL) {
+        } else if (i.t === IT.F) {
           _.wpn = WPN.FL;
         }
       }
@@ -177,7 +177,7 @@ var Player = function(x, y) {
     // with the head of the char
     if (_.d === DIR.UP) {
       if (_.vaccine) {
-        Vaccine.draw(p.x + 16, p.y - 6);
+        Vaccine.d(p.x + 16, p.y - 6);
       } else {
         // Hands
         $.x.fs(HC);
@@ -222,7 +222,7 @@ var Player = function(x, y) {
       $.x.fr(p.x + 45, p.y + 19, 6, 6);
       $.x.fr(p.x + 27, p.y + 31, 12, 2);
       if (_.vaccine) {
-        Vaccine.draw(p.x + 16, p.y + 16);
+        Vaccine.d(p.x + 16, p.y + 16);
       }
     } else if (_.d === DIR.LEFT) {
       // Arms
@@ -232,7 +232,7 @@ var Player = function(x, y) {
       $.x.fs(HC);
       $.x.fr(p.x + 5, p.y + 40, 6, 7);
       if (_.vaccine) {
-        Vaccine.draw(p.x - 30, p.y + 16);
+        Vaccine.d(p.x - 30, p.y + 16);
       }
       // Face
       $.x.fs(FC);
@@ -246,7 +246,7 @@ var Player = function(x, y) {
       $.x.fs(HC);
       $.x.fr(p.x + 55, p.y + 40, 6, 7);
       if (_.vaccine) {
-        Vaccine.draw(p.x + 62, p.y + 16);
+        Vaccine.d(p.x + 62, p.y + 16);
       }
       // Face
       $.x.fs(FC);
@@ -255,21 +255,19 @@ var Player = function(x, y) {
     }
 
     // debug
-    $.x.lw(1);
-    var c = _.offc(p),
-        mag = 100
-    $.x.ss('#f00');
-    $.x.bp();
-    $.x.mv(c.x, c.y);
-    $.x.lt(c.x + (mag * cos(_.an)), c.y + (mag * sin(_.an)));
-    $.x.k();
+    //$.x.lw(1);
+    //var c = _.offc(p),
+    //    mag = 100
+    //$.x.ss(RD);
+    //$.x.bp();
+    //$.x.mv(c.x, c.y);
+    //$.x.lt(c.x + (mag * cos(_.an)), c.y + (mag * sin(_.an)));
+    //$.x.k();
   }
 
   _.shoot = function() {
-    if (!_.ammo) {
-      return
-    }
-    _.dropVaccine();
+    if (!_.ammo) return;
+    _.drop();
     _.sd = _.wpn.DL; // shoot delay
     var i, c = _.getCenter();
     _.ammo -= 1;
@@ -293,7 +291,7 @@ var Player = function(x, y) {
     _.vaccine = 0;
   }
 
-  _.dropVaccine = function() {
+  _.drop = function() {
     if (_.vaccine) {
       _.vaccine.drop(_);
       _.vaccine = 0;
@@ -325,7 +323,7 @@ var Player = function(x, y) {
   }
 
   _.dAim = function() {
-    $.x.fs('#f00');
+    $.x.fs(RD);
     $.x.bp();
     $.x.arc(_.aim.x, _.aim.y, 2, 0, 2 * PI);
     $.x.cp();

@@ -149,8 +149,8 @@ var GameScene = function() {
       $.x.fs('#111');
       $.x.fr(x + 30, y, w - 60, h);
 
-      Zombie.draw(410, y + 160, DIR.DOWN);
-      Vaccine.draw(430, y + 245);
+      Zombie.d(410, y + 160, DIR.DOWN);
+      Vaccine.d(430, y + 245);
 
       $.x.ft('x  100', 30, 500, y + 200, c, s);
       $.x.ft('x  1', 30, 500, y + 270, c, s);
@@ -160,7 +160,7 @@ var GameScene = function() {
         $.x.ct('YOU DIED', 50, y + 80, c, s);
         $.x.ct('ENTER to send another soldier. ESC to exit.', 20, y + 450, c, s);
 
-        if ($.in.p(INPUT.E)) {
+        if ($.in.p(IN.E)) {
           _.zn = 0
           _.tries += 1;
           _.init();
@@ -168,7 +168,7 @@ var GameScene = function() {
       } else {
         $.x.ct('GAME OVER', 50, y + 80, c, s);
         //$.x.ct('You could not save the human race.', 18, y + 350, c, s);
-        if ($.in.p(INPUT.E)) {
+        if ($.in.p(IN.E)) {
           _.goToMenu();
         }
       }
@@ -180,12 +180,12 @@ var GameScene = function() {
       $.x.ct('You delivered the vaccine to the safe zone at the cost', 18, y + 150, c, s);
       $.x.ct('of your own life to save the human race. You are A HERO', 18, y + 175, c, s);
 
-      Zombie.draw(420, y + 220, DIR.DOWN);
+      Zombie.d(420, y + 220, DIR.DOWN);
       $.x.ft('x  100', 30, 510, y + 260, c, s);
 
       $.x.ct('Thanks for playing!', 25, y + 360, c, s);
       $.x.ct('ENTER to continue.', 20, y + 450, c, s);
-      if ($.in.p(INPUT.E)) {
+      if ($.in.p(IN.E)) {
         _.goToMenu();
       }
     }

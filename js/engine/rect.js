@@ -1,4 +1,4 @@
-var Rect = function(x, y, w, h) {
+var R = function(x, y, w, h) {
   var _ = this;
   _.x = x;
   _.y = y;
@@ -16,7 +16,7 @@ var Rect = function(x, y, w, h) {
   };
 
   _.toGrid = function() {
-    return new Rect(floor(_.x / GS), floor(_.y / GS), _.w / GS, _.h / GS);
+    return new R(floor(_.x / GS), floor(_.y / GS), _.w / GS, _.h / GS);
   };
 
   _.center = function() {
@@ -26,6 +26,6 @@ var Rect = function(x, y, w, h) {
   _.update();
 };
 
-Rect.fromGrid = function(o) {
-  return new Rect(o.x * GS, o.y * GS, o.w * GS, o.h * GS);
+R.fromGrid = function(o) {
+  return new R(o.x * GS, o.y * GS, o.w * GS, o.h * GS);
 };

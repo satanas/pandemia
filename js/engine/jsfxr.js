@@ -256,7 +256,7 @@ function SfxrSynth() {
       _phaserBuffer[i] = 0;
     }
     for (var i = _noiseBuffer.length; i--; ) {
-      _noiseBuffer[i] = Math.random() * 2 - 1;
+      _noiseBuffer[i] = rnd() * 2 - 1;
     }
 
     for (var i = 0; i < length; i++) {
@@ -297,7 +297,7 @@ function SfxrSynth() {
       // Applies the vibrato effect
       if (_vibratoAmplitude > 0) {
         _vibratoPhase += _vibratoSpeed;
-        _periodTemp *= 1 + Math.sin(_vibratoPhase) * _vibratoAmplitude;
+        _periodTemp *= 1 + sin(_vibratoPhase) * _vibratoAmplitude;
       }
 
       _periodTemp |= 0;
@@ -375,7 +375,7 @@ function SfxrSynth() {
           // Generates new random noise for this period
           if (_waveType == 3) {
             for (var n = _noiseBuffer.length; n--; ) {
-              _noiseBuffer[n] = Math.random() * 2 - 1;
+              _noiseBuffer[n] = rnd() * 2 - 1;
             }
           }
         }
@@ -395,7 +395,7 @@ function SfxrSynth() {
             _sample = .225 * ((_sample < 0 ? -1 : 1) * _sample * _sample  - _sample) + _sample;
             break;
           case 3: // Noise
-            _sample = _noiseBuffer[Math.abs(_phase * 32 / _periodTemp | 0)];
+            _sample = _noiseBuffer[abs(_phase * 32 / _periodTemp | 0)];
         }
 
         // Applies the low and high pass filters

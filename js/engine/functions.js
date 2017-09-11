@@ -1,9 +1,9 @@
-window['raf'] = window.requestAnimationFrame ||
+raf = window.requestAnimationFrame ||
   window.webkitRequestAnimationFrame ||
   window.mozRequestAnimationFrame ||
   function(a){ window.setTimeout(a,1E3/60); };
 
-window.caf = window.cancelAnimationFrame ||
+caf = window.cancelAnimationFrame ||
   window.mozCancelAnimationFrame;
 
 Object.prototype.inherits = function(parent) {
@@ -41,7 +41,7 @@ var abs = Math.abs,
     // Choose random element from array
     rnde = function(e) {
       return e[rndr(0, e.length)];
-    },
-    lim = function(x, y) {
-      return (x > y) ? y : x;
-    };
+    }
+    //lim = function(x, y) {
+    //  return (x > y) ? y : x;
+    //};

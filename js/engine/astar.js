@@ -1,11 +1,11 @@
 // A* implementation based on:
 // http://buildnewgames.com/astar/
 // https://github.com/qiao/PathFinding.js/blob/master/src/core/Grid.js
-var AStar = function(ww, wh, maxpath) {
+var AStar = function(ww, wh, mx) {
   var _ = this;
   _.ww = ww;
   _.wh = wh;
-  _.maxpath = maxpath; // max distance before aborting the calculation
+  _.mx = mx; // max distance before aborting the calculation
 
   // Manhattan distance
   _.getdist = function(p, q) {
@@ -77,8 +77,8 @@ var AStar = function(ww, wh, maxpath) {
   };
 
   _.findpath = function(a, b) {
-    var start = new Node(null, new Point(a.x , a.y).toGrid(), _.ww), // start node
-        end = new Node(null, new Point(b.x, b.y).toGrid(), _.ww), // end node
+    var start = new N(null, new Point(a.x , a.y).toGrid(), _.ww), // start node
+        end = new N(null, new Point(b.x, b.y).toGrid(), _.ww), // end node
         mlen = $.lvl.length(), // map size
         wcells = new Array(mlen), // array to store world cells
         lopen = [start], // list of currently open nodes
@@ -103,14 +103,14 @@ var AStar = function(ww, wh, maxpath) {
         do {
           res.push(new Point(xpath.x * GS, xpath.y * GS));
           // Abort the calculation if the target is too far away
-          if (res.length > _.maxpath) return [];
+          if (res.length > _.mx) return [];
         } while (xpath = xpath.p);
         wcells = lclosed = lopen = [];
         res.reverse();
       } else { // not the destination
         xneigh = _.neighbors(xnode.x, xnode.y);
         for (i=0, j=xneigh.length; i < j; i++) {
-          xpath = new Node(xnode, xneigh[i], _.ww);
+          xpath = new N(xnode, xneigh[i], _.ww);
           if (!wcells[xpath.v]) {
             xpath.g = xnode.g + _.getdist(xneigh[i], xnode);
             xpath.f = xnode.g + _.getdist(xneigh[i], end);
@@ -125,7 +125,7 @@ var AStar = function(ww, wh, maxpath) {
   };
 };
 
-var Node = function(pa, po, ww) {
+var N = function(pa, po, ww) {
   var _ = this;
   _.p = pa; // parent
   _.v = po.x + (po.y * ww); // value
