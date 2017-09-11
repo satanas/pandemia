@@ -1,7 +1,6 @@
 var GameScene = function() {
   var _ = this;
   _.maxBlur = 5;
-  _.c = $.byId("c"); // Canvas ref
   _.be = 0; // Bite effect flag
   _.end = 0; // Ending flag. 1 = game over, 2 = win
   _.zn = 0; // Zone flag. 0 = intro, 1 = lab
@@ -95,7 +94,7 @@ var GameScene = function() {
     if (h <= 70 && h > 0) {
       b = iir((70 - h) * 2, 0, 100);
     }
-    _.c.style.filter = "grayscale(" + g + "%) blur(" + (b * _.maxBlur / 100) + "px)";
+    $.cv.style.filter = "grayscale(" + g + "%) blur(" + (b * _.maxBlur / 100) + "px)";
 
     if (_.be) {
       //$.x.fs("rgba(255,0,0," + lim(_.t.fo / t, 1) +")");
@@ -136,58 +135,54 @@ var GameScene = function() {
         h = 500,
         c = WH,
         s = FN,
-        t = 'ENTER to ',
+        t = 'exit',
         e,
+        m,
         x = ($.vw - w) / 2,
         y = ($.vh - h) / 2;
 
     _.rstfx();
-    $.x.ga(0.9);
-    $.x.fs(c);
-    $.x.fr(x, y, w, h);
     if (_.end === 1) {
-      $.x.fs('#111');
-      $.x.fr(x + 30, y, w - 60, h);
+      $.x.fs(BL);
 
       // You still have soldiers left
-      if (_.tries < MAX_SOLD) {
+      if (_.tries < LIVES) {
         e = 'YOU DIED';
-        t += 'send another soldier.';
+        t = 'send another soldier';
 
         if ($.in.p(IN.E)) {
-          _.zn = 0
+          _.zn = 0;
           _.tries += 1;
           _.init();
+          $.sn.p('sl');
         }
       } else {
         e = 'GAME OVER';
-        t += 'exit.';
         if ($.in.p(IN.E)) _.goToMenu();
       }
     } else if (_.end === 2) {
       $.x.fs('#f80');
-      $.x.fr(x + 30, y, w - 60, h);
 
       e = 'WELL DONE!';
-      $.x.ct('You delivered the vaccine and saved the human race.', 18, y + 150, c, s);
+      m = 'You delivered the vaccine and saved the human race.';
 
-      t += 'exit.';
       if ($.in.p(IN.E)) _.goToMenu();
     }
-    $.x.ct(e, 50, y + 80, c, s);
-    $.x.ct(t, 20, y + 450, c, s);
-    $.x.ga(1);
+    $.x.fr(0, 0, $.vw, $.vh);
+    $.x.ct(e, 90, y + 150, c, s);
+    if (m) $.x.ct(m, 18, y + 250, c, s);
+    $.x.ct('Press ENTER to ' + t, 20, y + 450, c, s);
   }
 
   _.rstfx = function() {
-    _.c.style.filter = ""; // reset fx
+    $.cv.style.filter = ""; // reset fx
   }
 
   _.goToMenu = function() {
+    $.sn.p('sl');
     _.tries = 0;
     _.zn = 0;
     _.exit();
-    _.rstfx();
     $.scn.menu.start();
   }
 }

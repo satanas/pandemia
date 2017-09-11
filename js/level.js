@@ -53,7 +53,7 @@ var Level = function() {
       $.g.x.add(new Vaccine(128, 128));
     }
     // Add remaining soldiers
-    for (i=0; i < MAX_SOLD - $.scn.game.tries; i++) {
+    for (i=0; i < LIVES - $.scn.game.tries; i++) {
       $.g.n.add(new Soldier(378 + (i * 100), 110));
     }
   }
