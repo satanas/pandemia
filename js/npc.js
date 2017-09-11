@@ -66,8 +66,8 @@ var Scientist = function(x, y) {
     $.x.bp();
     $.x.mv(p.x - 64, p.y - 20);
     $.x.lt(p.x + 64 * 2, p.y - 20);
-    $.x.mv(p.x + (_.w / 2), p.y);
-    $.x.lt(p.x - 5, p.y - 20);
+    $.x.mv(p.x + 42, p.y);
+    $.x.lt(p.x + 5, p.y - 20);
     $.x.cp();
     $.x.k();
 
