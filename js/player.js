@@ -11,11 +11,9 @@ var Player = function(x, y) {
   _.hd = _.hum / (7 * 60); // Humanity decay 7 min
   _.hc = 0; // healing counter
   _.vaccine = 0;
-  _.an = 0;
+  _.an = 0; // Angle
   _.ammo = 500;
 
-  _.skinColor = '#ffe499';
-  _.hairColor = '#795548';
   _.aim = new Point(0, 0);
   _.wpn = WPN.MG;
   _.anim = new Animator([0, 1], 150);
