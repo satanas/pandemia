@@ -24,17 +24,7 @@ var Bullet = function(cx, cy, an, type) {
       $.g.w.c(_, function(p, w) {
         _.a = 0;
       });
-    }
-
-    if (!$.cam.inView(_) || !_.lt) {
-      _.a = 0;
-    }
-
-    // TODO: Update rect should run inside sprite. I forgot to call this method and
-    // lost more than 1 hour debugging
-    _.updateRect();
-
-    if (_.type.ID === WPN.FL.ID) {
+    } else {
       _.w = iir(_.w - ($.e * _.xdecay / 1000), 1);
       _.lt = iir(_.lt - $.e, 0);
       _.color = iir(_.color + ($.e / 12), 7, 22);
@@ -42,10 +32,13 @@ var Bullet = function(cx, cy, an, type) {
         _.an = _.anVar;
         _.anVar = 0;
       }
-      //if (_.lt < 200 && _.dam) {
-      //  _.dam = 0;
-      //}
     }
+
+    if (!$.cam.inView(_) || !_.lt) _.a = 0;
+
+    // TODO: Update rect should run inside sprite. I forgot to call this method and
+    // lost more than 1 hour debugging
+    _.updateRect();
   }
 
   _.r = function(p) {
