@@ -16,14 +16,11 @@ var Spawner = function(room) {
         x = floor(rndr(_.ro.x, _.ro.x + _.ro.w - 32)),
         y = floor(rndr(_.ro.y, _.ro.y + _.ro.h - 32));
 
-    if (_.z.length < 20 && !_.c) {
-      if (d > _.ad && !$.o.rect($.player, _.ro)) {
-        z = new Zombie(x, y);
-        _.z.push(z)
-        $.g.z.add(z);
-      }
-    } else {
-      _.c = 3000;
+    if (!_.c && d > _.ad && !$.o.rect($.player, _.ro)) {
+      z = new Zombie(x, y);
+      _.z.push(z)
+      $.g.z.add(z);
+      if (_.z.length >= 20) _.c = 5000;
     }
     _.z = _.z.filter(function(e) {
       return e.a;
