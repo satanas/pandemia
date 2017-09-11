@@ -3,10 +3,10 @@ var Zombie = function(x, y, s) {
   _.mindist = 500; // min distance to start chasing the player
   _.path = []; // points of path
   _.ctimer = 300; // check time in ms
-  _.ccount = 0; // time counter before checking new route
+  _.cc = 0; // time counter before checking new route
   _.an = 0;
   _.tp = 0; // Tracking pos
-  _.bcount = 0; // biting counter
+  _.bc = 0; // biting counter
   _.s = rnd() + MIN_ZS; // speed
   _.hsc = 0; // hurt sound counter
   _.gc = rndr(0, 4000); // growl counter
@@ -24,10 +24,10 @@ var Zombie = function(x, y, s) {
     if ($.scn.game.end === 2) return;
 
     // TODO: Move the seek behavior to a separated file inside ai folder
-    _.ccount += $.e;
+    _.cc += $.e;
     _.hsc = iir(_.hsc - $.e, 0);
     _.gc = iir(_.gc - $.e, 0);
-    _.bcount = iir(_.bcount - $.e, 0);
+    _.bc = iir(_.bc - $.e, 0);
 
     if (!_.gc && (rnd() > 0.98) && _.tp) {
       $.sn.p('zg');
@@ -36,7 +36,7 @@ var Zombie = function(x, y, s) {
     var d = _.getdist(_, $.player); // distance in pixels between zombie and player
 
     // The zombie doesn't have a path to walk
-    if (!_.bcount) {
+    if (!_.bc) {
       if (_.path.length === 0) {
         if ((d <= _.mindist) && (round(d) > 40)) {
           _.path = _.findpath(_, $.player, MAX_ZPD);
@@ -75,7 +75,7 @@ var Zombie = function(x, y, s) {
           _.updateRect();
 
           // Recalculate path if destination point changed
-          if (_.ccount >= _.ctimer && _.tp !== null && ($.player.x !== _.tp.x || $.player.y !== _.tp.y)) {
+          if (_.cc >= _.ctimer && _.tp !== null && ($.player.x !== _.tp.x || $.player.y !== _.tp.y)) {
             _.clrPath();
           }
         }
@@ -126,13 +126,13 @@ var Zombie = function(x, y, s) {
     Zombie.d(p.x, p.y, _.d, _.tp, _.anim, _.sol);
   }
   _.bite = function() {
-    _.bcount = rndr(MIN_BD, MIN_BD + 200);
+    _.bc = rndr(MIN_BD, MIN_BD + 200);
     return rndr(4, 8);
   }
 
   _.clrPath = function() {
     _.path.splice(1, _.path.length);
-    _.ccount = 0;
+    _.cc = 0;
   };
 };
 
