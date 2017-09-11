@@ -9,7 +9,7 @@ var GameScene = function() {
   _.inherits(Scene);
   Scene.call(_);
 
-  $.ss = new ScreenShake();
+  //$.ss = new ScreenShake();
   $.hud = new HUD();
 
   _.init = function() {
@@ -62,7 +62,7 @@ var GameScene = function() {
     $.g.b.u();
     $.cam.u();
     $.hud.u();
-    $.ss.u();
+    //$.ss.u();
 
     // Render
     $.g.s.r(); // spawners
@@ -112,8 +112,12 @@ var GameScene = function() {
 
   // To be called on game over
   _.over = function() {
-    _.end = 1;
-    $.sn.p('go');
+    if (!_.end) {
+      _.end = 1;
+      $.sn.p('go');
+      // Add zombie soldier
+      $.lvl.ds.push(new Zombie($.player.x, $.player.y, 1));
+    }
   }
 
   // To be called when the player reaches the goal

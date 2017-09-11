@@ -20,7 +20,7 @@ var Spawner = function(room) {
       z = new Zombie(x, y);
       _.z.push(z)
       $.g.z.add(z);
-      if (_.z.length >= 20) _.c = 10000;
+      if (_.z.length >= 20) _.c = 8000;
     } else if (!pn) {
       _.c = iir(_.c - $.e, 0);
     }

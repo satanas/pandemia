@@ -14,11 +14,18 @@ var Zombie = function(x, y, s) {
   _.anim = new Animator([0, 1]);
   _.sol = s; // If sol = true, means that this zombie was a soldier before and should have more health
   _.health = (s) ? 50 : rndr(3, 5);
+  _.or = new Point(x, y); // Orig coord used to respawn dead soldiers
 
   _.inherits(Sprite);
   _.inherits(AStar);
   Sprite.call(_, x, y, 64, 64);
   AStar.call(_, $.lvl.ww, $.lvl.wh);
+
+  _.rst = function() {
+    _.x = _.or.x;
+    _.y = _.or.y;
+    _.health = 50;
+  }
 
   _.u = function() {
     if ($.scn.game.end === 2) return;

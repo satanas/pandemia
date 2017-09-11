@@ -89,8 +89,7 @@ var Player = function(x, y) {
         $.scn.game.be = 30;
         //$.ss.shake(1.8, 200)
         $.sn.p('ph');
-        if (_.hum > 0) {
-        } else {
+        if (_.hum < 0) {
           $.scn.game.over();
         }
       });

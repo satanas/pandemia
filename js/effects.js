@@ -30,7 +30,4 @@ var ScreenShake = function() {
     _.duration = dur;
     _.magnitude = mag;
   }
-
-  _.reset = function() {
-  }
 }

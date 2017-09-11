@@ -12,11 +12,8 @@ var Level = function() {
   // TODO: Pass maxLeafSize as parameter
   _.maxLeafSize = 20;
 
-  _.arooms = [];
-  _.srooms = [];
-  _.pcoord = 0;
+  _.pcoord = 0; // Player coord
   _.os = new R(0, 0, 0, 0); // Original map size
-  _.ds = []; // Dead soldier coord
 
   // Generate intro room
   _.iroom = function(w, h) {
@@ -65,6 +62,9 @@ var Level = function() {
     _.wh = h / GS;
     _.os.w = _.ww;
     _.os.h = _.wh;
+    _.arooms = [];
+    _.srooms = [];
+    _.ds = []; // Dead soldiers
 
     _.makeLeafs();
     _.root.createRooms();
@@ -159,10 +159,17 @@ var Level = function() {
     _.map = _.bkmap.slice(0);
     _.ww = _.os.w;
     _.wh = _.os.h;
+    // Filter dead soldiers
+    _.ds = _.ds.filter(function(e) {
+      if (e.a) {
+        e.rst();
+        // Add zombie soldiers still alive
+        $.g.z.add(e);
+      }
+      return e.a;
+    });
     $.g.h.add($.endzone);
     $.g.x.add($.vaccine);
-    // Add zombie soldiers around the lost vaccine
-    $.g.z.add(new Zombie($.vaccine.x, $.vaccine.y, 1));
     $.player.reset(_.pcoord.x, _.pcoord.y);
 
     // Load the walls
