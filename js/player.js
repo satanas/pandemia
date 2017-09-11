@@ -256,7 +256,7 @@ var Player = function(x, y) {
   _.shoot = function() {
     if (!_.ammo) return;
 
-    $.ss.shake(1, 100)
+    //$.ss.shake(1, 100)
     _.drop();
     _.sd = _.wpn.DL; // shoot delay
     var i, c = _.getCenter();

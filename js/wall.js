@@ -36,6 +36,7 @@ var Barricade = function(x, y) {
         // Set the barricade flag off so the message disappear
         $.scientist.ba = 0;
         $.sn.p('ex');
+        $.ss.shake(2, 100)
       }
     });
   }
