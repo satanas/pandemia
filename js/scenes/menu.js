@@ -65,6 +65,14 @@ var MenuScene = function() {
       _.anim.f = 0; // Turn off the press enter message
       $.sn.p('sl');
     }
+
+
+    var keys = Object.keys($.txt.LETTERS);
+    for (i=0; i < keys.length; i++) {
+      for (var y=0; y <= 560; y += 20) {
+        $.x.drawImage($.txt.fontMap['2+#fff'][keys[i]], y + (10 * i), y);
+      }
+    }
   }
 
   // Function to draw circles

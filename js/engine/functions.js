@@ -41,7 +41,16 @@ var abs = Math.abs,
     // Choose random element from array
     rnde = function(e) {
       return e[rndr(0, e.length)];
-    }
+    };
     //lim = function(x, y) {
     //  return (x > y) ? y : x;
     //};
+
+function cache(w, h, f) {
+  var c = document.createElement('canvas');
+  c.width = w;
+  c.height = h;
+
+  f(c.getContext('2d'), c);
+  return c;
+}
