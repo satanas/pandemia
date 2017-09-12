@@ -342,20 +342,18 @@ var Text = function() {
     c = null;
   }
 
-  _.drawLine = function(opt) {
-    $.x.fs(opt.color);
-    for( var i = 0; i < opt.text.length; i++ ) {
+  // s = scale
+  // c = color
+  // hs = hspacing
+  _.drawLine = function(ox, oy, text, s, c, hs) {
+    var ff = s + '+' + c, // font family
+        i, x, y, l;
+
+    for (i = 0; i < text.length; i++) {
       // TODO: improve unknown
-      var letter = _.LETTERS[ ( opt.text.charAt( i ) ) ] || _.LETTERS[' '];
-      for( var y = 0; y < _.size; y++ ) {
-        for( var x = 0; x < _.size; x++ ) {
-          if( letter[ y ][ x ] === 1 ) {
-            $.x.bp();
-            $.x.rect( opt.x + ( x * opt.scale ) + ( ( _.size * opt.scale ) + opt.hspacing ) * i, opt.y + y * opt.scale, opt.scale, opt.scale );
-            $.x.fill();
-          }
-        }
-      }
+      l = text.charAt(i) || _.LETTERS[' '];
+      $.x.drawImage($.txt.fontMap[ff][l], ox + ((s * _.size) + hs) * i, oy);
+      //$.x.rect( opt.x + ( x * opt.scale ) + ( ( _.size * opt.scale ) + opt.hspacing ) * i, opt.y + y * opt.scale, opt.scale, opt.scale );
     }
   };
 
@@ -371,7 +369,7 @@ var Text = function() {
   //   hspacing: horizontal spacing. Default: 1,
   //   vspacing: vertical spacing. Default: 1,
   //   snap: round to the lower integer. Default: false
-  _.r = function(x, y, tx, sc, c, opt) {
+  _.r = function(tx, x, y, sc, c, opt) {
     opt = opt || {};
     opt.vspacing = opt.vspacing || 1;
     opt.hspacing = opt.hspacing || 1;
@@ -416,14 +414,7 @@ var Text = function() {
       //    color: opt.shadow.color
       //  });
       //}
-      _.drawLine({
-        x: x,
-        y: y,
-        text: line.toUpperCase(),
-        hspacing: opt.hspacing,
-        scale: sc,
-        color: c
-      });
+      _.drawLine(x, y, line.toUpperCase(), sc, c, opt.hspacing);
     }
 
     return {
