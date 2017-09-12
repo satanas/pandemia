@@ -59,8 +59,15 @@ var HUD = function() {
     $.txt.r(wn, 0, 90, 2, c, ha);
 
     // Minimap
-    var px, py;
+    var px,
+        py,
+        vc = '#f0f', // Vaccine color
+        sc = '#0f0' // Safe zone color;
     if ($.scn.game.zn) {
+      _.dc(_.mm.x + 5, _.mm.y - 18, sc);
+      $.x.ft('= safe zone', 11, _.mm.x + 10, _.mm.y - 15, WH, FN);
+      _.dc(_.mm.x + 5, _.mm.y - 8, vc);
+      $.x.ft('= vaccine', 11, _.mm.x + 10, _.mm.y - 5, WH, FN);
       $.x.ga(0.5);
       $.x.fs('#04d');
       $.x.fr(_.mm.x, _.mm.y, _.mm.w, _.mm.h);
@@ -70,10 +77,10 @@ var HUD = function() {
       _.rp($.player.x, $.player.y, c);
 
       // Draw safe zone position
-      _.rp($.endzone.x, $.endzone.y, '#0f0');
+      _.rp($.endzone.x, $.endzone.y, sc);
 
       // Draw vaccine position
-      _.rp($.vaccine.x, $.vaccine.y, '#f0f');
+      _.rp($.vaccine.x, $.vaccine.y, vc);
 
       $.x.ga(1);
     }
@@ -83,9 +90,14 @@ var HUD = function() {
   _.rp = function(x, y, c) {
     var px = floor(x * 120 / _.ww),
         py = floor(y * 120 / _.wh);
+    _.dc(_.mm.x + px, _.mm.y + py, c);
+  }
+
+  // Draw just a circle
+  _.dc = function(x, y, c) {
     $.x.fs(c);
     $.x.bp();
-    $.x.arc(_.mm.x + px, _.mm.y + py, 2, 0, 2 * PI);
+    $.x.arc(x, y, 2, 0, 2 * PI);
     $.x.cp();
     $.x.f();
   }
