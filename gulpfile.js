@@ -72,7 +72,7 @@ gulp.task('clean', function() {
 });
 
 gulp.task('zip', function() {
-  gulp.src(['min/all.min.js', 'min/index.html', 'min/style.min.css'])
+  return gulp.src(['min/all.min.js', 'min/index.html', 'min/style.min.css'])
   .pipe(zip(config.appName + '.zip'))
   .pipe(gulp.dest('min'))
   .on('end', reportSize);
@@ -100,6 +100,11 @@ gulp.task('build', ['minify_html', 'minify_css', 'minify_js', 'zip'], function()
 });
 
 gulp.task('build_closure', ['minify_html', 'minify_css', 'minify_js_closure', 'zip'], function() {
+});
+
+gulp.task('build_advzip', ['minify_html', 'minify_css', 'minify_js'], function() {
+  execSync('cd min && advzip -2 -a pandemia.zip all.min.js index.html style.min.css');
+  reportSize();
 });
 
 // brew install advancecomp

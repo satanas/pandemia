@@ -73,12 +73,13 @@ var Scientist = function(x, y) {
 
 
     for (i=0; i < _.dg[_.st].length; i++) {
+      //$.txt.r(_.dg[_.st][i], 250, y - (i * 20), 2, '#fff');
       $.x.ft(_.dg[_.st][i], 16, 250, y - (i * 20), c, s);
     }
     if (_.st === 1 && _.anim.g()) {
-      $.x.ft('VACCINE', 16, 110, 180, c, s);
+      $.txt.r('Vaccine', 100, 170, 2, '#fff');
     } else if (_.st === 2 && _.anim.g() && _.ba) {
-      $.x.ft('BARRICADE', 16, 880, 300, c, s);
+      $.txt.r('Barricade', 880, 285, 2, '#fff');
     }
   }
 

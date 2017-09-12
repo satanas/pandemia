@@ -104,9 +104,12 @@ var GameScene = function() {
   // Print instructions method
   _.pi = function() {
     $.x.fs('rgba(0,0,0,0.5)');
-    $.x.fr(300, 460, 430, 70);
-    $.x.ct('WASD, ZQSD and ARROWS to move', 20, 490, WH, FN);
-    $.x.ct('MOUSE to aim and shoot', 20, 515, WH, FN);
+    $.x.fr(250, 460, 520, 70);
+    $.txt.r('WASD, ZQSD and ARROWS to move\nMOUSE to aim and shoot', 0, 470, 3, WH,{
+      halign: 'center',
+      hspacing: 2,
+      vspacing: 20,
+    });
   }
 
   // To be called on game over

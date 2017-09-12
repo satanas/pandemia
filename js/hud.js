@@ -15,19 +15,21 @@ var HUD = function() {
 
   _.r = function() {
     var c = WH, // text color
-        s = FN; // font family
+        s = 4, // text scale
+        p,
+        ha = { halign: 'center' }; // horizontal alignment
 
     // Humanity bar
     $.x.fs('#333');
     $.x.fr(50, 30, _.bmx, 30);
     $.x.fs(RD);
     $.x.fr(50, 30, _.bw, 30);
-    $.x.ft('HUMANITY', 26, 60, 55, c, s);
+    $.txt.r('Humanity', 70, 35, s, c)
 
     // Ammo
     Ammo.d(670, 30);
-    $.x.ft('AMMO:', 26, 720, 55, c, s);
-    $.x.ft($.player.ammo + '', 26, 820, 55, c, s);
+    p = $.txt.r('Ammo:', 725, 35, s, c)
+    $.txt.r($.player.ammo + '', p.width + 725, 35, s, c);
 
     // Weapon icon
     var cx = ($.vw - 64) / 2,
@@ -54,7 +56,7 @@ var HUD = function() {
     } else {
       wn = $.player.wpn.ID;
     }
-    $.x.ct(wn, 18, 105, c, s);
+    $.txt.r(wn, 0, 90, 2, c, ha);
 
     // Minimap
     var px, py;

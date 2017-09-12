@@ -37,11 +37,12 @@ var MenuScene = function() {
     $.x.fs('#f80');
     $.x.fr(50, 0, $.vw - 100, $.vh);
 
-    $.x.ct('PANDEMIA', 125, 150, WH, FN);
+    var opt = {halign: 'center', hspacing: 2};
+    $.txt.r('PANDEMIA', 0, 60, 15, WH, {halign: 'center', hspacing: 15});
     if (_.anim.g()) {
-      $.x.ct('Press ENTER to start', 35, 490, WH, FN);
+      $.txt.r('Press Enter to start', 0, $.vh - 80, 4, '#fff', opt)
     }
-    $.x.ct('By @satanas82 for js13k 2017', 15, 550, '#eee', FN);
+    $.txt.r('By satanas82 for js13k 2017', 0, $.vh - 30, 2, WH, opt);
     var cx = floor($.vw / 2),
         cy = floor($.vh / 2) + 40,
         r = 60, // radius
@@ -64,14 +65,6 @@ var MenuScene = function() {
       _.xc = 300;
       _.anim.f = 0; // Turn off the press enter message
       $.sn.p('sl');
-    }
-
-
-    var keys = Object.keys($.txt.LETTERS);
-    for (i=0; i < keys.length; i++) {
-      for (var y=0; y <= 560; y += 20) {
-        $.x.drawImage($.txt.fontMap['2+#fff'][keys[i]], y + (10 * i), y);
-      }
     }
   }
 

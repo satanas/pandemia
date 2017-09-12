@@ -14,6 +14,7 @@ module.exports = {
     "js/engine/rect.js",
     "js/engine/point.js",
     "js/engine/astar.js",
+    "js/engine/text.js",
     "js/engine/init.js",
 
     "js/constants.js",
