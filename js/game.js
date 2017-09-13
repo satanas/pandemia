@@ -25,6 +25,7 @@ window.addEventListener('load', function() {
   $.txt.createFont(4, WH);
   $.txt.createFont(3, WH);
   $.txt.createFont(2, WH);
+  $.txt.createFont(1, WH);
 
   // Sound manager
   $.sn = new Sound();

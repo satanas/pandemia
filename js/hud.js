@@ -65,9 +65,9 @@ var HUD = function() {
         sc = '#0f0' // Safe zone color;
     if ($.scn.game.zn) {
       _.dc(_.mm.x + 5, _.mm.y - 18, sc);
-      $.x.ft('= safe zone', 11, _.mm.x + 10, _.mm.y - 15, WH, FN);
+      $.txt.r(': safe zone', _.mm.x + 8, _.mm.y - 21, 1, WH);
       _.dc(_.mm.x + 5, _.mm.y - 8, vc);
-      $.x.ft('= vaccine', 11, _.mm.x + 10, _.mm.y - 5, WH, FN);
+      $.txt.r(': vaccine', _.mm.x + 8, _.mm.y - 11, 1, WH);
       $.x.ga(0.5);
       $.x.fs('#04d');
       $.x.fr(_.mm.x, _.mm.y, _.mm.w, _.mm.h);
