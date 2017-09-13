@@ -47,7 +47,7 @@ var abs = Math.abs,
     //};
 
 function cache(w, h, f) {
-  var c = document.createElement('canvas');
+  var c = D.createElement('canvas');
   c.width = w;
   c.height = h;
 

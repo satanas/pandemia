@@ -34,7 +34,7 @@ var EndZ = function(cx, cy) {
   Sprite.call(_, cx - 64, cy - 40, _.ow / 2, _.oh / 2);
 
   // Temporary canvas to render strips
-  _.ca = document.createElement('canvas');
+  _.ca = D.createElement('canvas');
   _.ca.width = _.ow * 2;
   _.ca.width = _.oh * 2;
   _.cx = _.ca.getContext('2d');

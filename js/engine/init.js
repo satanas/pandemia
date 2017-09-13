@@ -1,7 +1,6 @@
-var $ = {}, dbg = false;
-
+var $ = {}, dbg = false, D = document;
 // Get canvas
-$.cv = document.querySelector("canvas");
+$.cv = D.querySelector("canvas");
 
 // Initialize all variables
 // w: width
@@ -109,18 +108,18 @@ $.init = function(w, h) {
 
 // Gets a DOM element by id
 $.byId = function(i) {
-  return document.getElementById(i);
+  return D.getElementById(i);
 };
 
 // Shows a DOM object putting its opacity in one
-$.show = function(i) {
-  $.byId(i).style.opacity = 1;
-};
-
-// Hides a DOM object putting its opacity in zero
-$.hide = function(i) {
-  $.byId(i).style.opacity = 0;
-};
+//$.show = function(i) {
+//  $.byId(i).style.opacity = 1;
+//};
+//
+//// Hides a DOM object putting its opacity in zero
+//$.hide = function(i) {
+//  $.byId(i).style.opacity = 0;
+//};
 
 function resize() {
   var h = window.innerHeight;

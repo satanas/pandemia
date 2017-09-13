@@ -4,7 +4,7 @@ var Input = function() {
       // Register the type of event (up: 1, down: -1)
       ev = {};
 
-  document.body.addEventListener('keydown', function(e) {
+  D.body.addEventListener('keydown', function(e) {
     if (e.keyCode in ps) {
       e.preventDefault();
       ev[e.keyCode] = -1;
@@ -12,7 +12,7 @@ var Input = function() {
     }
   });
 
-  document.body.addEventListener('keyup', function(e) {
+  D.body.addEventListener('keyup', function(e) {
     if (e.keyCode in ps) {
       e.preventDefault();
       ev[e.keyCode] = 1;
@@ -32,13 +32,13 @@ var Input = function() {
     }
   };
   /* Is released */
-  _.r = function(c) {
-    return ev[c] === 1;
-  };
-  /* Is down */
-  _.d = function(c) {
-    return ev[c] === -1;
-  };
+  //_.r = function(c) {
+  //  return ev[c] === 1;
+  //};
+  ///* Is down */
+  //_.d = function(c) {
+  //  return ev[c] === -1;
+  //};
   /* Update */
   _.u = function() {
     Object.keys(ps).forEach(function(k){
@@ -53,10 +53,10 @@ var Input = function() {
     });
   };
   /* Clear */
-  _.c = function() {
-    Object.keys(ps).forEach(function(k){
-      ev[k] = 0;
-      ps[k] = 0;
-    });
-  };
+  //_.c = function() {
+  //  Object.keys(ps).forEach(function(k){
+  //    ev[k] = 0;
+  //    ps[k] = 0;
+  //  });
+  //};
 };
