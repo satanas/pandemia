@@ -4,8 +4,8 @@ This is my entry for the 2017 edition of [js13kGames compo](http://js13kgames.co
 for HTML5 Game Developers where the file size limit is set to a maximum of 13 kb (13312 bytes) and no external
 libraries are allowed.
 
-The theme for 2017 edition is **Lost**. The actual size of my game is **12.99 kb** (13309 bytes. Yes, just 3 bytes less
-than the limit :P)** and it took me **77 hours 23 min** to complete.
+The theme for 2017 edition is **Lost**. The actual size of my game is **12.99 kb**, 13309 bytes to be precise (yes, just 3 bytes less
+than the limit :P) and it took me **77 hours 23 min** to complete.
 
 Pandemia is a zombie survival shooter game with Minecraft inspired graphics where you have to come through hordes of
 zombies in order to deliver a vaccine to a safe zone and stop the infection, saving the human race. But wait, you are
