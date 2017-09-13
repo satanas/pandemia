@@ -31,7 +31,7 @@ var GameScene = function() {
     } else {
       // Clear all groups before start
       Object.keys($.g).forEach(function(g) { $.g[g].clr() })
-      _.ww = _.wh = 5376;
+      _.ww = _.wh = 6144;
       if (!_.tries) {
         $.lvl.gen(_.ww, _.wh);
       } else {
