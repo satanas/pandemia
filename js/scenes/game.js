@@ -201,7 +201,7 @@ var GameScene = function() {
   _.share = function(v) {
     if (_.sh) return;
     _.sh = 1;
-    var a = document.createElement('a'), m = 'I killed ' + _.zn + ' zombie';
+    var a = document.createElement('a'), m = 'I killed ' + _.zk + ' zombie';
     if (_.zn > 10) m += 's';
     if (v) {
       m += ' and ' + _.vm;
