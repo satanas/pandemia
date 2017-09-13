@@ -72,10 +72,10 @@ gulp.task('clean', function() {
 });
 
 gulp.task('zip', function() {
-  return gulp.src(['min/all.min.js', 'min/index.html', 'min/style.min.css'])
+  gulp.src(['min/all.min.js', 'min/index.html', 'min/style.min.css'])
   .pipe(zip(config.appName + '.zip'))
   .pipe(gulp.dest('min'))
-  .on('end', reportSize);
+  //.on('end', reportSize);
 });
 
 function reportSize() {
@@ -97,6 +97,7 @@ gulp.task('minify_js_closure', function() {
 });
 
 gulp.task('build', ['minify_html', 'minify_css', 'minify_js', 'zip'], function() {
+  reportSize();
 });
 
 gulp.task('build_closure', ['minify_html', 'minify_css', 'minify_js_closure', 'zip'], function() {

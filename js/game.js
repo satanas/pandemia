@@ -20,12 +20,6 @@ window.addEventListener('load', function() {
   $.g.d = new Group(); // Decorations
 
   $.lvl = new Level();
-  $.txt = new Text();
-  $.txt.createFont(15, WH);
-  $.txt.createFont(4, WH);
-  $.txt.createFont(3, WH);
-  $.txt.createFont(2, WH);
-  $.txt.createFont(1, WH);
 
   // Sound manager
   $.sn = new Sound();

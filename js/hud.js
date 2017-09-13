@@ -15,21 +15,19 @@ var HUD = function() {
 
   _.r = function() {
     var c = WH, // text color
-        s = 4, // text scale
-        p,
-        ha = { halign: 'center' }; // horizontal alignment
+        s = FN; // text scale
 
     // Humanity bar
     $.x.fs('#333');
     $.x.fr(50, 30, _.bmx, 30);
     $.x.fs(RD);
     $.x.fr(50, 30, _.bw, 30);
-    $.txt.r('Humanity', 70, 35, s, c)
+    $.x.ft('HUMANITY', 26, 60, 55, c, s);
 
     // Ammo
     Ammo.d(670, 30);
-    $.txt.r('Ammo:', 725, 35, s, c)
-    $.txt.r($.player.ammo + '', 832, 35, s, c);
+    $.x.ft('AMMO:', 26, 720, 55, c, s);
+    $.x.ft($.player.ammo + '', 26, 820, 55, c, s);
 
     // Weapon icon
     var cx = ($.vw - 64) / 2,
@@ -56,7 +54,7 @@ var HUD = function() {
     } else {
       wn = $.player.wpn.ID;
     }
-    $.txt.r(wn, 0, 90, 2, c, ha);
+    $.x.ct(wn, 18, 105, c, s);
 
     // Minimap
     var px,
@@ -65,9 +63,9 @@ var HUD = function() {
         sc = '#0f0' // Safe zone color;
     if ($.scn.game.zn) {
       _.dc(_.mm.x + 5, _.mm.y - 18, sc);
-      $.txt.r(': safe zone', _.mm.x + 8, _.mm.y - 21, 1, WH);
+      $.x.ft('= safe zone', 11, _.mm.x + 10, _.mm.y - 15, c, s);
       _.dc(_.mm.x + 5, _.mm.y - 8, vc);
-      $.txt.r(': vaccine', _.mm.x + 8, _.mm.y - 11, 1, WH);
+      $.x.ft('= vaccine', 11, _.mm.x + 10, _.mm.y - 5, c, s);
       $.x.ga(0.5);
       $.x.fs('#04d');
       $.x.fr(_.mm.x, _.mm.y, _.mm.w, _.mm.h);

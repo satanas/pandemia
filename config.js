@@ -14,7 +14,6 @@ module.exports = {
     "js/engine/rect.js",
     "js/engine/point.js",
     "js/engine/astar.js",
-    "js/engine/text.js",
     "js/engine/init.js",
 
     "js/constants.js",
@@ -28,7 +27,6 @@ module.exports = {
     "js/spawner.js",
     "js/items.js",
     "js/hud.js",
-    //"js/perlin_noise.js",
     "js/effects.js",
     "js/bullet.js",
     "js/zones.js",

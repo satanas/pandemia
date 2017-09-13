@@ -37,12 +37,11 @@ var MenuScene = function() {
     $.x.fs('#f80');
     $.x.fr(50, 0, $.vw - 100, $.vh);
 
-    var opt = {halign: 'center', hspacing: 2};
-    $.txt.r('PANDEMIA', 0, 60, 15, WH, {halign: 'center', hspacing: 15});
+    $.x.ct('PANDEMIA', 125, 150, WH, FN);
     if (_.anim.g()) {
-      $.txt.r('Press Enter to start', 0, $.vh - 80, 4, '#fff', opt)
+      $.x.ct('Press ENTER to start', 35, 490, WH, FN);
     }
-    $.txt.r('By satanas82 for js13k 2017', 0, $.vh - 30, 2, WH, opt);
+    $.x.ct('By @satanas82 for js13k 2017', 15, 550, '#eee', FN);
     var cx = floor($.vw / 2),
         cy = floor($.vh / 2) + 40,
         r = 60, // radius

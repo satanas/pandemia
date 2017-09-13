@@ -299,6 +299,7 @@ var Player = function(x, y) {
       }
       $.sn.p('sh');
     } else if (_.wpn.ID === WPN.FL.ID) {
+      _.ammo -= 5;
       $.sn.p('fl');
     } else {
       $.sn.p('gu');
