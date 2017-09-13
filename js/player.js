@@ -12,6 +12,10 @@ var Player = function(x, y) {
   _.vaccine = 0;
   _.an = 0; // Angle
   _.ammo = 500;
+  _.hf = 0; // Heartbeat frequency
+  _.hc = _.hf; // Heartbeat counter
+  _.bd = BEAT; // Delay between beats
+  _.bc = 0; // Single beat counter
 
   _.aim = new Point(0, 0);
   _.wpn = WPN.MG;
@@ -30,6 +34,9 @@ var Player = function(x, y) {
     _.mxs = iir(-1.5 + (_.hum / 10), MIN_PS);
     _.sd = iir(_.sd - $.e, 0);
     _.ic = iir(_.ic - $.e, 0);
+    _.hc = iir(_.hc - $.e, 0);
+    _.bd = iir(_.bd - $.e, 0);
+    _.hf = _.hum * 10;
 
     _.anim.u();
 
@@ -89,7 +96,10 @@ var Player = function(x, y) {
         $.scn.game.be = 30;
         $.ss.shake(4, 200)
         $.sn.p('ph');
-        if (_.hum <= 0) $.scn.game.over();
+        if (_.hum <= 0) {
+          $.scn.game.over();
+          $.sn.p('fp');
+        }
       }
     });
 
@@ -148,6 +158,26 @@ var Player = function(x, y) {
         }
       }
     });
+
+    // Hearbeats
+    // If the heartbeat counter is zero then proceed to play it.
+
+    if (!_.hc) {
+      if (_.bc < 2) {
+        // If we haven't played two beats and the delay is zero, play the beat,
+        // increase one in the beat counter and reset the delay
+        if (!_.bd) {
+          _.bd = BEAT;
+          _.bc += 1;
+          $.sn.p('hb');
+        }
+      } else {
+        // If we playerd two beats, then reset everything
+        _.bc = 0;
+        _.bd = BEAT;
+        _.hc = _.hf;
+      }
+    }
 
     _.updateRect();
 

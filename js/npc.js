@@ -20,7 +20,7 @@ var Scientist = function(x, y) {
   _.sda = [
     [
       'take it to the safe zone.',
-      'Go soldier! Retrieve the vaccine and',
+      'Go soldier! Retrieve the vaccine and'
     ]
   ];
   _.dg = ($.scn.game.tries) ? _.sda : _.fda;

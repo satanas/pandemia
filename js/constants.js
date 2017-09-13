@@ -4,6 +4,7 @@ MIN_ZS = 1; // Min zombie speed
 MAX_ZPD = 15; // Max zombie path distance (in nodes)
 MIN_BD = 900; // Min biting duration (in ms)
 LIVES = 3; // max number of soldiers
+BEAT = 150;
 IT = {
   A: 2,
   M: 3,
