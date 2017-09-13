@@ -6,6 +6,7 @@ var GameScene = function() {
   _.zn = 0; // Zone flag. 0 = intro, 1 = lab
   _.tries = 0;
   _.zk = 0; // Zombies killed
+  _.sh = 0; // Share flag to avoid multiple windows
   _.vm = 'delivered the vaccine to save the human race.';
 
   _.inherits(Scene);
@@ -18,6 +19,7 @@ var GameScene = function() {
     _.be = 0;
     _.end = 0;
     _.zk = 0;
+    _.sh = 0;
     $.msg = 0;
 
     // If intro
@@ -197,6 +199,8 @@ var GameScene = function() {
 
   // v = victory?
   _.share = function(v) {
+    if (_.sh) return;
+    _.sh = 1;
     var a = document.createElement('a'), m = 'I killed ' + _.zn + ' zombie';
     if (_.zn > 10) m += 's';
     if (v) {

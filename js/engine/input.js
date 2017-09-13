@@ -40,11 +40,11 @@ var Input = function() {
   //  return ev[c] === -1;
   //};
   /* Update */
-  _.u = function() {
-    Object.keys(ps).forEach(function(k){
-      ev[k] = 0;
-    });
-  };
+  //_.u = function() {
+  //  Object.keys(ps).forEach(function(k){
+  //    ev[k] = 0;
+  //  });
+  //};
   /* Bind */
   _.b = function(ks) {
     ks.forEach(function(k){
