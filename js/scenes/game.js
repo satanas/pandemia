@@ -5,6 +5,8 @@ var GameScene = function() {
   _.end = 0; // Ending flag. 1 = game over, 2 = win
   _.zn = 0; // Zone flag. 0 = intro, 1 = lab
   _.tries = 0;
+  _.zk = 0; // Zombies killed
+  _.vm = 'delivered the vaccine to save the human race.';
 
   _.inherits(Scene);
   Scene.call(_);
@@ -15,6 +17,7 @@ var GameScene = function() {
   _.init = function() {
     _.be = 0;
     _.end = 0;
+    _.zk = 0;
     $.msg = 0;
 
     // If intro
@@ -141,6 +144,7 @@ var GameScene = function() {
         t = 'play again',
         e,
         m,
+        v = 0, // victory
         x = ($.vw - w) / 2,
         y = ($.vh - h) / 2;
 
@@ -166,15 +170,17 @@ var GameScene = function() {
     } else if (_.end === 2) {
       $.x.fs('#f80');
 
+      v = 1;
       e = 'WELL DONE!';
-      m = 'You delivered the vaccine and saved the human race.';
+      m = 'You ' + _.vm;
 
       if ($.in.p(IN.E)) _.goToMenu();
     }
     $.x.fr(0, 0, $.vw, $.vh);
     $.x.ct(e, 90, y + 150, c, s);
     if (m) $.x.ct(m, 18, y + 250, c, s);
-    $.x.ct('Press ENTER to ' + t, 20, y + 450, c, s);
+    $.x.ct('Press ENTER to ' + t + '. T to share', 20, y + 450, c, s);
+    if ($.in.p(IN.T)) _.share(v);
   }
 
   _.rstfx = function() {
@@ -187,5 +193,20 @@ var GameScene = function() {
     _.zn = 0;
     _.exit();
     $.scn.menu.start();
+  }
+
+  // v = victory?
+  _.share = function(v) {
+    var a = document.createElement('a'), m = 'I killed ' + _.zn + ' zombie';
+    if (_.zn > 10) m += 's';
+    if (v) {
+      m += ' and ' + _.vm;
+    } else {
+      m += ' but couldn\'t save the human race.';
+    }
+    m += ' Try Pandemia on https://satanas.github.io/pandemia/ #js13k';
+    a.target = "_blank";
+    a.href = "https://twitter.com/intent/tweet?text=" + escape(m);
+    a.click();
   }
 }
