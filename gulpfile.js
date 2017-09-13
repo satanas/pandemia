@@ -103,7 +103,7 @@ gulp.task('build_closure', ['minify_html', 'minify_css', 'minify_js_closure', 'z
 });
 
 gulp.task('build_advzip', ['minify_html', 'minify_css', 'minify_js'], function() {
-  execSync('cd min && advzip -2 -a pandemia.zip all.min.js index.html style.min.css');
+  execSync('cd min && advzip -3 -a pandemia.zip all.min.js index.html style.min.css');
   reportSize();
 });
 

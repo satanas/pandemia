@@ -94,31 +94,31 @@ var Soldier = function(x, y) {
   _.inherits(Sprite);
   Sprite.call(_, x, y, 64, 64);
 
-  _.r = function(p) {
+  _.r = function(p, x, y) {
     // Head
     $.x.fs('#ffca85');
-    $.x.fr(p.x + 2, p.y, 62, 38);
+    $.x.fr(x + 2, y, 62, 38);
     // Chest
     $.x.fs('#727254');
-    $.x.fr(p.x + 16, p.y + 38, 34, 13);
+    $.x.fr(x + 16, y + 38, 34, 13);
     // Waist
     $.x.fs('#203622');
-    $.x.fr(p.x + 16, p.y + 50, 34, 5);
+    $.x.fr(x + 16, y + 50, 34, 5);
     // Feet
-    $.x.fr(p.x + 16, p.y + 55, 14, 8);
-    $.x.fr(p.x + 36, p.y + 55, 14, 8);
+    $.x.fr(x + 16, y + 55, 14, 8);
+    $.x.fr(x + 36, y + 55, 14, 8);
     // Arms
     $.x.fs(AC);
-    $.x.fr(p.x + 9, p.y + 39, 7, 5);
-    $.x.fr(p.x + 50, p.y + 39, 7, 5);
+    $.x.fr(x + 9, y + 39, 7, 5);
+    $.x.fr(x + 50, y + 39, 7, 5);
     // Hands
     $.x.fs(HC);
-    $.x.fr(p.x + 9, p.y + 44, 7, 5);
-    $.x.fr(p.x + 50, p.y + 44, 7, 5);
+    $.x.fr(x + 9, y + 44, 7, 5);
+    $.x.fr(x + 50, y + 44, 7, 5);
     // Face
     $.x.fs(FC);
-    $.x.fr(p.x + 15, p.y + 19, 6, 6);
-    $.x.fr(p.x + 45, p.y + 19, 6, 6);
-    $.x.fr(p.x + 27, p.y + 31, 12, 2);
+    $.x.fr(x + 15, y + 19, 6, 6);
+    $.x.fr(x + 45, y + 19, 6, 6);
+    $.x.fr(x + 27, y + 31, 12, 2);
   }
 }

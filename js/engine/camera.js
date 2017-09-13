@@ -88,7 +88,7 @@ var Camera = function(w, h, ww, wh) {
     k.forEach(function(o) {
       if (_.inView(o)) {
         var t = _.txRCoord(o);
-        o.r(t);
+        o.r(t, t.x, t.y);
       }
     });
   };

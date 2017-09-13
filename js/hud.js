@@ -28,8 +28,8 @@ var HUD = function() {
 
     // Ammo
     Ammo.d(670, 30);
-    p = $.txt.r('Ammo:', 725, 35, s, c)
-    $.txt.r($.player.ammo + '', p.width + 725, 35, s, c);
+    $.txt.r('Ammo:', 725, 35, s, c)
+    $.txt.r($.player.ammo + '', 832, 35, s, c);
 
     // Weapon icon
     var cx = ($.vw - 64) / 2,
