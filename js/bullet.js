@@ -13,6 +13,9 @@ var Bullet = function(cx, cy, an, type) {
   }
 
   _.inherits(Sprite);
+  // Calculation to spawn the bullet away from the center of the char
+  cx += cos(an) * 20;
+  cy += sin(an) * 20;
   Sprite.call(_, cx, cy, _.type.SI, _.type.SI);
 
   _.u = function() {

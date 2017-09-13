@@ -284,7 +284,7 @@ var Player = function(x, y) {
   }
 
   _.shoot = function() {
-    if (!_.ammo) return;
+    if (_.ammo <= 0) return;
 
     //$.ss.shake(1, 100)
     _.drop();
@@ -299,7 +299,6 @@ var Player = function(x, y) {
       }
       $.sn.p('sh');
     } else if (_.wpn.ID === WPN.FL.ID) {
-      _.ammo -= 5;
       $.sn.p('fl');
     } else {
       $.sn.p('gu');

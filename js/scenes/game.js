@@ -122,6 +122,7 @@ var GameScene = function() {
   // To be called when the player reaches the goal
   _.win = function() {
     _.end = 2;
+    $.sn.p('wn');
   }
 
   // Print global message
