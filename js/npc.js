@@ -33,7 +33,7 @@ var Scientist = function(x, y) {
 
   _.r = function(p) {
     var i,
-        y = 290,
+        y = 280,
         c = WH,
         s = FN,
         bc = '#c68642'; // body color
@@ -73,8 +73,8 @@ var Scientist = function(x, y) {
 
 
     for (i=0; i < _.dg[_.st].length; i++) {
-      //$.txt.r(_.dg[_.st][i], 250, y - (i * 20), 2, '#fff');
-      $.x.ft(_.dg[_.st][i], 16, 250, y - (i * 20), c, s);
+      $.txt.r(_.dg[_.st][i], 190, y - (i * 15), 2, '#fff');
+      //$.x.ft(_.dg[_.st][i], 16, 250, y - (i * 20), c, s);
     }
     if (_.st === 1 && _.anim.g()) {
       $.txt.r('Vaccine', 100, 170, 2, '#fff');
